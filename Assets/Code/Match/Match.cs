@@ -10,13 +10,11 @@ public class Match : Photon.MonoBehaviour
 	public Level level           { get; private set; }	
 	public bool matchStarted     { get; private set; }
 
-	[SerializeField] ScoreUI _scoreUI;
+	[SerializeField] ScoreUI        _scoreUI;
 	[SerializeField] StartCounterUI _counterUI;
-	[SerializeField] WinnerUI _winnerUI;
+	[SerializeField] WinnerUI       _winnerUI;
 
 	IGameMode _currentGameMode;
-	
-	int _numPlayers;
 	
 	void Awake()
 	{
@@ -53,12 +51,12 @@ public class Match : Photon.MonoBehaviour
 	void SetupMatch()
 	{
 		// init data structures
-		_numPlayers = PhotonNetwork.room.PlayerCount;
+		int numPlayer = PhotonNetwork.room.PlayerCount;
 
-		_currentGameMode.OnSetup(_numPlayers);
+		_currentGameMode.OnSetup(numPlayer);
 
 		// tell the ui how many players we are
-		_scoreUI.Setup(_numPlayers);
+		_scoreUI.Setup(numPlayer);
 	}
 
 	void StartOnAllLoaded()
@@ -69,7 +67,7 @@ public class Match : Photon.MonoBehaviour
 			photonView.RPC("AllIsLoaded", PhotonTargets.MasterClient);
 	}
 
-	// called from character
+	// called from character(only on server) 
 	public void OnPlayerDie(int playerId, int viewID)
 	{
 		_currentGameMode.OnPlayerDie(playerId, viewID);

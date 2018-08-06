@@ -465,7 +465,7 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 			}
 
 			// check if we exited the map after every tile
-			// stop movement and flag dead locally and only handle death on server
+			// stop movement and flag frozen locally and only handle death on server
 			// will be corrected by server if say a collision happened on server but not locally that would have prevented us from exiting map
 			if (DeadlyEdge())
 			{
