@@ -29,6 +29,13 @@ public class CharacterDeathComponent : MonoBehaviour
 			Timing.RunCoroutineSingleton(_quicksand(), gameObject.GetInstanceID(), SingletonBehavior.Overwrite);
 		else if (type == DeathType.Mine)
 			Timing.RunCoroutineSingleton(_Explode(deathTile), gameObject.GetInstanceID(), SingletonBehavior.Overwrite);
+
+		// replace old tile with a new one if flaged from editor
+		if (deathTile.model.data.replaceTileOnDeath)
+		{
+			TileMap TM = Match.instance.level.tileMap;
+			TM.SetTile(deathTile.position, new Tile(deathTile.position, deathTile.model.data.replacementTile, 0, 1, TM.tilesFolder), 0.0f);
+		}
 	}
 
 	public IEnumerator<float> _sink()

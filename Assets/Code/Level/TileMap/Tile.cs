@@ -28,6 +28,8 @@ public class TileModel
         public bool deadly;         // Will a player die if it steps on this tile?
         public bool unbreakable;    // tile cant break 
 		public DeathType deathType; // what death scenario will play
+		public bool replaceTileOnDeath;
+		public string replacementTile;
 
 		[Header("SOUNDS"), Space(3)]
 		public AudioClip   landSound;
@@ -86,9 +88,8 @@ public class Tile
 	public Tile GetRelativeTile(Vector2DInt offset) =>
 		Match.instance.level.tileMap.GetTile(position + offset);
 
-	// hardcoded to same lenght as animation for now (change this later when needed)
-	public void Delete() =>
-		Object.Destroy(view, 1.0f);
+	public void Delete(float delay) =>
+		Object.Destroy(view, delay);
 
 	public Tile(Vector2DInt position, string tileName, float yRotation, float tintStrength, Transform tilesFolder)
     {
@@ -188,7 +189,7 @@ public class Tile
 		}
 
 		if (currentHealth == 0)
-			Match.instance.level.tileMap.SetTile(position, new Tile(position, "empty", 0.0f, 0.0f, null));
+			Match.instance.level.tileMap.SetTile(position, new Tile(position, "empty", 0.0f, 0.0f, null), 1.0f);
 	}
 }
 

@@ -10,19 +10,19 @@ public class TileMap
     Dictionary<Vector2DInt, Tile> _tiles = new Dictionary<Vector2DInt, Tile>();
 
 	Vector2DInt _gridSize;
-	Transform _tilesFolder;
+	public readonly Transform tilesFolder;
 	
     public TileMap(string mapName, Transform tilesFolder)
     {
         name = mapName;
-		_tilesFolder = tilesFolder;
+		this.tilesFolder = tilesFolder;
         BinaryLoad();
     }
 
     public Tile GetTile(Vector2DInt position) => _tiles[position];
-    public void SetTile(Vector2DInt position, Tile tile)
+    public void SetTile(Vector2DInt position, Tile tile, float destroyDelay)
     {
-        _tiles[position].Delete();
+        _tiles[position].Delete(destroyDelay);
         _tiles[position] = tile;
     }
 
@@ -52,7 +52,7 @@ public class TileMap
 
 				float tintStrength = reader.ReadSingle();
 
-                _tiles.Add(tilePosition, new Tile(tilePosition, typeName, yRot, tintStrength, _tilesFolder));
+                _tiles.Add(tilePosition, new Tile(tilePosition, typeName, yRot, tintStrength, tilesFolder));
             }
 
 			AddEdgeTiles(gridSizeX, gridSizeY);
@@ -80,8 +80,8 @@ public class TileMap
 
 	public void ClearTileViews()
 	{
-		for (int i = 0; i < _tilesFolder.childCount; i++)
-			Object.Destroy(_tilesFolder.GetChild(i).gameObject);
+		for (int i = 0; i < tilesFolder.childCount; i++)
+			Object.Destroy(tilesFolder.GetChild(i).gameObject);
 	}
 
 	public void ResetMap()

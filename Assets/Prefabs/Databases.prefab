@@ -118,6 +118,8 @@ MonoBehaviour:
       deadly: 0
       unbreakable: 0
       deathType: 0
+      replaceTileOnDeath: 0
+      replacementTile: 
       landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
       breakSound: {fileID: 0}
       killSound: {fileID: 0}
@@ -132,6 +134,8 @@ MonoBehaviour:
       deadly: 0
       unbreakable: 0
       deathType: 0
+      replaceTileOnDeath: 0
+      replacementTile: 
       landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
       breakSound: {fileID: 0}
       killSound: {fileID: 0}
@@ -146,6 +150,8 @@ MonoBehaviour:
       deadly: 0
       unbreakable: 1
       deathType: 0
+      replaceTileOnDeath: 0
+      replacementTile: 
       landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
       breakSound: {fileID: 0}
       killSound: {fileID: 0}
@@ -160,6 +166,8 @@ MonoBehaviour:
       deadly: 1
       unbreakable: 1
       deathType: 0
+      replaceTileOnDeath: 0
+      replacementTile: 
       landSound: {fileID: 0}
       breakSound: {fileID: 0}
       killSound: {fileID: 0}
@@ -174,6 +182,8 @@ MonoBehaviour:
       deadly: 0
       unbreakable: 0
       deathType: 0
+      replaceTileOnDeath: 0
+      replacementTile: 
       landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
       breakSound: {fileID: 0}
       killSound: {fileID: 0}
@@ -188,6 +198,8 @@ MonoBehaviour:
       deadly: 0
       unbreakable: 0
       deathType: 0
+      replaceTileOnDeath: 0
+      replacementTile: 
       landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
       breakSound: {fileID: 0}
       killSound: {fileID: 0}
@@ -204,6 +216,8 @@ MonoBehaviour:
       deadly: 1
       unbreakable: 1
       deathType: 1
+      replaceTileOnDeath: 0
+      replacementTile: 
       landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
       breakSound: {fileID: 0}
       killSound: {fileID: 8300000, guid: 34dd74c03e9be14419eac0aada37fc58, type: 3}
@@ -219,6 +233,8 @@ MonoBehaviour:
       deadly: 1
       unbreakable: 1
       deathType: 2
+      replaceTileOnDeath: 1
+      replacementTile: empty
       landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
       breakSound: {fileID: 0}
       killSound: {fileID: 8300000, guid: d238eef53a3b2244e9ec7213b0c7d8fa, type: 3}
