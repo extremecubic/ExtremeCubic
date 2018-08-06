@@ -229,9 +229,11 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 		_character.soundComponent.StopSound(CharacterSoundComponent.CharacterSound.Charge);
 		_character.ParticleComponent.StopAll();
 
-		transform.position = new Vector3(tileX, 1, tileY);
+		Tile deathTile = Match.instance.level.tileMap.GetTile(new Vector2DInt(tileX, tileY));
 
-		_character.deathComponent.KillPlayer(currentTile.position, currentTile.model.data.deathType);
+		transform.position = new Vector3(deathTile.position.x, 1, deathTile.position.y);
+
+		_character.deathComponent.KillPlayer(deathTile);
 
 		if (PhotonNetwork.isMasterClient)
 			Match.instance.OnPlayerDie(_character.playerID, photonView.viewID);

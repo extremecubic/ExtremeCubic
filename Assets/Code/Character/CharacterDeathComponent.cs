@@ -19,17 +19,16 @@ public class CharacterDeathComponent : MonoBehaviour
 		_character = GetComponent<Character>();	
 	}
 
-	public void KillPlayer(Vector2DInt tilePos, DeathType type)
+	public void KillPlayer(Tile deathTile)
 	{
-		Tile tile = Match.instance.level.tileMap.GetTile(tilePos);
-		tile.PlaySound(TileSounds.Kill);
+		DeathType type = deathTile.model.data.deathType;
 
 		if (type == DeathType.Sink)
 		   Timing.RunCoroutineSingleton(_sink(), gameObject.GetInstanceID(), SingletonBehavior.Overwrite);
 		else if(type == DeathType.Quicksand)
 			Timing.RunCoroutineSingleton(_quicksand(), gameObject.GetInstanceID(), SingletonBehavior.Overwrite);
 		else if (type == DeathType.Mine)
-			Timing.RunCoroutineSingleton(_Explode(tile), gameObject.GetInstanceID(), SingletonBehavior.Overwrite);
+			Timing.RunCoroutineSingleton(_Explode(deathTile), gameObject.GetInstanceID(), SingletonBehavior.Overwrite);
 	}
 
 	public IEnumerator<float> _sink()
