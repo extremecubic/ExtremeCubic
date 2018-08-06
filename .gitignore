@@ -38,4 +38,4 @@ sysinfo.txt
 *.unitypackage
 AscentServer/.vs/AscentServer/v15/Server/sqlite3/db.lock
 Client/Temp/UnityLockfile
-Cubic.sln
+ExtremeCubic.sln
