@@ -5,17 +5,19 @@ using System.IO;
 
 public class TileMap
 {
-    readonly string name = "EditorTest";
+    readonly string mapName = "EditorTest";
 
     Dictionary<Vector2DInt, Tile> _tiles = new Dictionary<Vector2DInt, Tile>();
 
 	Vector2DInt _gridSize;
 	public readonly Transform tilesFolder;
+	public readonly Transform powerUpsFolder;
 	
-    public TileMap(string mapName, Transform tilesFolder)
+    public TileMap(string mapName, Transform tilesFolder, Transform powerUpsFolder)
     {
-        name = mapName;
+        this.mapName = mapName;
 		this.tilesFolder = tilesFolder;
+		this.powerUpsFolder = powerUpsFolder;
         BinaryLoad();
     }
 
@@ -31,7 +33,7 @@ public class TileMap
 	  
     public void BinaryLoad()
     {
-        using (FileStream stream = new FileStream(Path.Combine(Constants.TILEMAP_SAVE_FOLDER, name), FileMode.Open, FileAccess.Read))
+        using (FileStream stream = new FileStream(Path.Combine(Constants.TILEMAP_SAVE_FOLDER, mapName), FileMode.Open, FileAccess.Read))
         using (BinaryReader reader = new BinaryReader(stream))
         {
             int gridSizeY = reader.ReadInt32();        // Read: Num tiles Vertical
@@ -78,14 +80,22 @@ public class TileMap
 			_tiles.Add(new Vector2DInt(i, -1), new Tile(new Vector2DInt(i, -1), Constants.EDGE_TYPE, 0, 0, null));
 	}
 
-	public void ClearTileViews()
+	void ClearTileViews()
 	{
 		for (int i = 0; i < tilesFolder.childCount; i++)
 			Object.Destroy(tilesFolder.GetChild(i).gameObject);
 	}
 
+	void ClearPowerUpViews()
+	{
+		for (int i = 0; i < powerUpsFolder.childCount; i++)
+			Object.Destroy(powerUpsFolder.GetChild(i).gameObject);
+	}
+
 	public void ResetMap()
 	{
+		ClearTileViews();
+		ClearPowerUpViews();
 		_tiles.Clear();
 		BinaryLoad();
 	}

@@ -1115,15 +1115,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4284169262861586, guid: 684e161ed388d67499fa6f7c86190005, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 862.6046
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4284169262861586, guid: 684e161ed388d67499fa6f7c86190005, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 791.1479
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4284169262861586, guid: 684e161ed388d67499fa6f7c86190005, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -1129.898
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4284169262861586, guid: 684e161ed388d67499fa6f7c86190005, type: 2}
       propertyPath: m_LocalRotation.x
@@ -1145,26 +1145,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 114850442708484112, guid: 684e161ed388d67499fa6f7c86190005,
-        type: 2}
-      propertyPath: viewIdField
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114850442708484112, guid: 684e161ed388d67499fa6f7c86190005,
-        type: 2}
-      propertyPath: instantiationId
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114792443764372392, guid: 684e161ed388d67499fa6f7c86190005,
-        type: 2}
-      propertyPath: viewIdField
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114792443764372392, guid: 684e161ed388d67499fa6f7c86190005,
-        type: 2}
-      propertyPath: instantiationId
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 114240948812881822, guid: 684e161ed388d67499fa6f7c86190005,
         type: 2}
       propertyPath: _scoreUI
@@ -1180,6 +1160,26 @@ Prefab:
       propertyPath: _winnerUI
       value: 
       objectReference: {fileID: 661698849}
+    - target: {fileID: 114792443764372392, guid: 684e161ed388d67499fa6f7c86190005,
+        type: 2}
+      propertyPath: viewIdField
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792443764372392, guid: 684e161ed388d67499fa6f7c86190005,
+        type: 2}
+      propertyPath: instantiationId
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114850442708484112, guid: 684e161ed388d67499fa6f7c86190005,
+        type: 2}
+      propertyPath: viewIdField
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114850442708484112, guid: 684e161ed388d67499fa6f7c86190005,
+        type: 2}
+      propertyPath: instantiationId
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 684e161ed388d67499fa6f7c86190005, type: 2}
   m_IsPrefabParent: 0

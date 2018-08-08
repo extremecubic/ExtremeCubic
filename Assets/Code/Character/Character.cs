@@ -9,6 +9,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterSoundComponent))]
 [RequireComponent(typeof(CharacterParticlesComponent))]
 [RequireComponent(typeof(CharacterDeathComponent))]
+[RequireComponent(typeof(CharacterPowerUpComponent))]
 public class Character : Photon.MonoBehaviour
 {		
 	public CharacterModel model                {get; private set;}
@@ -24,6 +25,7 @@ public class Character : Photon.MonoBehaviour
 	public CharacterSoundComponent     soundComponent    {get; private set;}
 	public CharacterParticlesComponent ParticleComponent {get; private set;}
 	public CharacterDeathComponent	   deathComponent    {get; private set;}
+	public CharacterPowerUpComponent   powerUpComponent  {get; private set;}
 
 	public event Action<Vector2DInt> OnCharacterSpawned;
 
@@ -59,6 +61,7 @@ public class Character : Photon.MonoBehaviour
 		soundComponent    = GetComponent<CharacterSoundComponent>();
 		ParticleComponent = GetComponent<CharacterParticlesComponent>();
 		deathComponent	  = GetComponent<CharacterDeathComponent>();
+		powerUpComponent  = GetComponent<CharacterPowerUpComponent>();
 
 		// initialize components
 		movementComponent.ManualAwake();
@@ -101,6 +104,7 @@ public class Character : Photon.MonoBehaviour
 	{
 		movementComponent.ResetAll();
 		ParticleComponent.StopAll();
+		powerUpComponent.AbortPowerUp();
 		soundComponent.StopSound(CharacterSoundComponent.CharacterSound.Charge);
 		transform.position = new Vector3(spawnTileX, 1, spawnTileY);
 		OnCharacterSpawned?.Invoke(new Vector2DInt(spawnTileX, spawnTileY));		

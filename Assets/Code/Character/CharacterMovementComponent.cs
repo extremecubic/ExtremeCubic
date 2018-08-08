@@ -228,6 +228,7 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 		_character.soundComponent.PlaySound(CharacterSoundComponent.CharacterSound.Death);
 		_character.soundComponent.StopSound(CharacterSoundComponent.CharacterSound.Charge);
 		_character.ParticleComponent.StopAll();
+		_character.powerUpComponent.AbortPowerUp();
 
 		Tile deathTile = Match.instance.level.tileMap.GetTile(new Vector2DInt(tileX, tileY));
 
@@ -237,7 +238,14 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 
 		if (PhotonNetwork.isMasterClient)
 			Match.instance.OnPlayerDie(_character.playerID, photonView.viewID);
-	}	
+	}
+
+	[PunRPC]
+	void ClaimPowerUp(int tileX, int tileY)
+	{
+		Tile tile = Match.instance.level.tileMap.GetTile(new Vector2DInt(tileX, tileY));
+		_character.powerUpComponent.AddPower(tile.ClaimPowerUp());
+	}
 
 	[PunRPC]
 	void SyncTransform(int px, int py, float rx, float ry, float rz, float rw)
@@ -294,7 +302,7 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 		float movementProgress = 0;
 		while (movementProgress < 1)
 		{
-			movementProgress += _model.walkSpeed * Time.deltaTime;
+			movementProgress += (_model.walkSpeed * _character.powerUpComponent.speedMultiplier) * Time.deltaTime;
 			movementProgress = Mathf.Clamp01(movementProgress);
 
 			transform.position = Vector3.Lerp(fromPosition, targetPosition, movementProgress);
@@ -309,6 +317,10 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 		if (PhotonNetwork.isMasterClient && DeadlyTile())
 			yield break;
 
+		// check if tile contains any power up and pick it up
+		if (PhotonNetwork.isMasterClient && currentTile.ContainsPowerUp())
+			photonView.RPC("ClaimPowerUp", PhotonTargets.All, currentTile.position.x, currentTile.position.y);
+			
 		currentTile.OnPlayerLand();
 
 		// reset state and add cooldown
@@ -341,7 +353,7 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 			if (Input.GetAxisRaw(Constants.AXIS_HORIZONTAL) > 0)
 				_lastMoveDirection = Vector2DInt.Right;
 
-			currentDashCharges = (int)chargeAmount;
+			currentDashCharges = (int)chargeAmount + _character.powerUpComponent.extraDashCharges;
 
 			yield return Timing.WaitForOneFrame;
 		}
@@ -455,7 +467,7 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 			float movementProgress = 0;
 			while (movementProgress < 1)
 			{
-				movementProgress += _model.dashSpeed * Time.deltaTime;
+				movementProgress += (_model.dashSpeed * _character.powerUpComponent.speedMultiplier) * Time.deltaTime;
 				movementProgress = Mathf.Clamp01(movementProgress);
 
 				transform.position = Vector3.Lerp(fromPosition, targetPosition, movementProgress);
@@ -476,6 +488,10 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 
 				yield break;
 			}
+
+			// check if tile contains any power up and pick it up
+			if (PhotonNetwork.isMasterClient && currentTile.ContainsPowerUp())
+				photonView.RPC("ClaimPowerUp", PhotonTargets.All, currentTile.position.x, currentTile.position.y);
 		}
 
 		// check if we ended up on deadly tile

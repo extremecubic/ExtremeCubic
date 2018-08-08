@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Level : Photon.MonoBehaviour
 {
-    
     public TileMap tileMap { get; private set; }
 	
     [SerializeField] GameObject _characterPrefab; // The character gameobject that Photon automagically creates 
-	[SerializeField] string _mapToLoad;
-	[SerializeField] Transform _tilesFolder;
+	[SerializeField] string     _mapToLoad;
+	[SerializeField] Transform  _tilesFolder;
+	[SerializeField] Transform  _powerUpFolder;
 
     Character _character;
 
@@ -24,11 +24,11 @@ public class Level : Photon.MonoBehaviour
 		_character = PhotonNetwork.Instantiate("Character", Vector3.zero, Quaternion.identity, 0).GetComponent<Character>();
 		_character.Initialize(characterName, PhotonNetwork.player.ID, PhotonNetwork.player.NickName, skinID);
 
-		tileMap = new TileMap(_mapToLoad, _tilesFolder);
+		tileMap = new TileMap(_mapToLoad, _tilesFolder, _powerUpFolder);
 
 		_spawnID = (int)PhotonNetwork.player.CustomProperties[Constants.SPAWN_ID];
 
-		_character.Spawn(tileMap.GetSpawnPointFromSpawnID(_spawnID));		
+		_character.Spawn(tileMap.GetSpawnPointFromSpawnID(_spawnID));	
 	}
 		
 	public void ResetRound()
@@ -39,8 +39,7 @@ public class Level : Photon.MonoBehaviour
 	[PunRPC]
 	void NetworkResetRound()
 	{
-		tileMap.ClearTileViews();
-		tileMap.ResetMap();		
+		tileMap.ResetMap();
 		_character.Spawn(tileMap.GetSpawnPointFromSpawnID(_spawnID));
 	}
 

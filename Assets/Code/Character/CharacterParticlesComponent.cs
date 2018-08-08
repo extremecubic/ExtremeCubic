@@ -16,6 +16,7 @@ public class CharacterParticlesComponent : MonoBehaviour
 	{
 		_data = data;
 		CreateTrail(parent);
+		CreateCharge(parent);
 	}
 
 	void CreateTrail(Transform parent)
@@ -25,6 +26,12 @@ public class CharacterParticlesComponent : MonoBehaviour
 
 		_trail = Instantiate(_data.trailParticle, transform.position, _data.trailParticle.transform.rotation, parent);
 		_trail.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+	}
+
+	void CreateCharge(Transform parent)
+	{
+		_charge = Instantiate(_data.chargeupParticle, transform.position, _data.chargeupParticle.transform.rotation, parent);
+		_charge.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 	}
 
 	public void EmitTrail(bool emit, Vector3 dashForward)
@@ -50,20 +57,10 @@ public class CharacterParticlesComponent : MonoBehaviour
 		if (_data.chargeupParticle == null)
 			return;		
 
-		if (emit)
-		{
-			if(_charge == null)
-			   _charge = Instantiate(_data.chargeupParticle, transform.position, _data.chargeupParticle.transform.rotation);
-		}
-		else
-		{
-			if (_charge == null)
-				return;
-
-			_charge.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-			Destroy(_charge, 8);
-			_charge = null;
-		}
+		if (emit)		
+			_charge.Play(true);	
+		else				
+			_charge.Stop(true, ParticleSystemStopBehavior.StopEmitting);					
 	}
 
 	public void SpawnHitEffect(Vector2DInt a, Vector2DInt b)
@@ -87,19 +84,10 @@ public class CharacterParticlesComponent : MonoBehaviour
 
 	public void StopAll()
 	{
-		if (_charge != null)
-		{
-			_charge.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-			Destroy(_charge, 8);
-			_charge = null;
-		}
-
-		if (_trail != null)
-		{
-			_trail.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-		}
-
-
-
+		if (_charge != null)		
+			_charge.Stop(true, ParticleSystemStopBehavior.StopEmitting);			
+		
+		if (_trail != null)		
+			_trail.Stop(true, ParticleSystemStopBehavior.StopEmitting);		
 	}
 }
