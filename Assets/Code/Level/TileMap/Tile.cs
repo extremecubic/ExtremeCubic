@@ -162,6 +162,7 @@ public class Tile
 		_sounds[(int)TileSounds.Kill].clip = model.data.killSound;
 	}
 
+	// play a sound belonging to the tile as child
 	public void PlaySound(TileSounds type)
 	{
 		if (_view == null)
@@ -171,23 +172,42 @@ public class Tile
 			_sounds[(int)type].Play();
 	}
 
+	// spawn a sound and play it, good if a sound needs to outlive the tile when destroyed
+	public void SpawnAndPlaySound(TileSounds type, float destroyAfter)
+	{
+		// spawn object with audiosource
+		GameObject soundHolder = new GameObject("soundOneUse", typeof(AudioSource));
+		AudioSource audio = soundHolder.GetComponent<AudioSource>();
+
+		// asign clip and play
+		audio.clip = _sounds[(int)type].clip;
+		audio.Play();
+
+		// delete after delay
+		Object.Destroy(soundHolder, destroyAfter);
+	}
+
 	public void OnPlayerLand()
 	{
 		PlaySound(TileSounds.Land);
 
+		// spawn land particle if tile has one defined
 		if (model.data.landParticle != null)
 		{
 			GameObject p = Object.Instantiate(model.data.landParticle, new Vector3(position.x, 0, position.y), model.data.landParticle.transform.rotation);
-			Object.Destroy(p, 8);
+			Object.Destroy(p, 5);
 		}
 	}
 
 	public void TintTile(GameObject tile, float strength)
 	{
+
+		// get renderer of main object and tint
 		Renderer renderer = tile.GetComponent<Renderer>();
 		if (renderer != null)
 			renderer.material.color = Color.white * strength;
 
+		// loop over all child renderers and tint
 		for (int i = 0; i < tile.transform.childCount; i++)
 		{
 			renderer = tile.transform.GetChild(i).GetComponent<Renderer>();

@@ -14,12 +14,20 @@ public enum PowerUpType
 [Serializable]
 public struct PowerUp
 {
-	[Header("Settings for all")]
+	[Header("SETTINGS FOR ALL")]
 	public PowerUpType type;
-	public float duration;
-	public GameObject prefab;
+	public float       duration;
+	public GameObject  prefab;
 
-	[Header("for powerups that change a property like speed")]
+	[Header("Pickup Feedback")]
+	public AudioClip      pickupSound;
+	public ParticleSystem pickupParticle;
+
+	[Header("During power feedback")]
+	public AudioClip      loopSound;
+	public ParticleSystem characterParticle;
+
+	[Header("FOR POWERUPS THAT CHANGE A PROPERTY LIKE SPEED")]
 	public float modifier;
 }
 

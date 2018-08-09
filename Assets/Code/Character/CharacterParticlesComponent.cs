@@ -9,6 +9,7 @@ public class CharacterParticlesComponent : MonoBehaviour
 	ParticleSystem _trail;
 	ParticleSystem _hit;
 	ParticleSystem _charge;
+	ParticleSystem _powerUpLoop;
 
 	Vector3 _dashForward;
 
@@ -61,6 +62,23 @@ public class CharacterParticlesComponent : MonoBehaviour
 			_charge.Play(true);	
 		else				
 			_charge.Stop(true, ParticleSystemStopBehavior.StopEmitting);					
+	}
+
+	public void StartPowerUpParticle(ParticleSystem system, bool emit)
+	{
+		if (!emit)
+		{
+			_powerUpLoop.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+			return;
+		}
+
+		if (_powerUpLoop)
+		{
+			_powerUpLoop.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+			Destroy(_powerUpLoop.gameObject, 5);
+		}
+
+		_powerUpLoop = Instantiate(system, transform.position, system.transform.rotation, transform);			
 	}
 
 	public void SpawnHitEffect(Vector2DInt a, Vector2DInt b)

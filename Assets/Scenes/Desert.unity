@@ -1180,6 +1180,12 @@ Prefab:
       propertyPath: instantiationId
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114425577266680056, guid: 684e161ed388d67499fa6f7c86190005,
+        type: 2}
+      propertyPath: _powers
+      value: 
+      objectReference: {fileID: 11400000, guid: 257dc15a941853e46a3ae6e3f3d1ecd2,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 684e161ed388d67499fa6f7c86190005, type: 2}
   m_IsPrefabParent: 0
@@ -7016,6 +7022,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114066752224454210, guid: 51ce67218695e5a4b8798b10455461b0,
+        type: 2}
+      propertyPath: tilesToSerialize.Array.data[7]._data.killSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d238eef53a3b2244e9ec7213b0c7d8fa, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 51ce67218695e5a4b8798b10455461b0, type: 2}
   m_IsPrefabParent: 0

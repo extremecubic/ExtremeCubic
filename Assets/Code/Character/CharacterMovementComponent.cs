@@ -244,7 +244,7 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 	void ClaimPowerUp(int tileX, int tileY)
 	{
 		Tile tile = Match.instance.level.tileMap.GetTile(new Vector2DInt(tileX, tileY));
-		_character.powerUpComponent.AddPower(tile.ClaimPowerUp());
+		_character.powerUpComponent.AddPower(tile.ClaimPowerUp(), new Vector3(tileX, 1, tileY));
 	}
 
 	[PunRPC]

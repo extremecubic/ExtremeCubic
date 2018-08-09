@@ -12,15 +12,23 @@ public class CharacterSoundComponent : MonoBehaviour
 		Punch,
 		Death,
 		Charge,
+		PowerupLoop,
 
 		Count,
 	}
 
-	AudioSource[] _sounds;
+	public struct SoundData
+	{
+		public AudioSource audioSource;
+		public CoroutineHandle fadeHandle;
+		public float originalVolume;
+	}
+
+	SoundData[] _sounds;
 
 	public void ManualAwake(CharacterDatabase.ViewData data, Transform parent)
 	{
-		_sounds = new AudioSource[(int)CharacterSound.Count];
+		_sounds = new SoundData[(int)CharacterSound.Count];
 
 		CreateSounds(data, parent);
 	}
@@ -42,51 +50,68 @@ public class CharacterSoundComponent : MonoBehaviour
 		GameObject soundHolderCharge = new GameObject("ChargeSound", typeof(AudioSource));
 		soundHolderCharge.transform.SetParent(parent);
 
-		_sounds[(int)CharacterSound.Walk] = soundHolderWalk.GetComponent<AudioSource>();
-		_sounds[(int)CharacterSound.Walk].clip = data.walkSound;
+		GameObject soundHolderpowerLoop = new GameObject("PowerUpLoopSound", typeof(AudioSource));
+		soundHolderpowerLoop.transform.SetParent(parent);
 
-		_sounds[(int)CharacterSound.Dash] = soundHolderDash.GetComponent<AudioSource>();
-		_sounds[(int)CharacterSound.Dash].clip = data.dashSound;
+		_sounds[(int)CharacterSound.Walk].audioSource = soundHolderWalk.GetComponent<AudioSource>();
+		_sounds[(int)CharacterSound.Walk].audioSource.clip = data.walkSound;
 
-		_sounds[(int)CharacterSound.Punch] = soundHolderPunch.GetComponent<AudioSource>();
-		_sounds[(int)CharacterSound.Punch].clip = data.hitSound;
+		_sounds[(int)CharacterSound.Dash].audioSource = soundHolderDash.GetComponent<AudioSource>();
+		_sounds[(int)CharacterSound.Dash].audioSource.clip = data.dashSound;
 
-		_sounds[(int)CharacterSound.Death] = soundHolderDeath.GetComponent<AudioSource>();
-		_sounds[(int)CharacterSound.Death].clip = data.deathSound;
+		_sounds[(int)CharacterSound.Punch].audioSource = soundHolderPunch.GetComponent<AudioSource>();
+		_sounds[(int)CharacterSound.Punch].audioSource.clip = data.hitSound;
 
-		_sounds[(int)CharacterSound.Charge] = soundHolderCharge.GetComponent<AudioSource>();
-		_sounds[(int)CharacterSound.Charge].clip = data.chargeSound;
-		_sounds[(int)CharacterSound.Charge].loop = true;
+		_sounds[(int)CharacterSound.Death].audioSource = soundHolderDeath.GetComponent<AudioSource>();
+		_sounds[(int)CharacterSound.Death].audioSource.clip = data.deathSound;
+
+		_sounds[(int)CharacterSound.Charge].audioSource = soundHolderCharge.GetComponent<AudioSource>();
+		_sounds[(int)CharacterSound.Charge].audioSource.clip = data.chargeSound;
+		_sounds[(int)CharacterSound.Charge].audioSource.loop = true;
+
+		_sounds[(int)CharacterSound.PowerupLoop].audioSource = soundHolderpowerLoop.GetComponent<AudioSource>();
+		_sounds[(int)CharacterSound.PowerupLoop].audioSource.loop = true;
 	}
 
 	public void PlaySound(CharacterSound type)
 	{
-		_sounds[(int)type].Play();
+		if (_sounds[(int)type].fadeHandle.IsRunning)
+		{
+			_sounds[(int)type].fadeHandle.IsRunning = false;
+			_sounds[(int)type].audioSource.volume = _sounds[(int)type].originalVolume;
+		}
+
+		_sounds[(int)type].audioSource.Play();
 	}
 
 	public void StopSound(CharacterSound type, float fadeInSeconds = 0.5f)
 	{
-		if (_sounds[(int)type].isPlaying)
-			Timing.RunCoroutine(_fadeSound(fadeInSeconds, (int)type));
+		if (_sounds[(int)type].audioSource.isPlaying)
+			_sounds[(int)type].fadeHandle = Timing.RunCoroutine(_fadeSound(fadeInSeconds, (int)type));
 	}
 
+	public void SetClipToSound(CharacterSound type, AudioClip clip)
+	{
+		_sounds[(int)type].audioSource.clip = clip;
+	}
 
 	IEnumerator<float> _fadeSound(float time, int sound)
 	{
-		float startVolume = _sounds[sound].volume;
+		float startVolume = _sounds[sound].audioSource.volume;
+		_sounds[sound].originalVolume = startVolume;
 
 		float fraction = 0;
 		while(fraction < 1.0f)
 		{
 			fraction = time == 0 ? 1.0f : fraction + Time.deltaTime / time;
 
-			_sounds[sound].volume = Mathf.Lerp(startVolume, 0.0f, fraction);
+			_sounds[sound].audioSource.volume = Mathf.Lerp(startVolume, 0.0f, fraction);
 
 			yield return Timing.WaitForOneFrame;
 		}
 
-		_sounds[sound].Stop();
-		_sounds[sound].volume = startVolume;
+		_sounds[sound].audioSource.Stop();
+		_sounds[sound].audioSource.volume = startVolume;
 
 	}
 }

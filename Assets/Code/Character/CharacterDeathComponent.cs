@@ -26,7 +26,7 @@ public class CharacterDeathComponent : MonoBehaviour
 		if (type == DeathType.Sink)
 		   Timing.RunCoroutineSingleton(_sink(), gameObject.GetInstanceID(), SingletonBehavior.Overwrite);
 		else if(type == DeathType.Quicksand)
-			Timing.RunCoroutineSingleton(_quicksand(), gameObject.GetInstanceID(), SingletonBehavior.Overwrite);
+			Timing.RunCoroutineSingleton(_quicksand(deathTile), gameObject.GetInstanceID(), SingletonBehavior.Overwrite);
 		else if (type == DeathType.Mine)
 			Timing.RunCoroutineSingleton(_Explode(deathTile), gameObject.GetInstanceID(), SingletonBehavior.Overwrite);
 
@@ -47,10 +47,12 @@ public class CharacterDeathComponent : MonoBehaviour
 		}
 	}
 
-	public IEnumerator<float> _quicksand()
+	public IEnumerator<float> _quicksand(Tile deathTile)
 	{
 		CharacterModel model = _character.model;		
 		Vector3 rotation = transform.rotation.eulerAngles;
+
+		deathTile.PlaySound(TileSounds.Kill);
 
 		float fraction = 0.0f;
 		while (fraction < 1.0f)
@@ -69,11 +71,13 @@ public class CharacterDeathComponent : MonoBehaviour
 		}
 	}
 
-	public IEnumerator<float> _Explode(Tile tile)
+	public IEnumerator<float> _Explode(Tile deathTile)
 	{
-		if (tile.model.data.killParticle)
+		deathTile.SpawnAndPlaySound(TileSounds.Kill, 5);
+
+		if (deathTile.model.data.killParticle)
 		{
-			GameObject particle = Instantiate(tile.model.data.killParticle, new Vector3(tile.position.x, 0, tile.position.y), tile.model.data.killParticle.transform.rotation);
+			GameObject particle = Instantiate(deathTile.model.data.killParticle, new Vector3(deathTile.position.x, 0, deathTile.position.y), deathTile.model.data.killParticle.transform.rotation);
 			Destroy(particle, 8.0f);
 		}
 

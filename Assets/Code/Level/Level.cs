@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Level : Photon.MonoBehaviour
 {
+	public PowerUpModel _powers;
+
     public TileMap tileMap { get; private set; }
 	
     [SerializeField] GameObject _characterPrefab; // The character gameobject that Photon automagically creates 
@@ -28,7 +30,13 @@ public class Level : Photon.MonoBehaviour
 
 		_spawnID = (int)PhotonNetwork.player.CustomProperties[Constants.SPAWN_ID];
 
-		_character.Spawn(tileMap.GetSpawnPointFromSpawnID(_spawnID));	
+		_character.Spawn(tileMap.GetSpawnPointFromSpawnID(_spawnID));
+
+		for (int i = 0; i < 3; i++)
+			tileMap.GetTile(tileMap.GetRandomTileCoords()).SpawnPowerUp(_powers.GetPowerUpFromType(PowerUpType.SuperSpeed), _powerUpFolder);
+
+		for (int i = 0; i < 3; i++)
+			tileMap.GetTile(tileMap.GetRandomTileCoords()).SpawnPowerUp(_powers.GetPowerUpFromType(PowerUpType.InfiniteDash), _powerUpFolder);
 	}
 		
 	public void ResetRound()
