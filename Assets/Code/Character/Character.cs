@@ -105,7 +105,7 @@ public class Character : Photon.MonoBehaviour
 		movementComponent.ResetAll();
 		ParticleComponent.StopAll();
 		powerUpComponent.AbortPowerUp();
-		soundComponent.StopSound(CharacterSoundComponent.CharacterSound.Charge);
+		soundComponent.StopSound(CharacterSound.Charge);
 		transform.position = new Vector3(spawnTileX, 1, spawnTileY);
 		OnCharacterSpawned?.Invoke(new Vector2DInt(spawnTileX, spawnTileY));		
 	}
@@ -135,7 +135,7 @@ public class Character : Photon.MonoBehaviour
 			movementComponent.InfiniteDash();
 
 		if (Input.GetKeyDown(KeyCode.L))
-			soundComponent.PlaySound(CharacterSoundComponent.CharacterSound.Dash);
+			soundComponent.PlaySound(CharacterSound.Dash);
 
 #endif
 	}

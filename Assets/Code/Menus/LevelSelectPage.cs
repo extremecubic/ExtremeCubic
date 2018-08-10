@@ -186,7 +186,7 @@ public class LevelSelectPage : MenuPage
 		_nominatedScreen.SetActive(true);
 		_selectScreen.SetActive(false);
 
-		// activate border and set twxt of level to empty
+		// activate border and set text of level to empty
 		_border.SetActive(true);
 		_levelWinnerNameText.text = "";
 

@@ -32,11 +32,19 @@ public class Level : Photon.MonoBehaviour
 
 		_character.Spawn(tileMap.GetSpawnPointFromSpawnID(_spawnID));
 
+		if(PhotonNetwork.isMasterClient)
 		for (int i = 0; i < 3; i++)
-			tileMap.GetTile(tileMap.GetRandomTileCoords()).SpawnPowerUp(_powers.GetPowerUpFromType(PowerUpType.SuperSpeed), _powerUpFolder);
+		{
+			Vector2DInt pos = tileMap.GetRandomTileCoords();
+			photonView.RPC("SpawnPowerup", PhotonTargets.All, pos.x, pos.y);
+		}
 
-		for (int i = 0; i < 3; i++)
-			tileMap.GetTile(tileMap.GetRandomTileCoords()).SpawnPowerUp(_powers.GetPowerUpFromType(PowerUpType.InfiniteDash), _powerUpFolder);
+		if (PhotonNetwork.isMasterClient)
+			for (int i = 0; i < 3; i++)
+			{
+				Vector2DInt pos = tileMap.GetRandomTileCoords();
+				photonView.RPC("SpawnPowerup2", PhotonTargets.All, pos.x, pos.y);
+			}
 	}
 		
 	public void ResetRound()
@@ -60,5 +68,17 @@ public class Level : Photon.MonoBehaviour
 	void NetworkBreakTile(int x, int y)
 	{
 		tileMap.GetTile(new Vector2DInt(x, y)).DamageTile();
+	}
+
+	[PunRPC]
+	void SpawnPowerup(int x, int y)
+	{
+		tileMap.GetTile(new Vector2DInt(x,y)).SpawnPowerUp(_powers.GetPowerUpFromType(PowerUpType.SlowdownOthers), _powerUpFolder);
+	}
+
+	[PunRPC]
+	void SpawnPowerup2(int x, int y)
+	{
+		tileMap.GetTile(new Vector2DInt(x, y)).SpawnPowerUp(_powers.GetPowerUpFromType(PowerUpType.SuperSpeed), _powerUpFolder);
 	}
 }

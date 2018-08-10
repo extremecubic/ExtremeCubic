@@ -76,4 +76,6 @@ MonoBehaviour:
   - CheckAllReady
   - LevelToPlay
   - ClaimPowerUp
+  - SpawnPowerup
+  - SpawnPowerup2
   DisableAutoOpenWizard: 1

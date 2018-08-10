@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public enum PowerUpType
+public enum PowerUpType : int
 {
-	InfiniteDash,
-	SuperSpeed,
+	InfiniteDash   = 0x00000001,
+	SuperSpeed     = 0x00000002,
+	SlowdownOthers = 0x00010003,
 
-	None,
+	EffectOthersFlag = 0x00010000,
+	None             = 0x00000000,
 }
 
 [Serializable]
@@ -24,8 +26,10 @@ public struct PowerUp
 	public ParticleSystem pickupParticle;
 
 	[Header("During power feedback")]
-	public AudioClip      loopSound;
+	public AudioClip      characterLoopSound;
 	public ParticleSystem characterParticle;
+
+	public AudioClip sharedLoopSound;
 
 	[Header("FOR POWERUPS THAT CHANGE A PROPERTY LIKE SPEED")]
 	public float modifier;
@@ -46,5 +50,10 @@ public class PowerUpModel : ScriptableObject
 
 		Debug.LogErrorFormat("No powerUp of type {0} exist in this PowerUp Model", type.ToString());
 		return new PowerUp();
+	}
+
+	public bool EffectOthersOnly(PowerUpType type)
+	{
+		return (type & PowerUpType.EffectOthersFlag) == PowerUpType.EffectOthersFlag;
 	}
 }

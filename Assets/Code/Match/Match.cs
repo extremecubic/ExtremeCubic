@@ -6,10 +6,13 @@ using MEC;
 public class Match : Photon.MonoBehaviour
 {
 	public static Match instance { get; private set; }
-
-	public Level level           { get; private set; }	
 	public bool matchStarted     { get; private set; }
 
+	[Header("GAME REFERENCES")]
+	[SerializeField] MusicManager _musicManager; public MusicManager musicManager { get { return _musicManager; } }
+	[SerializeField] Level        _level;        public Level        level        { get { return _level; } }
+
+	[Header("UI REFERENCES")]
 	[SerializeField] ScoreUI        _scoreUI;
 	[SerializeField] StartCounterUI _counterUI;
 	[SerializeField] WinnerUI       _winnerUI;
@@ -26,8 +29,6 @@ public class Match : Photon.MonoBehaviour
 
 	void Start()
 	{		
-		level = FindObjectOfType<Level>();
-		
 		// check if we start from menu or the simple network starter directly from level scen
 		if (FindObjectOfType<SimpleNetworkStarter>() == null)
 		{
@@ -119,7 +120,7 @@ public class Match : Photon.MonoBehaviour
 		FindObjectOfType<CollisionTracker>().ManualStart();
 
 		// create level (player creation is here for now aswell)
-		level.ManualStart();
+		_level.ManualStart();
 
 		// start countdown
 		_counterUI.StartCount(delta, 3, () => OnCounterZero());
@@ -133,7 +134,7 @@ public class Match : Photon.MonoBehaviour
 		_currentGameMode.OnRoundRestarted();
 
 		// reset level(character resapwn is here aswell for now)
-		level.ResetRound();
+		_level.ResetRound();
 
 		// update score ui and restart timer
 		_counterUI.StartCount(delta, 3, () => OnCounterZero());

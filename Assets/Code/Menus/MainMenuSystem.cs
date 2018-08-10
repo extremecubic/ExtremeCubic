@@ -12,9 +12,7 @@ public class MainMenuSystem : Photon.MonoBehaviour
 	[SerializeField] MenuPlayerInfoUI _playerInfo;
 
 	[SerializeField] MenuPage[] _menuPages;
-
-
-	MenuPage _currentPage;
+	public MenuPage currentPage { get; private set; }
 
 	void Awake()
 	{
@@ -29,8 +27,7 @@ public class MainMenuSystem : Photon.MonoBehaviour
 
 		PhotonNetwork.automaticallySyncScene = true;
 
-		PhotonNetwork.ConnectUsingSettings(Constants.GAME_VERSION);
-		
+		PhotonNetwork.ConnectUsingSettings(Constants.GAME_VERSION);		
 	}
 
 	void Start()
@@ -43,16 +40,19 @@ public class MainMenuSystem : Photon.MonoBehaviour
 
 	public void SetToPage(string pagename)
 	{
-		if (_currentPage != null)
-			_currentPage.OnPageExit();
+		if (currentPage != null && currentPage.pageName == pagename)
+			return;
+
+		if (currentPage != null)
+			currentPage.OnPageExit();
 
 		for (int i =0; i < _menuPages.Length; i++)
 		{
 			if(_menuPages[i].pageName == pagename)
 			{				
-				_currentPage = _menuPages[i];
-				_currentPage.EnableDisableContent(true);
-				_currentPage.OnPageEnter();
+				currentPage = _menuPages[i];
+				currentPage.EnableDisableContent(true);
+				currentPage.OnPageEnter();
 				continue;
 			}
 
@@ -62,16 +62,16 @@ public class MainMenuSystem : Photon.MonoBehaviour
 
 	void Update()
 	{
-		if (_currentPage == null)
+		if (currentPage == null)
 			return;
 
-		_currentPage.UpdatePage();
+		currentPage.UpdatePage();
 	}
 
 	void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
 	{
-		if (_currentPage != null)
-			_currentPage.OnPlayerLeftRoom(otherPlayer);
+		if (currentPage != null)
+			currentPage.OnPlayerLeftRoom(otherPlayer);
 	}
 
 }

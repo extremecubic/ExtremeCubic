@@ -1160,32 +1160,26 @@ Prefab:
       propertyPath: _winnerUI
       value: 
       objectReference: {fileID: 661698849}
-    - target: {fileID: 114792443764372392, guid: 684e161ed388d67499fa6f7c86190005,
+    - target: {fileID: 114850442708484112, guid: 684e161ed388d67499fa6f7c86190005,
         type: 2}
       propertyPath: viewIdField
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114792443764372392, guid: 684e161ed388d67499fa6f7c86190005,
+    - target: {fileID: 114850442708484112, guid: 684e161ed388d67499fa6f7c86190005,
         type: 2}
       propertyPath: instantiationId
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114850442708484112, guid: 684e161ed388d67499fa6f7c86190005,
+    - target: {fileID: 114792443764372392, guid: 684e161ed388d67499fa6f7c86190005,
         type: 2}
       propertyPath: viewIdField
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114850442708484112, guid: 684e161ed388d67499fa6f7c86190005,
+    - target: {fileID: 114792443764372392, guid: 684e161ed388d67499fa6f7c86190005,
         type: 2}
       propertyPath: instantiationId
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114425577266680056, guid: 684e161ed388d67499fa6f7c86190005,
-        type: 2}
-      propertyPath: _powers
-      value: 
-      objectReference: {fileID: 11400000, guid: 257dc15a941853e46a3ae6e3f3d1ecd2,
-        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 684e161ed388d67499fa6f7c86190005, type: 2}
   m_IsPrefabParent: 0

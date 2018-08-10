@@ -21,7 +21,35 @@ public class CharacterPowerUpComponent : MonoBehaviour
 		_character = GetComponent<Character>();
 	}
 
-	public void AddPower(PowerUpType type, Vector3 pickupPos)
+	public void RegisterPowerup(PowerUpType type, Vector3 pickupPos)
+	{
+		// spawn feedback for powerup
+		SpawnPickupFeedback(pickupPos, type);
+
+		// check if powerup should effect me or others
+		if (_powerUps.EffectOthersOnly(type))
+		{
+			// get all other players and add the powerup to them(these are usually negative power effects)
+			CharacterPowerUpComponent[] all = FindObjectsOfType<CharacterPowerUpComponent>();
+			for (int i = 0; i < all.Length; i++)
+				if (all[i] != this)
+					all[i].AddPower(type);
+
+			// start the powerUp sound loop
+			// becuase this power effects multiple players we only start one sound 
+			// for all to share instead of one sound per character
+			PowerUp powerUp = _powerUps.GetPowerUpFromType(type);
+			if (powerUp.sharedLoopSound != null)
+				Match.instance.musicManager.PlaySharedPowerUpLoop(powerUp.sharedLoopSound, powerUp.duration);
+
+			return;
+		}
+
+		// if not effect others only add the power to this player
+		AddPower(type);
+	}
+
+	void AddPower(PowerUpType type)
 	{
 		// abort old powerup if one is running
 		if (_currentPowerUp != PowerUpType.None)
@@ -30,16 +58,17 @@ public class CharacterPowerUpComponent : MonoBehaviour
 		// set wich powerup is active
 		_currentPowerUp = type;
 
-		// spawn feedback for powerup
-		SpawnPickupFeedback(pickupPos);
+		// spawn feedback that stays active during entire power duration
 		SpawnPowerFeedback();
 
 		PowerUp powerUp = _powerUps.GetPowerUpFromType(type);
 
-		// run CoRoutine that sets a effect from powerUp and resets it after time runs out
+		// run Coroutine that sets a effect from powerUp and resets it after time runs out
 		if (type == PowerUpType.InfiniteDash)
 			_handle = Timing.RunCoroutine(_RunPowerUp(() => extraDashCharges = 1000, powerUp.duration));
 		else if (type == PowerUpType.SuperSpeed)
+			_handle = Timing.RunCoroutine(_RunPowerUp(() => speedMultiplier = powerUp.modifier, powerUp.duration));
+		else if (type == PowerUpType.SlowdownOthers)
 			_handle = Timing.RunCoroutine(_RunPowerUp(() => speedMultiplier = powerUp.modifier, powerUp.duration));
 	}
 	
@@ -60,9 +89,9 @@ public class CharacterPowerUpComponent : MonoBehaviour
 		_currentPowerUp = PowerUpType.None;
 	}
 
-	void SpawnPickupFeedback(Vector3 pickupPos)
+	void SpawnPickupFeedback(Vector3 pickupPos, PowerUpType type)
 	{
-		PowerUp powerUp = _powerUps.GetPowerUpFromType(_currentPowerUp);
+		PowerUp powerUp = _powerUps.GetPowerUpFromType(type);
 
 		if (powerUp.pickupSound != null)
 		{
@@ -90,11 +119,12 @@ public class CharacterPowerUpComponent : MonoBehaviour
 	{
 		PowerUp powerUp = _powerUps.GetPowerUpFromType(_currentPowerUp);
 
-		// start sound to play during powerup
-		if (powerUp.loopSound != null)
+		// start sound to play during powerup 
+		// only used for powers that only effect the player that picks it up
+		if (powerUp.characterLoopSound != null)
 		{
-			_character.soundComponent.SetClipToSound(CharacterSoundComponent.CharacterSound.PowerupLoop, powerUp.loopSound);
-			_character.soundComponent.PlaySound(CharacterSoundComponent.CharacterSound.PowerupLoop);
+			_character.soundComponent.SetClipToSound(CharacterSound.PowerupLoop, powerUp.characterLoopSound);
+			_character.soundComponent.PlaySound(CharacterSound.PowerupLoop);
 		}
 
 		// start particle on player during powerup
@@ -105,7 +135,7 @@ public class CharacterPowerUpComponent : MonoBehaviour
 	void AbortPowerFeedBack()
 	{
 		// stop sound and particle that was used during powerup
-		_character.soundComponent.StopSound(CharacterSoundComponent.CharacterSound.PowerupLoop);
+		_character.soundComponent.StopSound(CharacterSound.PowerupLoop);
 		_character.ParticleComponent.StartPowerUpParticle(null, false);
 	}
 

@@ -2,33 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MEC;
+using System;
+
+[Serializable]
+public class SoundData
+{
+	public AudioSource audioSource;
+	public CoroutineHandle fadeHandle;
+	public CoroutineHandle playDurationHandle;
+	[HideInInspector] public float originalVolume;
+}
+
+public enum CharacterSound
+{
+	Walk,
+	Dash,
+	Punch,
+	Death,
+	Charge,
+	PowerupLoop,
+
+	Count,
+}
 
 public class CharacterSoundComponent : MonoBehaviour
-{
-	public enum CharacterSound
-	{
-		Walk,
-		Dash,
-		Punch,
-		Death,
-		Charge,
-		PowerupLoop,
-
-		Count,
-	}
-
-	public struct SoundData
-	{
-		public AudioSource audioSource;
-		public CoroutineHandle fadeHandle;
-		public float originalVolume;
-	}
-
+{	
 	SoundData[] _sounds;
 
 	public void ManualAwake(CharacterDatabase.ViewData data, Transform parent)
 	{
 		_sounds = new SoundData[(int)CharacterSound.Count];
+		for (int i = 0; i < _sounds.Length; i++)
+			_sounds[i] = new SoundData();
 
 		CreateSounds(data, parent);
 	}

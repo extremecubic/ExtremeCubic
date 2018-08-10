@@ -21,9 +21,10 @@ GameObject:
   - component: {fileID: 4492497036304692}
   - component: {fileID: 33918108217729880}
   - component: {fileID: 23729555265238896}
+  - component: {fileID: 65647280514043552}
   - component: {fileID: 114436496488170136}
   m_Layer: 0
-  m_Name: PowerUpSuperSpeed
+  m_Name: PowerUpSlowDownOthers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -57,7 +58,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 18c953e0a05615f47b1c58380910d01c, type: 2}
+  - {fileID: 2100000, guid: 4e908882841eef140836fccd6f839ffb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -84,6 +85,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1454881615725070}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &65647280514043552
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1454881615725070}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114436496488170136
 MonoBehaviour:
   m_ObjectHideFlags: 1

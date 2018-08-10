@@ -12,23 +12,38 @@ MonoBehaviour:
   m_Name: StandardPowerupModel
   m_EditorClassIdentifier: 
   powerUps:
-  - type: 0
+  - type: 1
     duration: 10
     prefab: {fileID: 1568687623006260, guid: 858d10bbfc4dac4449b9786756c4acb7, type: 2}
     pickupSound: {fileID: 8300000, guid: 6cc7f9c62d56ff147a1c45bd732ad65e, type: 3}
     pickupParticle: {fileID: 198914476518634566, guid: d23510484b8edbd43b62983cf3147e55,
       type: 2}
-    loopSound: {fileID: 8300000, guid: 434ef2d32e35ede46bc43d795001f900, type: 3}
+    characterLoopSound: {fileID: 8300000, guid: 434ef2d32e35ede46bc43d795001f900,
+      type: 3}
     characterParticle: {fileID: 198368318468898538, guid: bb5bdc3895b1fc7499e58654acc4a20e,
       type: 2}
+    sharedLoopSound: {fileID: 0}
     modifier: 0
-  - type: 1
+  - type: 2
     duration: 10
     prefab: {fileID: 1454881615725070, guid: e7feaafa79477064599f5220fe203da4, type: 2}
     pickupSound: {fileID: 8300000, guid: 6cc7f9c62d56ff147a1c45bd732ad65e, type: 3}
     pickupParticle: {fileID: 198914476518634566, guid: d23510484b8edbd43b62983cf3147e55,
       type: 2}
-    loopSound: {fileID: 8300000, guid: 434ef2d32e35ede46bc43d795001f900, type: 3}
+    characterLoopSound: {fileID: 8300000, guid: 434ef2d32e35ede46bc43d795001f900,
+      type: 3}
     characterParticle: {fileID: 198619986043320536, guid: 824719269959732408f709a4b2e09845,
       type: 2}
+    sharedLoopSound: {fileID: 0}
     modifier: 2
+  - type: 65539
+    duration: 10
+    prefab: {fileID: 1454881615725070, guid: 0a601ff9320b148479dfc6c96e262e6d, type: 2}
+    pickupSound: {fileID: 8300000, guid: 6cc7f9c62d56ff147a1c45bd732ad65e, type: 3}
+    pickupParticle: {fileID: 198914476518634566, guid: d23510484b8edbd43b62983cf3147e55,
+      type: 2}
+    characterLoopSound: {fileID: 0}
+    characterParticle: {fileID: 198893990534512710, guid: 8fe42f8633faeaa42836d16ed3a12ad4,
+      type: 2}
+    sharedLoopSound: {fileID: 8300000, guid: bba0fbc8f1f0a0944896833558632cd1, type: 3}
+    modifier: 0.5

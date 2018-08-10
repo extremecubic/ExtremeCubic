@@ -139,7 +139,7 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 
 		// start feedback
 		_character.ParticleComponent.EmitCharge(true);
-		_character.soundComponent.PlaySound(CharacterSoundComponent.CharacterSound.Charge);		
+		_character.soundComponent.PlaySound(CharacterSound.Charge);		
 	}
 
 	[PunRPC]
@@ -179,7 +179,7 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 		Timing.KillCoroutines(gameObject.GetInstanceID());
 
 		// play hit sound and spawn effect
-		_character.soundComponent.PlaySound(CharacterSoundComponent.CharacterSound.Punch);
+		_character.soundComponent.PlaySound(CharacterSound.Punch);
 		_character.ParticleComponent.SpawnHitEffect(new Vector2DInt(fromX, fromY), new Vector2DInt(targetX, targetY));
 
 		// set new current tile if desynced
@@ -225,8 +225,8 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 		_stateComponent.SetState(CharacterState.Dead);
 
 		// stop all possible feedback
-		_character.soundComponent.PlaySound(CharacterSoundComponent.CharacterSound.Death);
-		_character.soundComponent.StopSound(CharacterSoundComponent.CharacterSound.Charge);
+		_character.soundComponent.PlaySound(CharacterSound.Death);
+		_character.soundComponent.StopSound(CharacterSound.Charge);
 		_character.ParticleComponent.StopAll();
 		_character.powerUpComponent.AbortPowerUp();
 
@@ -244,7 +244,7 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 	void ClaimPowerUp(int tileX, int tileY)
 	{
 		Tile tile = Match.instance.level.tileMap.GetTile(new Vector2DInt(tileX, tileY));
-		_character.powerUpComponent.AddPower(tile.ClaimPowerUp(), new Vector3(tileX, 1, tileY));
+		_character.powerUpComponent.RegisterPowerup(tile.ClaimPowerUp(), new Vector3(tileX, 1, tileY));
 	}
 
 	[PunRPC]
@@ -260,7 +260,7 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 	{
 		_stateComponent.SetState(CharacterState.Walking);
 
-		_character.soundComponent.PlaySound(CharacterSoundComponent.CharacterSound.Walk);
+		_character.soundComponent.PlaySound(CharacterSound.Walk);
 
 		// only handle tilebreaks on server
 		if (PhotonNetwork.isMasterClient && !currentTile.model.data.unbreakable)
@@ -334,7 +334,7 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 
 		// start sound and charge particles
 		_character.ParticleComponent.EmitCharge(true);
-		_character.soundComponent.PlaySound(CharacterSoundComponent.CharacterSound.Charge);	
+		_character.soundComponent.PlaySound(CharacterSound.Charge);	
 
 		float chargeAmount = _model.dashMinCharge;
 
@@ -373,13 +373,13 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 			Vector2DInt currentPos = currentTile.position;
 			Vector2DInt targetPos  = currentTile.GetRelativeTile(direction).position;
 
-			_character.soundComponent.PlaySound(CharacterSoundComponent.CharacterSound.Dash);
+			_character.soundComponent.PlaySound(CharacterSound.Dash);
 			_character.ParticleComponent.EmitTrail(true, (new Vector3(targetPos.x, 1, targetPos.y) - new Vector3(currentPos.x, 1, currentPos.y)).normalized);
 		}
 
 		// stop feedback from charge
 		_character.ParticleComponent.EmitCharge(false);
-		_character.soundComponent.StopSound(CharacterSoundComponent.CharacterSound.Charge);
+		_character.soundComponent.StopSound(CharacterSound.Charge);
 
 		// loop over all dash charges
 		for (int i = 0; i < dashStrength; i++)
@@ -463,11 +463,14 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 			// Update tile player references 
 			SetNewTileReferences(targetTile.position);
 
+			// only use potential speed multipliers from powerups if we initiated the dash ourselfs
+			float speedMultiplier = fromCollision ? 1.0f : _character.powerUpComponent.speedMultiplier;
+
 			// do the movement itself
 			float movementProgress = 0;
 			while (movementProgress < 1)
 			{
-				movementProgress += (_model.dashSpeed * _character.powerUpComponent.speedMultiplier) * Time.deltaTime;
+				movementProgress += (_model.dashSpeed * speedMultiplier) * Time.deltaTime;
 				movementProgress = Mathf.Clamp01(movementProgress);
 
 				transform.position = Vector3.Lerp(fromPosition, targetPosition, movementProgress);

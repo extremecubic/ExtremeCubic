@@ -225,6 +225,10 @@ public class CharacterSelectPage : MenuPage
 	[PunRPC]
 	void StartCountdown(double delta)
 	{
+		// if clients is lagging behind and is still left at previous page, set the page to this
+		if (MainMenuSystem.instance.currentPage != this)
+			MainMenuSystem.instance.SetToPage("CharacterSelectScreen");
+
 		_counter.StartCount(delta, 100, () => OnReady());
 	}
 
