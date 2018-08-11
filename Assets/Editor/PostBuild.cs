@@ -6,7 +6,8 @@ public class PostBuild
 	[PostProcessBuild(1)]
 	public static void CopyLevelsToBuild(BuildTarget target, string buildPath)
 	{
-		FileUtil.ReplaceDirectory(Constants.TILEMAP_SAVE_FOLDER, System.IO.Path.GetDirectoryName(buildPath) + "/Maps");
+		// FileUtil src directory can be relative to the root folder of the project
+		FileUtil.ReplaceDirectory("Maps", System.IO.Path.GetDirectoryName(buildPath) + "/Maps");
 	}
 	
 }
