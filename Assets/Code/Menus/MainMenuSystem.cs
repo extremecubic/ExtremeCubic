@@ -11,7 +11,7 @@ public class MainMenuSystem : Photon.MonoBehaviour
 
 	[SerializeField] MenuPlayerInfoUI _playerInfo;
 
-	[SerializeField] MenuPage[] _menuPages;
+	[SerializeField] MenuPage[] _menuPages; public MenuPage[] menuPages { get { return _menuPages; } }
 	public MenuPage currentPage { get; private set; }
 
 	void Awake()
@@ -43,7 +43,7 @@ public class MainMenuSystem : Photon.MonoBehaviour
 		if (currentPage != null && currentPage.pageName == pagename)
 			return;
 
-		if (currentPage != null)
+		if (currentPage != null && Application.isPlaying)
 			currentPage.OnPageExit();
 
 		for (int i =0; i < _menuPages.Length; i++)
@@ -52,7 +52,10 @@ public class MainMenuSystem : Photon.MonoBehaviour
 			{				
 				currentPage = _menuPages[i];
 				currentPage.EnableDisableContent(true);
-				currentPage.OnPageEnter();
+
+				if(Application.isPlaying)
+				   currentPage.OnPageEnter();
+
 				continue;
 			}
 
