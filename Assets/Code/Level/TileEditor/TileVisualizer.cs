@@ -145,13 +145,13 @@ public class TileVisualizer : MonoBehaviour
 	{
 		Renderer renderer = tile.GetComponent<Renderer>();
 		if (renderer != null)
-			renderer.material.color = Color.white * strength;
+			renderer.sharedMaterial.color = Color.white * strength;
 
 		for (int i = 0; i < tile.transform.childCount; i++)
 		{
 			renderer = tile.transform.GetChild(i).GetComponent<Renderer>();
 			if (renderer != null)
-				renderer.material.color = Color.white * strength;
+				renderer.sharedMaterial.color = Color.white * strength;
 		}
 	}
 }
