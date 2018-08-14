@@ -5,9 +5,10 @@ using System;
 
 public enum PowerUpType : int
 {
-	InfiniteDash   = 0x00000001,
-	SuperSpeed     = 0x00000002,
-	SlowdownOthers = 0x00010003,
+	InfiniteDash         = 0x00000001,
+	SuperSpeed           = 0x00000002,
+	SlowdownOthers       = 0x00010003,
+	invertControllOthers = 0x00010004,
 
 	EffectOthersFlag = 0x00010000,
 	None             = 0x00000000,

@@ -74,9 +74,10 @@ public class Match : Photon.MonoBehaviour
 		_currentGameMode.OnPlayerDie(playerId, viewID);
 	}
 	
-	// called from gamemode
+	// called from gamemode (called on all clients)
 	public void OnRoundOver(int winnerId, int score)
 	{
+		musicManager.StopSharedPowerUpLoop(0.5f);
 		_scoreUI.UpdateScore(winnerId, score);
 	}
 	

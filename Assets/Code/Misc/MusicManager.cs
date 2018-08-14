@@ -30,6 +30,12 @@ public class MusicManager : Photon.MonoBehaviour
 		_sharedPowerUpSoundLoop.playDurationHandle = Timing.RunCoroutine(_PlayForDuration(stopAfterSec, _sharedPowerUpSoundLoop));
 	}
 
+	public void StopSharedPowerUpLoop(float fadeTime)
+	{
+		_sharedPowerUpSoundLoop.playDurationHandle.IsRunning = false;
+		_sharedPowerUpSoundLoop.fadeHandle = Timing.RunCoroutine(_FadeSound(fadeTime, _sharedPowerUpSoundLoop));
+	}
+
 	IEnumerator<float> _PlayForDuration(float time, SoundData sound)
 	{
 		sound.audioSource.Play();

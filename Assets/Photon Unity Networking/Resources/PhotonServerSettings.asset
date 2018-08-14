@@ -78,4 +78,5 @@ MonoBehaviour:
   - ClaimPowerUp
   - SpawnPowerup
   - SpawnPowerup2
+  - SpawnPowerUp
   DisableAutoOpenWizard: 1

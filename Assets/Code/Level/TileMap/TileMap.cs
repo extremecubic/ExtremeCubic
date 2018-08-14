@@ -100,6 +100,18 @@ public class TileMap
 		BinaryLoad();
 	}
 
+	public Tile GetRandomFreeTile(int numTries)
+	{
+		for(int i =0; i < numTries; i++)
+		{
+			Tile tile = GetTile(GetRandomTileCoords());
+			if (!tile.IsOccupied() && !tile.ContainsPowerUp() && tile.model.data.walkable)
+				return tile;
+		}
+
+		return null;
+	}
+
 	public Vector2DInt GetSpawnPointFromSpawnID(int id)
 	{
 		Vector2DInt point;

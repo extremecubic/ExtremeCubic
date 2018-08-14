@@ -47,3 +47,14 @@ MonoBehaviour:
       type: 2}
     sharedLoopSound: {fileID: 8300000, guid: bba0fbc8f1f0a0944896833558632cd1, type: 3}
     modifier: 0.5
+  - type: 65540
+    duration: 10
+    prefab: {fileID: 1643365813406466, guid: 442f1584d728b3a45ad4ac7f07cfc800, type: 2}
+    pickupSound: {fileID: 8300000, guid: 6cc7f9c62d56ff147a1c45bd732ad65e, type: 3}
+    pickupParticle: {fileID: 198914476518634566, guid: d23510484b8edbd43b62983cf3147e55,
+      type: 2}
+    characterLoopSound: {fileID: 0}
+    characterParticle: {fileID: 198893990534512710, guid: 8fe42f8633faeaa42836d16ed3a12ad4,
+      type: 2}
+    sharedLoopSound: {fileID: 8300000, guid: bba0fbc8f1f0a0944896833558632cd1, type: 3}
+    modifier: 1

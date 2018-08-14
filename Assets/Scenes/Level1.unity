@@ -291,6 +291,21 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
+        type: 2}
+      propertyPath: _spawners.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
+        type: 2}
+      propertyPath: _spawners.Array.data[0].powerUps.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
+        type: 2}
+      propertyPath: _spawners.Array.data[1].powerUps.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4284169262861586, guid: 684e161ed388d67499fa6f7c86190005, type: 2}
       propertyPath: m_LocalPosition.x
       value: 862.6046
@@ -358,9 +373,74 @@ Prefab:
       propertyPath: instantiationId
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
+        type: 2}
+      propertyPath: _powerUpFolder
+      value: 
+      objectReference: {fileID: 715894225}
+    - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
+        type: 2}
+      propertyPath: _spawners.Array.data[0].spawnerName
+      value: SpeedSpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
+        type: 2}
+      propertyPath: _spawners.Array.data[0].powerUps.Array.data[0]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
+        type: 2}
+      propertyPath: _spawners.Array.data[0].powerUps.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
+        type: 2}
+      propertyPath: _spawners.Array.data[0].spawnFrequency.min
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
+        type: 2}
+      propertyPath: _spawners.Array.data[0].spawnFrequency.max
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
+        type: 2}
+      propertyPath: _spawners.Array.data[0].numSpawnsEachTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
+        type: 2}
+      propertyPath: _spawners.Array.data[1].spawnerName
+      value: InvertControlls
+      objectReference: {fileID: 0}
+    - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
+        type: 2}
+      propertyPath: _spawners.Array.data[1].powerUps.Array.data[0]
+      value: 65540
+      objectReference: {fileID: 0}
+    - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
+        type: 2}
+      propertyPath: _spawners.Array.data[1].spawnFrequency.min
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
+        type: 2}
+      propertyPath: _spawners.Array.data[1].spawnFrequency.max
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
+        type: 2}
+      propertyPath: _spawners.Array.data[1].numSpawnsEachTime
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 684e161ed388d67499fa6f7c86190005, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &715894225 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4042057151778110, guid: 684e161ed388d67499fa6f7c86190005,
+    type: 2}
+  m_PrefabInternal: {fileID: 715894224}
 --- !u!1 &776826529
 GameObject:
   m_ObjectHideFlags: 0

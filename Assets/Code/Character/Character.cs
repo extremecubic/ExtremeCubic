@@ -115,17 +115,19 @@ public class Character : Photon.MonoBehaviour
 		if (!photonView.isMine || !Match.instance.matchStarted || stateComponent.currentState == CharacterState.Frozen)
 			return;
 
+		bool invert = powerUpComponent.invertControlls;
+
 		if (Input.GetButton(Constants.BUTTON_CHARGE))
 			movementComponent.TryCharge();
 
 		if (Input.GetAxisRaw(Constants.AXIS_VERTICAL) > 0)
-			movementComponent.TryWalk(Vector2DInt.Up);
+			movementComponent.TryWalk(invert == false ? Vector2DInt.Up    : Vector2DInt.Down);
 		if (Input.GetAxisRaw(Constants.AXIS_VERTICAL) < 0)
-			movementComponent.TryWalk(Vector2DInt.Down);
+			movementComponent.TryWalk(invert == false ? Vector2DInt.Down  : Vector2DInt.Up);
 		if (Input.GetAxisRaw(Constants.AXIS_HORIZONTAL) < 0)
-			movementComponent.TryWalk(Vector2DInt.Left);
+			movementComponent.TryWalk(invert == false ? Vector2DInt.Left  : Vector2DInt.Right);
 		if (Input.GetAxisRaw(Constants.AXIS_HORIZONTAL) > 0)
-			movementComponent.TryWalk(Vector2DInt.Right);
+			movementComponent.TryWalk(invert == false ? Vector2DInt.Right : Vector2DInt.Left);
 
 		
 

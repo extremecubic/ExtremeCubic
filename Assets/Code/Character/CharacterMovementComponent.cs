@@ -338,6 +338,8 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 
 		float chargeAmount = _model.dashMinCharge;
 
+		bool invert = _character.powerUpComponent.invertControlls;
+
 		while (Input.GetButton(Constants.BUTTON_CHARGE))
 		{
 			chargeAmount += (_model.dashChargeRate * Time.deltaTime);
@@ -345,13 +347,13 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 
 			// while charging direction can be changed
 			if (Input.GetAxisRaw(Constants.AXIS_VERTICAL) > 0)
-				_lastMoveDirection = Vector2DInt.Up;
+				_lastMoveDirection = invert == false ? Vector2DInt.Up : Vector2DInt.Down;
 			if (Input.GetAxisRaw(Constants.AXIS_VERTICAL) < 0)
-				_lastMoveDirection = Vector2DInt.Down;
+				_lastMoveDirection = invert == false ? Vector2DInt.Down : Vector2DInt.Up;
 			if (Input.GetAxisRaw(Constants.AXIS_HORIZONTAL) < 0)
-				_lastMoveDirection = Vector2DInt.Left;
+				_lastMoveDirection = invert == false ? Vector2DInt.Left : Vector2DInt.Right;
 			if (Input.GetAxisRaw(Constants.AXIS_HORIZONTAL) > 0)
-				_lastMoveDirection = Vector2DInt.Right;
+				_lastMoveDirection = invert == false ? Vector2DInt.Right : Vector2DInt.Left;
 
 			currentDashCharges = (int)chargeAmount + _character.powerUpComponent.extraDashCharges;
 

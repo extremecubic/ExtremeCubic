@@ -13,8 +13,9 @@ public class CharacterPowerUpComponent : MonoBehaviour
 	CoroutineHandle _handle;
 	PowerUpType _currentPowerUp = PowerUpType.None;
 
-	public int   extraDashCharges  { get; private set; } = 0;
-	public float speedMultiplier   { get; private set; } = 1.0f;
+	public int   extraDashCharges { get; private set; } = 0;
+	public float speedMultiplier  { get; private set; } = 1.0f;
+	public bool  invertControlls  { get; private set; } = false;
 
 	void Awake()
 	{
@@ -70,6 +71,8 @@ public class CharacterPowerUpComponent : MonoBehaviour
 			_handle = Timing.RunCoroutine(_RunPowerUp(() => speedMultiplier = powerUp.modifier, powerUp.duration));
 		else if (type == PowerUpType.SlowdownOthers)
 			_handle = Timing.RunCoroutine(_RunPowerUp(() => speedMultiplier = powerUp.modifier, powerUp.duration));
+		else if (type == PowerUpType.invertControllOthers)
+			_handle = Timing.RunCoroutine(_RunPowerUp(() => invertControlls = true, powerUp.duration));
 	}
 	
 	public void AbortPowerUp()
@@ -144,6 +147,7 @@ public class CharacterPowerUpComponent : MonoBehaviour
 		// reset all power values to 0
 		extraDashCharges = 0;
 		speedMultiplier = 1.0f;
+		invertControlls = false;
 	}
 
 	IEnumerator<float> _RunPowerUp(Action onStart, float duration)
