@@ -396,17 +396,17 @@ Prefab:
     - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
         type: 2}
       propertyPath: _spawners.Array.data[0].spawnFrequency.min
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
         type: 2}
       propertyPath: _spawners.Array.data[0].spawnFrequency.max
-      value: 20
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
         type: 2}
       propertyPath: _spawners.Array.data[0].numSpawnsEachTime
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
         type: 2}
@@ -528,8 +528,6 @@ GameObject:
   - component: {fileID: 906677698}
   - component: {fileID: 906677697}
   - component: {fileID: 906677696}
-  - component: {fileID: 906677695}
-  - component: {fileID: 906677694}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -537,41 +535,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &906677694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114421590828065562, guid: 435c3c21160850f4f9939d2aea37b8f9,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 906677693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b5a618c43a8d4e2aab80f67424cb7f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sky: {fileID: 0}
-  DomePosToCamera: 1
-  DomePosOffset: {x: 0, y: 0, z: 0}
-  DomeScaleToFarClip: 1
-  DomeScaleFactor: 0.95
---- !u!114 &906677695
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114157999595082182, guid: 435c3c21160850f4f9939d2aea37b8f9,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 906677693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 872ad7533cc5443188d2965011e98378, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sky: {fileID: 0}
-  ScatteringShader: {fileID: 4800000, guid: fdd320689879e4151a6d37fa30a2a572, type: 3}
-  DitheringTexture: {fileID: 2800000, guid: 0cad0b965ebef4d4ba864861b866e2e5, type: 3}
-  GlobalDensity: 0.00045
-  HeightFalloff: 0.528
-  ZeroLevel: 0
 --- !u!114 &906677696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -584,7 +547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: f0978233abe13df4d9f78a8b9ec7df6b, type: 2}
+  sharedProfile: {fileID: 11400000, guid: 070eaf2481545184d829ce3e02fe8ff2, type: 2}
   isGlobal: 1
   blendDistance: 0
   weight: 1
@@ -605,7 +568,7 @@ MonoBehaviour:
   volumeLayer:
     serializedVersion: 2
     m_Bits: 4294967295
-  stopNaNPropagation: 1
+  stopNaNPropagation: 0
   antialiasingMode: 2
   temporalAntialiasing:
     jitterSpread: 0.75
@@ -728,7 +691,7 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: 3
+  m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3

@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: b72857da229d08b4bbfa0cca22dd95a1
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/main.unity
     guid: 17cab89ca644e7a449e97583fa4c7389
   - enabled: 1
@@ -17,7 +17,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Desert.unity
     guid: 6e025de0cc8e02047a90b1d45d738cc5
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Level2.unity
     guid: 2c8f26f39576c4d4a882cacdd1fe88d3
   m_configObjects: {}
