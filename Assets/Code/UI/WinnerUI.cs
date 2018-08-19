@@ -31,7 +31,7 @@ public class WinnerUI : MonoBehaviour
 
 		// set witch page to set active when returning to menu scene and that all players left in room need to claim a UIPlayerBox
 		MainMenuSystem.reclaimPlayerUI = true;
-		MainMenuSystem.startPage = "LevelSelectScreen";
+		MainMenuSystem.startPage = Constants.SCREEN_ONLINE_CHARACTERSELECT;
 
 		yield return Timing.WaitForSeconds(3);
 

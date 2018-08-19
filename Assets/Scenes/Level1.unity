@@ -294,12 +294,12 @@ Prefab:
     - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
         type: 2}
       propertyPath: _spawners.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
         type: 2}
       propertyPath: _spawners.Array.data[0].powerUps.Array.size
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
         type: 2}
@@ -381,7 +381,7 @@ Prefab:
     - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
         type: 2}
       propertyPath: _spawners.Array.data[0].spawnerName
-      value: SpeedSpawner
+      value: Spawner
       objectReference: {fileID: 0}
     - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
         type: 2}
@@ -396,12 +396,12 @@ Prefab:
     - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
         type: 2}
       propertyPath: _spawners.Array.data[0].spawnFrequency.min
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
         type: 2}
       propertyPath: _spawners.Array.data[0].spawnFrequency.max
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
         type: 2}
@@ -432,6 +432,16 @@ Prefab:
         type: 2}
       propertyPath: _spawners.Array.data[1].numSpawnsEachTime
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
+        type: 2}
+      propertyPath: _spawners.Array.data[0].powerUps.Array.data[2]
+      value: 65539
+      objectReference: {fileID: 0}
+    - target: {fileID: 114821137002943616, guid: 684e161ed388d67499fa6f7c86190005,
+        type: 2}
+      propertyPath: _spawners.Array.data[0].powerUps.Array.data[3]
+      value: 65540
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 684e161ed388d67499fa6f7c86190005, type: 2}

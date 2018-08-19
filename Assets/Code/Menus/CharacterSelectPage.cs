@@ -227,7 +227,7 @@ public class CharacterSelectPage : MenuPage
 	{
 		// if clients is lagging behind and is still left at previous page, set the page to this
 		if (MainMenuSystem.instance.currentPage != this)
-			MainMenuSystem.instance.SetToPage("CharacterSelectScreen");
+			MainMenuSystem.instance.SetToPage(Constants.SCREEN_ONLINE_CHARACTERSELECT);
 
 		_counter.StartCount(delta, 100, () => OnReady());
 	}
@@ -285,7 +285,7 @@ public class CharacterSelectPage : MenuPage
 		PhotonNetwork.LeaveRoom();
 
 		// set back to main page
-		MainMenuSystem.instance.SetToPage("StartScreen");
+		MainMenuSystem.instance.SetToPage(Constants.SCREEN_START);
 	}
 
 	void CheckAllReady()

@@ -7,9 +7,15 @@ public class PlayWithFriendsPage : MenuPage
 {
 	[SerializeField] MenuPlayerInfoUI _playerInfo;
 
+	[Header("SUB PAGES")]
+	[SerializeField] GameObject _generalPage;
+	[SerializeField] GameObject _steamPage;
+
+	[Header("NON STEAM UI REFERENCES")]
 	[SerializeField] Text _roomNameText;
 	[SerializeField] Text _joinRoomInput;
 
+	[Header("SHARED UI REFERENCES")]
 	[SerializeField] Button _continueButton;
 	
 	public void HostRoom()
@@ -55,11 +61,13 @@ public class PlayWithFriendsPage : MenuPage
 	[PunRPC]
 	void ContinueToLevelselect()
 	{
-		MainMenuSystem.instance.SetToPage("LevelSelectScreen");
+		MainMenuSystem.instance.SetToPage(Constants.SCREEN_ONLINE_LEVELSELECT);
 	}
 
 	public override void OnPageEnter()
 	{
+		SetSubPageBasedOnGameVersion();
+
 		_continueButton.interactable = false;
 
 		// move all player UI boxes to the prefered positions of this page
@@ -76,7 +84,6 @@ public class PlayWithFriendsPage : MenuPage
 			_continueButton.interactable = true;
 		else
 			_continueButton.interactable = false;
-
 	}
 
 	public override void OnPageExit()
@@ -94,13 +101,26 @@ public class PlayWithFriendsPage : MenuPage
 		// if yet not in room just return to main menu
 		if(PhotonNetwork.room == null)
 		{
-			MainMenuSystem.instance.SetToPage("StartScreen");
+			MainMenuSystem.instance.SetToPage(Constants.SCREEN_START);
 			return;
 		}
 
 		// if connected to room, unclaim UI and leave room before we return to main menu
 		_playerInfo.DisableAllPlayerUI();
 		PhotonNetwork.LeaveRoom();
-		MainMenuSystem.instance.SetToPage("StartScreen");
+		MainMenuSystem.instance.SetToPage(Constants.SCREEN_START);
+	}
+
+	void SetSubPageBasedOnGameVersion()
+	{
+#if STEAM_VERSION
+		_steamPage.SetActive(true);
+		_generalPage.SetActive(false);
+#endif
+
+#if NO_SERVICE_VERSION
+		_steamPage.SetActive(false);
+		_generalPage.SetActive(true);
+#endif
 	}
 }

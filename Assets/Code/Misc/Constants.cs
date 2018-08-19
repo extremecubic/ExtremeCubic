@@ -26,4 +26,12 @@ public static class Constants
 	public static string SKIN_ID = "3";
 	public static string PLAYER_READY = "4";
 	public static string NOMINATED_LEVEL = "5";
+
+	// menu pages names
+	public static string SCREEN_START                    = "StartScreen";
+	public static string SCREEN_ONLINEPLAY               = "OnlinePlayScreen";
+	public static string SCREEN_ONLINE_PLAY_WITH_FRIENDS = "PlayWithFriendsScreen";
+	public static string SCREEN_ONLINE_PLAY_QUICK_MATCH  = "QuickmatchScreen";
+	public static string SCREEN_ONLINE_LEVELSELECT       = "OnlineLevelSelectScreen";
+	public static string SCREEN_ONLINE_CHARACTERSELECT   = "OnlineCharacterSelectScreen";
 }

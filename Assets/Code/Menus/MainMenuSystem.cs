@@ -16,18 +16,7 @@ public class MainMenuSystem : Photon.MonoBehaviour
 
 	void Awake()
 	{
-		instance = this;
-
-		if (PhotonNetwork.connected)
-			return;
-
-		// network initialization wont be here later on
-		PhotonNetwork.sendRate = 64;
-		PhotonNetwork.sendRateOnSerialize = 64;
-
-		PhotonNetwork.automaticallySyncScene = true;
-
-		PhotonNetwork.ConnectUsingSettings(Constants.GAME_VERSION);		
+		instance = this;	
 	}
 
 	void Start()

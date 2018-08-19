@@ -22,6 +22,12 @@ public class CharacterPowerUpComponent : MonoBehaviour
 		_character = GetComponent<Character>();
 	}
 
+	void OnDestroy()
+	{
+		if (_handle.IsRunning)
+			_handle.IsRunning = false;
+	}
+
 	public void RegisterPowerup(PowerUpType type, Vector3 pickupPos)
 	{
 		// spawn feedback for powerup
