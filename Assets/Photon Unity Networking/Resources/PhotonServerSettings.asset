@@ -79,4 +79,5 @@ MonoBehaviour:
   - SpawnPowerup
   - SpawnPowerup2
   - SpawnPowerUp
+  - WaitingForPlayersTimer
   DisableAutoOpenWizard: 1

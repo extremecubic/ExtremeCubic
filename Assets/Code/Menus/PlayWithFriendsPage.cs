@@ -52,6 +52,9 @@ public class PlayWithFriendsPage : MenuPage
 
 	void OnJoinedRoom()
 	{
+		if (MainMenuSystem.instance.currentPage != this)
+			return;
+
 		if (!PhotonNetwork.isMasterClient)
 		   _roomNameText.text = PhotonNetwork.room.Name + " As Client";
 				

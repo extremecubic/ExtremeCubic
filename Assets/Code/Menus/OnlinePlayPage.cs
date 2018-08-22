@@ -45,6 +45,9 @@ public class OnlinePlayPage : MenuPage
 
 	void OnConnectedToMaster()
 	{
+		if (MainMenuSystem.instance.currentPage != this)
+			return;
+
 		_connectingParent.SetActive(false);
 
 		for (int i = 0; i < _buttons.Length; i++)
@@ -53,6 +56,9 @@ public class OnlinePlayPage : MenuPage
 
 	void OnFailedToConnectToPhoton(DisconnectCause cause)
 	{
+		if (MainMenuSystem.instance.currentPage != this)
+			return;
+
 		_connectingParent.SetActive(false);
 		_promt.SetAndShow(string.Format("Failed to Connect to Server!\nError : {0}", cause.ToString()), () => MainMenuSystem.instance.SetToPage(Constants.SCREEN_START));
 	}

@@ -13,6 +13,8 @@ public class StartCounterUI : MonoBehaviour
 
 	public void StartCount(double delta, Double time, Action action)
 	{
+		Timing.KillCoroutines(_handle);
+
 		_onDone = action;
 		_handle = Timing.RunCoroutine(_countDown(delta, time));
 	}
@@ -44,7 +46,6 @@ public class StartCounterUI : MonoBehaviour
 		_counterText.gameObject.SetActive(false);
 
 		_onDone?.Invoke();
-		_onDone = null;
 
 	}
 }
