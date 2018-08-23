@@ -39,16 +39,17 @@ public class RandomMatchMakingPage : MenuPage
 	{
 		if(PhotonNetwork.room != null)
 		{
+			// activate UI that we are waiting for more players
 			_statusTextParent.SetActive(true);
 			_statusText.text = "Waiting for players";
 			_counter.gameObject.SetActive(true);
 
+			// if max players have joined the room continue to next screen without waiting for timer
 			if (_preferedPlayers != 0 && PhotonNetwork.room.PlayerCount == PhotonNetwork.room.MaxPlayers)			
 				ContinueAndCloseRoom();			
-			else if(_preferedPlayers == 0 && PhotonNetwork.room.PlayerCount == 4)			
-				ContinueAndCloseRoom();
-
-			UpdateTimer();
+			
+			if (PhotonNetwork.isMasterClient)
+				UpdateTimer();
 	
 			_counter.text = _timer.ToString("0");
 		}
@@ -61,39 +62,45 @@ public class RandomMatchMakingPage : MenuPage
 
 	public void JoinMatch(int preferedPlayers)
 	{
+		// saved the prefered num players we want to play with
+		_preferedPlayers = (byte)preferedPlayers;
+
+		// if we are in room already we need to disconnect 
+		// and wait for "OnConnectedToMaster" callback before we can join new
+		// therefore set rejoin to true and we will request to join new room in
+		// the photon callback
 		if (PhotonNetwork.room != null)
 		{
 			_playerInfo.DisableAllPlayerUI();
 			PhotonNetwork.LeaveRoom();
-			_preferedPlayers = (byte)preferedPlayers;
 			_reJoin = true;
 			return;
-		}
+		}		
 
-		_preferedPlayers = (byte)preferedPlayers;
 		PhotonNetwork.JoinRandomRoom(null, (byte)preferedPlayers);
 	}
 
 	void OnJoinedRoom()
 	{
+		// claim a Player UI box when entering room and set countdown timer to max
+		// if not master client the timer will be corrected from the server to the correct value
 		if (MainMenuSystem.instance.currentPage != this)
 			return;
 
 		_timer = _waitForPlayersTime;
 
 		_playerInfo.photonView.RPC("ClaimUIBox", PhotonTargets.AllBufferedViaServer, PhotonNetwork.player.ID, "SteamNick", "??????????");
-		Debug.Log("RoomJoined");
 	}	
 
 	void OnConnectedToMaster()
 	{
-		if (MainMenuSystem.instance.currentPage != this)
-			return;
-
 		// when we leave a room for joining another one
 		// we have to wait for this callback before we can
 		// connect to a new room, rejoin is set to true when we
 		// leave the old room for joining a new one
+		if (MainMenuSystem.instance.currentPage != this)
+			return;
+
 		if (_reJoin)
 		{
 			PhotonNetwork.JoinRandomRoom(null, _preferedPlayers);
@@ -103,18 +110,27 @@ public class RandomMatchMakingPage : MenuPage
 
 	void OnPhotonRandomJoinFailed(object[] codeAndMsg)
 	{
+		// no empty space in any room was found
+		// create new room and let others join
 		if (MainMenuSystem.instance.currentPage != this)
 			return;
 
-		Debug.Log("Failed to join any room, creating new");
+		// if we said to join first best room no matter max players in room
+		// and no room was found at all, set the max players on created room to 
+		// max players in game
+		if (_preferedPlayers == 0)
+			_preferedPlayers = 4;
+
 		RoomOptions roomOptions = new RoomOptions();
 		roomOptions.MaxPlayers = _preferedPlayers;
 
 		PhotonNetwork.CreateRoom(null, roomOptions, TypedLobby.Default);
 	}
 
+	[PunRPC]
 	void ContinueAndCloseRoom()
 	{
+		// close room and go to levelselect
 		if (PhotonNetwork.isMasterClient)
 			PhotonNetwork.room.IsOpen = false;
 
@@ -122,20 +138,21 @@ public class RandomMatchMakingPage : MenuPage
 	}
 
 	void UpdateTimer()
-	{
-		if (PhotonNetwork.isMasterClient)
+	{		
+		// countdown the timer on master client
+		// if more then i player is connected to room
+		// start the game even if the prefered player count of room was higher
+		_timer -= Time.deltaTime;
+		if (_timer <= 0)
 		{
-			_timer -= Time.deltaTime;
-			if (_timer <= 0)
-			{
-				if (PhotonNetwork.room.PlayerCount > 1)
-					ContinueAndCloseRoom();
+			if (PhotonNetwork.room.PlayerCount > 1)
+				photonView.RPC("ContinueAndCloseRoom", PhotonTargets.All);
 
-				_timer = _waitForPlayersTime;
-			}
-		}
+			_timer = _waitForPlayersTime;
+		}		
 	}
 
+	//write and read the timer
 	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
 	{
 		if (stream.isWriting)
@@ -143,9 +160,7 @@ public class RandomMatchMakingPage : MenuPage
 			if (PhotonNetwork.isMasterClient)			
 				stream.Serialize(ref _timer);			
 		}
-		else
-		{
-			stream.Serialize(ref _timer);  
-		}
+		else		
+			stream.Serialize(ref _timer);  		
 	}
 }

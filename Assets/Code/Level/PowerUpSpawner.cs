@@ -21,13 +21,9 @@ public class PowerUpSpawner : Photon.MonoBehaviour
 	[SerializeField] PowerUpModel    _powerUps;
 	[SerializeField] Transform		 _powerUpFolder;
 	[SerializeField] SpawnerSystem[] _spawners;
-
-	Match _match;
-
+	
 	void Awake()
-	{
-		_match = GetComponent<Match>();
-
+	{		
 		for (int i =0; i< _spawners.Length; i++)
 			_spawners[i].timer = _spawners[i].spawnFrequency.RandomRange();		
 	}
@@ -51,7 +47,7 @@ public class PowerUpSpawner : Photon.MonoBehaviour
 				
 				for (int y = 0; y < _spawners[i].numSpawnsEachTime; y++)
 				{
-					Tile freeTile = _match.level.tileMap.GetRandomFreeTile(10);
+					Tile freeTile = TileMap.instance.GetRandomFreeTile(10);
 					if (freeTile == null)
 						continue;
 
@@ -70,6 +66,6 @@ public class PowerUpSpawner : Photon.MonoBehaviour
 	{
 		PowerUpType type = _spawners[spawnerIndex].powerUps[powerIndex];
 
-		_match.level.tileMap.GetTile(new Vector2DInt(tileX, tileY)).SpawnPowerUp(_powerUps.GetPowerUpFromType(type), _powerUpFolder);
+		TileMap.instance.GetTile(new Vector2DInt(tileX, tileY)).SpawnPowerUp(_powerUps.GetPowerUpFromType(type), _powerUpFolder);
 	}
 }

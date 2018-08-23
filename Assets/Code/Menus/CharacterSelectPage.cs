@@ -187,8 +187,6 @@ public class CharacterSelectPage : MenuPage
 		// if masterclient tell averyone to start countdown timer
 		if (PhotonNetwork.isMasterClient)
 			photonView.RPC("StartCountdown", PhotonTargets.All, PhotonNetwork.time);
-
-		InvokeRepeating("CheckAllReady", 0, 5);		
 	}
 
 	public override void OnPageExit()
@@ -209,7 +207,9 @@ public class CharacterSelectPage : MenuPage
 		}
 
 		if (_currentPressedIndex >= 0)		
-			_characterButtons[_currentPressedIndex].button.Select();			
+			_characterButtons[_currentPressedIndex].button.Select();
+
+		CheckAllReady();
 	}
 
 	void ChangeAllButtonsState(bool enable)
@@ -303,8 +303,6 @@ public class CharacterSelectPage : MenuPage
 			// loop over all players in room and give them a spawnpoint based on order in list			
 			for (int i = 0; i < PhotonNetwork.room.PlayerCount; i++)
 				PhotonHelpers.SetPlayerProperty(PhotonNetwork.playerList[i], Constants.SPAWN_ID, i);
-
-			CancelInvoke("CheckAllReady");
 
 			PhotonNetwork.LoadLevel(PhotonNetwork.player.CustomProperties[Constants.LEVEL_SCENE_NAME].ToString());
 		}

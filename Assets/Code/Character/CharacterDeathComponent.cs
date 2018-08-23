@@ -33,7 +33,7 @@ public class CharacterDeathComponent : MonoBehaviour
 		// replace old tile with a new one if flaged from editor
 		if (deathTile.model.data.replaceTileOnDeath)
 		{
-			TileMap TM = Match.instance.level.tileMap;
+			TileMap TM = TileMap.instance;
 			TM.SetTile(deathTile.position, new Tile(deathTile.position, deathTile.model.data.replacementTile, 0, 1, TM.tilesFolder), 0.0f);
 		}
 	}

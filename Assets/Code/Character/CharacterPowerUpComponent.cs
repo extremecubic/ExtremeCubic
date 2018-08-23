@@ -47,7 +47,7 @@ public class CharacterPowerUpComponent : MonoBehaviour
 			// for all to share instead of one sound per character
 			PowerUp powerUp = _powerUps.GetPowerUpFromType(type);
 			if (powerUp.sharedLoopSound != null)
-				Match.instance.musicManager.PlaySharedPowerUpLoop(powerUp.sharedLoopSound, powerUp.duration);
+				MusicManager.instance.PlaySharedPowerUpLoop(powerUp.sharedLoopSound, powerUp.duration);
 
 			return;
 		}

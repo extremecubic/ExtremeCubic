@@ -21,9 +21,13 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 	CollisionTracker _collisionTracker;
 
 	Quaternion _lastTargetRotation; // used to keep track of the rotation the player last was targeting when getting interupted by getting hit
-	
+
+	TileMap _tileMap;
+
 	public void ManualAwake()
 	{
+		_tileMap = TileMap.instance;
+
 		_character = GetComponent<Character>();
 		_model = _character.model;
 
@@ -36,7 +40,7 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 
 		_character.OnCharacterSpawned += (Vector2DInt inSpawnTile) =>
 		{
-			currentTile = Match.instance.level.tileMap.GetTile(inSpawnTile);
+			currentTile = _tileMap.GetTile(inSpawnTile);
 			currentTile.SetCharacter(_character);
 		};
 	}
@@ -101,7 +105,7 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 	{
 		// remove old reference and set to new
 		currentTile.RemovePlayer();
-		currentTile = Match.instance.level.tileMap.GetTile(tile);
+		currentTile = _tileMap.GetTile(tile);
 		currentTile.SetCharacter(_character);
 	}
 
@@ -230,7 +234,7 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 		_character.ParticleComponent.StopAll();
 		_character.powerUpComponent.AbortPowerUp();
 
-		Tile deathTile = Match.instance.level.tileMap.GetTile(new Vector2DInt(tileX, tileY));
+		Tile deathTile = _tileMap.GetTile(new Vector2DInt(tileX, tileY));
 
 		transform.position = new Vector3(deathTile.position.x, 1, deathTile.position.y);
 
@@ -243,7 +247,7 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 	[PunRPC]
 	void ClaimPowerUp(int tileX, int tileY)
 	{
-		Tile tile = Match.instance.level.tileMap.GetTile(new Vector2DInt(tileX, tileY));
+		Tile tile = _tileMap.GetTile(new Vector2DInt(tileX, tileY));
 		_character.powerUpComponent.RegisterPowerup(tile.ClaimPowerUp(), new Vector3(tileX, 1, tileY));
 	}
 
@@ -266,11 +270,9 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 		if (PhotonNetwork.isMasterClient && !currentTile.model.data.unbreakable)
 			Match.instance.level.BreakTile(currentTile.position.x, currentTile.position.y);
 
-		TileMap tileMap = Match.instance.level.tileMap;
-
 		// get references to tiles
-		Tile fromTile = tileMap.GetTile(fromTilePos);
-		Tile targetTile = tileMap.GetTile(toTilePos);		
+		Tile fromTile   = _tileMap.GetTile(fromTilePos);
+		Tile targetTile = _tileMap.GetTile(toTilePos);		
 
 		// Calculate lerp positions
 		// lerp from current position (will catch up if laging)

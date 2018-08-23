@@ -3,9 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using MEC;
 
-public class MusicManager : Photon.MonoBehaviour
+public class MusicManager : MonoBehaviour
 {
 	[SerializeField] SoundData _sharedPowerUpSoundLoop;
+
+	public static MusicManager instance { get; private set; }
+
+	void Awake()
+	{
+		instance = this;
+	}
+
+	void OnDestroy()
+	{
+		instance = null;	
+	}
 
 	public void PlaySharedPowerUpLoop(AudioClip clip, float stopAfterSec)
 	{

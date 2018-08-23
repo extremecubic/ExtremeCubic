@@ -61,8 +61,7 @@ public class LevelSelectPage : MenuPage
 	{
 		// move all player UI boxes to the prefered positions of this page
 		_playerInfo.SetPlayerUIByScreen(MenuScreen.LevelSelect);
-
-		InvokeRepeating("AllNominatedLevel", 0, 5);
+		
 		_selectScreen.SetActive(true);
 		_nominatedScreen.SetActive(false);
 
@@ -91,7 +90,8 @@ public class LevelSelectPage : MenuPage
 	}
 
 	public override void UpdatePage()
-	{		
+	{
+		AllNominatedLevel();
 	}
 
 	void AllNominatedLevel()
@@ -138,8 +138,7 @@ public class LevelSelectPage : MenuPage
 	void LevelToPlay(string level, string levelName, int winnerIndex, int one, int two, int three, int four)
 	{
 		// stop count and cancel to keep checking if all is selected
-		_counter.CancelCount();
-		CancelInvoke("AllNominatedLevel");
+		_counter.CancelCount();		
 
 		// set witch level we will load later and reset ready for next screen
 		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.LEVEL_SCENE_NAME, level);

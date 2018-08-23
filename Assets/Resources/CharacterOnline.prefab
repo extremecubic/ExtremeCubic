@@ -29,7 +29,7 @@ GameObject:
   - component: {fileID: 114824208362164304}
   - component: {fileID: 114994355821424538}
   m_Layer: 0
-  m_Name: Character
+  m_Name: CharacterOnline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

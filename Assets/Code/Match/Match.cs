@@ -9,13 +9,13 @@ public class Match : Photon.MonoBehaviour
 	public bool matchStarted     { get; private set; }
 
 	[Header("GAME REFERENCES")]
-	[SerializeField] MusicManager _musicManager; public MusicManager musicManager { get { return _musicManager; } }
-	[SerializeField] Level        _level;        public Level        level        { get { return _level; } }
+	[SerializeField] Level _level; public Level level { get { return _level; } }
+	
+	ScoreUI        _scoreUI;
+	StartCounterUI _counterUI;
+	WinnerUI       _winnerUI;
 
-	[Header("UI REFERENCES")]
-	[SerializeField] ScoreUI        _scoreUI;
-	[SerializeField] StartCounterUI _counterUI;
-	[SerializeField] WinnerUI       _winnerUI;
+	MusicManager _musicManager;
 
 	IGameMode _currentGameMode;
 	
@@ -28,7 +28,14 @@ public class Match : Photon.MonoBehaviour
 	}
 
 	void Start()
-	{		
+	{
+		InGameUI UI = InGameUI.instance;
+		_scoreUI    = UI.scoreUI;
+		_counterUI  = UI.startCounterUI;
+		_winnerUI   = UI.winnerUI;
+
+		_musicManager = MusicManager.instance;
+
 		// check if we start from menu or the simple network starter directly from level scen
 		if (FindObjectOfType<SimpleNetworkStarter>() == null)
 		{
@@ -77,7 +84,7 @@ public class Match : Photon.MonoBehaviour
 	// called from gamemode (called on all clients)
 	public void OnRoundOver(int winnerId, int score)
 	{
-		musicManager.StopSharedPowerUpLoop(0.5f);
+		_musicManager.StopSharedPowerUpLoop(0.5f);
 		_scoreUI.UpdateScore(winnerId, score);
 	}
 	

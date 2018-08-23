@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class Level : Photon.MonoBehaviour
 {
-	public PowerUpModel _powers;
-
-    public TileMap tileMap { get; private set; }
+	TileMap tileMap;
 	
-    [SerializeField] GameObject _characterPrefab; // The character gameobject that Photon automagically creates 
 	[SerializeField] string     _mapToLoad;
 	[SerializeField] Transform  _tilesFolder;
 	[SerializeField] Transform  _powerUpFolder;
@@ -23,16 +20,21 @@ public class Level : Photon.MonoBehaviour
 		string characterName = PhotonNetwork.player.CustomProperties[Constants.CHARACTER_NAME].ToString();
 		int skinID           = (int)PhotonNetwork.player.CustomProperties[Constants.SKIN_ID];
 
-		_character = PhotonNetwork.Instantiate("Character", Vector3.zero, Quaternion.identity, 0).GetComponent<Character>();
-		_character.Initialize(characterName, PhotonNetwork.player.ID, PhotonNetwork.player.NickName, skinID);
-
 		tileMap = new TileMap(_mapToLoad, _tilesFolder, _powerUpFolder);
+
+		_character = PhotonNetwork.Instantiate("CharacterOnline", Vector3.zero, Quaternion.identity, 0).GetComponent<Character>();
+		_character.Initialize(characterName, PhotonNetwork.player.ID, PhotonNetwork.player.NickName, skinID);
 
 		_spawnID = (int)PhotonNetwork.player.CustomProperties[Constants.SPAWN_ID];
 
 		_character.Spawn(tileMap.GetSpawnPointFromSpawnID(_spawnID));
 	}
-		
+
+	void OnDestroy()
+	{
+		tileMap.Shutdown();	
+	}
+
 	public void ResetRound()
 	{
 		photonView.RPC("NetworkResetRound", PhotonTargets.All);

@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4432448468316030}
   - component: {fileID: 114115654384710866}
   m_Layer: 0
-  m_Name: SimpleNetworkStarter
+  m_Name: PlayFromScene(ONLY FOR STARTING GAME FROM SCENE)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
