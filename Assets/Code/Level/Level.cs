@@ -4,52 +4,77 @@ using UnityEngine;
 
 public class Level : Photon.MonoBehaviour
 {
-	TileMap tileMap;
+	public TileMap tileMap { get; private set; }
 	
 	[SerializeField] string     _mapToLoad;
 	[SerializeField] Transform  _tilesFolder;
 	[SerializeField] Transform  _powerUpFolder;
+	[SerializeField] GameObject _characterPrefab;
 
-    Character _character;
+    List<Character> _characters = new List<Character>();
 
-	int _spawnID;
+	public static Level instance { get; private set; }
 
-	public void ManualStart()
+	void Awake()
 	{
-		// get player properties saved in photonplayer
-		string characterName = PhotonNetwork.player.CustomProperties[Constants.CHARACTER_NAME].ToString();
-		int skinID           = (int)PhotonNetwork.player.CustomProperties[Constants.SKIN_ID];
-
-		tileMap = new TileMap(_mapToLoad, _tilesFolder, _powerUpFolder);
-
-		_character = PhotonNetwork.Instantiate("CharacterOnline", Vector3.zero, Quaternion.identity, 0).GetComponent<Character>();
-		_character.Initialize(characterName, PhotonNetwork.player.ID, PhotonNetwork.player.NickName, skinID);
-
-		_spawnID = (int)PhotonNetwork.player.CustomProperties[Constants.SPAWN_ID];
-
-		_character.Spawn(tileMap.GetSpawnPointFromSpawnID(_spawnID));
+		instance = this;	
 	}
 
 	void OnDestroy()
 	{
-		tileMap.Shutdown();	
+		instance = null;
+	}
+
+	public void StartGameOnline()
+	{
+		// get player properties saved in photonplayer
+		string characterName = PhotonNetwork.player.CustomProperties[Constants.CHARACTER_NAME].ToString();
+		int skinID           = (int)PhotonNetwork.player.CustomProperties[Constants.SKIN_ID];
+		int spawnID          = (int)PhotonNetwork.player.CustomProperties[Constants.SPAWN_ID];
+
+		tileMap = new TileMap(_mapToLoad, _tilesFolder, _powerUpFolder);
+
+		_characters.Add(PhotonNetwork.Instantiate("Character", Vector3.zero, Quaternion.identity, 0).GetComponent<Character>());
+		_characters[0].Initialize(characterName, PhotonNetwork.player.ID, PhotonNetwork.player.NickName, skinID, spawnID);
+		_characters[0].Spawn();
+	}
+
+	public void StartGameLocal()
+	{
+		tileMap = new TileMap(_mapToLoad, _tilesFolder, _powerUpFolder);
+
+		for(int i =0; i< 2; i++)
+		{
+			_characters.Add(Instantiate(_characterPrefab, Vector3.zero, Quaternion.identity).GetComponent<Character>());
+			_characters[i].Initialize("duplo", i, "LocalGuy", 0, i);
+			_characters[i].Spawn();
+		}		
 	}
 
 	public void ResetRound()
 	{
-		photonView.RPC("NetworkResetRound", PhotonTargets.All);
+		if (Constants.onlineGame)
+		   photonView.RPC("NetworkResetRound", PhotonTargets.All);
+
+		if (!Constants.onlineGame)
+			NetworkResetRound();
+	}
+
+	public void BreakTile(int x, int y)
+	{
+		if (Constants.onlineGame)
+			photonView.RPC("NetworkBreakTile", PhotonTargets.All, x, y);
+
+		if (!Constants.onlineGame)
+			NetworkBreakTile(x, y);
 	}
 
 	[PunRPC]
 	void NetworkResetRound()
 	{
 		tileMap.ResetMap();
-		_character.Spawn(tileMap.GetSpawnPointFromSpawnID(_spawnID));
-	}
-
-	public void BreakTile(int x, int y)
-	{
-		photonView.RPC("NetworkBreakTile", PhotonTargets.All, x, y);
+		for (int i =0; i < _characters.Count; i++)
+		     _characters[i].Spawn();
 	}
 
 	[PunRPC]

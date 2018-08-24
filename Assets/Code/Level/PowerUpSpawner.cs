@@ -30,7 +30,7 @@ public class PowerUpSpawner : Photon.MonoBehaviour
 
 	void Update()
 	{
-		if (!PhotonNetwork.isMasterClient)
+		if (Constants.onlineGame && !PhotonNetwork.isMasterClient)
 			return;
 
 		UpdateSpawners();
@@ -47,11 +47,15 @@ public class PowerUpSpawner : Photon.MonoBehaviour
 				
 				for (int y = 0; y < _spawners[i].numSpawnsEachTime; y++)
 				{
-					Tile freeTile = TileMap.instance.GetRandomFreeTile(10);
+					Tile freeTile = Level.instance.tileMap.GetRandomFreeTile(10);
 					if (freeTile == null)
 						continue;
 
-					photonView.RPC("SpawnPowerUp", PhotonTargets.All, i, powerIndex, freeTile.position.x, freeTile.position.y);
+					if (Constants.onlineGame)
+					    photonView.RPC("SpawnPowerUp", PhotonTargets.All, i, powerIndex, freeTile.position.x, freeTile.position.y);
+
+					if (!Constants.onlineGame)
+						SpawnPowerUp(i, powerIndex, freeTile.position.x, freeTile.position.y);
 					
 					if (!_spawners[i].sameEachTime)
 						powerIndex = Random.Range(0, _spawners[i].powerUps.Length);
@@ -66,6 +70,6 @@ public class PowerUpSpawner : Photon.MonoBehaviour
 	{
 		PowerUpType type = _spawners[spawnerIndex].powerUps[powerIndex];
 
-		TileMap.instance.GetTile(new Vector2DInt(tileX, tileY)).SpawnPowerUp(_powerUps.GetPowerUpFromType(type), _powerUpFolder);
+		Level.instance.tileMap.GetTile(new Vector2DInt(tileX, tileY)).SpawnPowerUp(_powerUps.GetPowerUpFromType(type), _powerUpFolder);
 	}
 }

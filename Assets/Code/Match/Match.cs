@@ -37,18 +37,17 @@ public class Match : Photon.MonoBehaviour
 		_musicManager = MusicManager.instance;
 
 		// check if we start from menu or the simple network starter directly from level scen
-		if (FindObjectOfType<SimpleNetworkStarter>() == null)
-		{
-			SetupMatch();
-			StartOnAllLoaded();
-		}
+		if (Constants.onlineGame && FindObjectOfType<SimpleNetworkStarter>() == null)		
+			SetupMatchOnline();
+					
+		if (!Constants.onlineGame)
+			SetupMatchLocal();
 	}
 
 	// only used directly from starting game from levelscene
 	public void SimpleStart()
 	{
-		SetupMatch();
-		NetworkStartGame(PhotonNetwork.time);
+		SetupMatchOnline();		
 	}
 
 	void OnDestroy()
@@ -56,23 +55,31 @@ public class Match : Photon.MonoBehaviour
 		instance = null;	
 	}
 
-	void SetupMatch()
-	{
-		// init data structures
+	void SetupMatchOnline()
+	{		
 		int numPlayer = PhotonNetwork.room.PlayerCount;
 
 		_currentGameMode.OnSetup(numPlayer);
 
 		// tell the ui how many players we are
 		_scoreUI.Setup(numPlayer);
+
+		if (PhotonNetwork.isMasterClient)
+			photonView.RPC("NetworkStartGame", PhotonTargets.All, PhotonNetwork.time);
 	}
 
-	void StartOnAllLoaded()
-	{
-		// this rpc will execute when all players are loaded in the scene
-		// the masterclient will then send a message with timestamp to all clients to start the countdown
-		if (PhotonNetwork.isMasterClient)
-			photonView.RPC("AllIsLoaded", PhotonTargets.MasterClient);
+	void SetupMatchLocal()
+	{		
+		int numPlayer = 2;
+
+		_currentGameMode.OnSetup(numPlayer);
+
+		// tell the ui how many players we are
+		_scoreUI.Setup(numPlayer);
+
+		_level.StartGameLocal();
+
+		_counterUI.StartCount(0, 3, () => OnCounterZero());
 	}
 
 	// called from character(only on server) 
@@ -115,20 +122,13 @@ public class Match : Photon.MonoBehaviour
 	}
 
 	[PunRPC]
-	void AllIsLoaded()
-	{
-		// tell everyone to start the match, send the timestamp so the countdown timer will be the same for all players no matter lag
-		photonView.RPC("NetworkStartGame", PhotonTargets.All, PhotonNetwork.time);
-	}
-
-	[PunRPC]
 	void NetworkStartGame(double delta)
 	{
 		// init master class that have last say in all collisions(will only be called on the server)
 		FindObjectOfType<CollisionTracker>().ManualStart();
 
 		// create level (player creation is here for now aswell)
-		_level.ManualStart();
+		_level.StartGameOnline();
 
 		// start countdown
 		_counterUI.StartCount(delta, 3, () => OnCounterZero());
@@ -149,7 +149,7 @@ public class Match : Photon.MonoBehaviour
 	}
 
 	[PunRPC]
-	void RegisterPlayer(int id, string name)
+	public void RegisterPlayer(int id, string name)
 	{
 		// register a player by id for scorekepping and ui
 		_currentGameMode.OnPlayerRegistred(id);

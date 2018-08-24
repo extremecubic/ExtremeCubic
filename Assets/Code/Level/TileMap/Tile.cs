@@ -76,8 +76,6 @@ public class Tile
 	PowerUpType _powerUp = PowerUpType.None;
 	GameObject  _powerView;
 
-	TileMap _tileMap;
-
 	public void SetCharacter(Character character) =>
 		_character = character;
 
@@ -91,7 +89,7 @@ public class Tile
 		 _character;
 
 	public Tile GetRelativeTile(Vector2DInt offset) =>
-		_tileMap.GetTile(position + offset);
+		Level.instance.tileMap.GetTile(position + offset);
 
 	public void Delete(float delay) =>
 		Object.Destroy(_view, delay);
@@ -117,7 +115,6 @@ public class Tile
 
 	public Tile(Vector2DInt position, string tileName, float yRotation, float tintStrength, Transform tilesFolder)
     {
-		_tileMap      = TileMap.instance;
 		_tileDB       = TileDatabase.instance;
 		model         = _tileDB.GetTile(tileName);
 		this.position = position;
@@ -234,7 +231,7 @@ public class Tile
 		}
 
 		if (currentHealth == 0)
-			_tileMap.SetTile(position, new Tile(position, "empty", 0.0f, 0.0f, null), 1.0f);
+			Level.instance.tileMap.SetTile(position, new Tile(position, "empty", 0.0f, 0.0f, null), 1.0f);
 	}
 }
 

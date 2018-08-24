@@ -26,7 +26,7 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 
 	public void ManualAwake()
 	{
-		_tileMap = TileMap.instance;
+		_tileMap = Level.instance.tileMap;
 
 		_character = GetComponent<Character>();
 		_model = _character.model;
@@ -37,12 +37,6 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 		_collisionTracker = FindObjectOfType<CollisionTracker>();
 
 		_lastTargetRotation = transform.rotation;
-
-		_character.OnCharacterSpawned += (Vector2DInt inSpawnTile) =>
-		{
-			currentTile = _tileMap.GetTile(inSpawnTile);
-			currentTile.SetCharacter(_character);
-		};
 	}
 
 	void OnDestroy()
@@ -51,6 +45,13 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 	}
 
 	#region LOCAL FUNCTION CALLS
+
+	public void SetSpawnTile(Vector2DInt inSpawnTile)
+	{
+		currentTile = _tileMap.GetTile(inSpawnTile);
+		currentTile.SetCharacter(_character);
+	}
+
 	public void TryWalk(Vector2DInt direction)
 	{
 		if (_stateComponent.currentState != CharacterState.Idle || _flagComponent.GetFlag(CharacterFlag.Cooldown_Walk))

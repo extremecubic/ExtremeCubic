@@ -28,7 +28,10 @@ public class StartCounterUI : MonoBehaviour
 	
 	IEnumerator<float> _countDown(double delta, double time)
 	{
-		double timer = time - (PhotonNetwork.time - delta);
+		double timer = time;
+
+		if (Constants.onlineGame)
+		    timer = time - (PhotonNetwork.time - delta);
 
 		_counterText.gameObject.SetActive(true);
 

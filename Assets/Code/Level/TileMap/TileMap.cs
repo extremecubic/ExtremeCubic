@@ -12,23 +12,14 @@ public class TileMap
 	Vector2DInt _gridSize;
 	public readonly Transform tilesFolder;
 	public readonly Transform powerUpsFolder;
-
-	public static TileMap instance { get; private set; }
 	
     public TileMap(string mapName, Transform tilesFolder, Transform powerUpsFolder)
     {
-		instance = this;
-
         this.mapName = mapName;
 		this.tilesFolder = tilesFolder;
 		this.powerUpsFolder = powerUpsFolder;
         BinaryLoad();
     }
-
-	public void Shutdown()
-	{
-		instance = null;
-	}
 
 	public Tile GetTile(Vector2DInt position) => _tiles[position];
     public void SetTile(Vector2DInt position, Tile tile, float destroyDelay)

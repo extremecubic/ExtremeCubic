@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
+
+
 public static class Constants
 {
     public static readonly string APP_NAME = "Cubic";
@@ -35,4 +37,8 @@ public static class Constants
 	public static string SCREEN_ONLINE_LEVELSELECT        = "OnlineLevelSelectScreen";
 	public static string SCREEN_ONLINE_CHARACTERSELECT    = "OnlineCharacterSelectScreen";
 	public static string SCREEN_ONLINE_RANDOM_MATCHMAKING = "RandomPlayScreen";
+
+
+	// temp storage here for now
+	public static bool onlineGame = true;
 }

@@ -27,24 +27,32 @@ public class Character : Photon.MonoBehaviour
 	public CharacterDeathComponent	   deathComponent    {get; private set;}
 	public CharacterPowerUpComponent   powerUpComponent  {get; private set;}
 
-	public event Action<Vector2DInt> OnCharacterSpawned;
+	int _spawnPoint;
 
-	public void Initialize(string viewName, int playerID, string nickname, int skinID)
+	public void Initialize(string viewName, int playerID, string nickname, int skinID, int spawnPoint)
     {
-		isMasterClient = PhotonNetwork.isMasterClient;
-		photonView.RPC("NetworkInitialize", PhotonTargets.AllBuffered, viewName, playerID, nickname, skinID); // wont need be buffered later when level loading is synced
+		if (Constants.onlineGame)
+		    photonView.RPC("NetworkInitialize", PhotonTargets.AllBuffered, viewName, playerID, nickname, skinID, spawnPoint); // wont need be buffered later when level loading is synced
+
+		if (!Constants.onlineGame)
+			NetworkInitialize(viewName, playerID, nickname, skinID, spawnPoint);
 	}
 
-	public void Spawn(Vector2DInt spawnTile)
+	public void Spawn()
 	{
-		photonView.RPC("NetworkSpawn", PhotonTargets.AllBuffered, spawnTile.x, spawnTile.y); // wont need be buffered later when level loading is synced
+		if (Constants.onlineGame)
+			photonView.RPC("NetworkSpawn", PhotonTargets.AllBuffered); // wont need be buffered later when level loading is synced
+
+		if (!Constants.onlineGame)
+			NetworkSpawn();
 	}
 
 	[PunRPC]
-	void NetworkInitialize(string viewname, int playerID, string nickname, int skinID)
+	void NetworkInitialize(string viewname, int playerID, string nickname, int skinID, int spawnPoint)
 	{
 		this.playerID  = playerID;
 		playerNickname = nickname;
+		_spawnPoint    = spawnPoint;
 
 		model    = CharacterDatabase.instance.standardModel;
 		viewData = CharacterDatabase.instance.GetViewFromName(viewname);
@@ -70,13 +78,32 @@ public class Character : Photon.MonoBehaviour
 		soundComponent.ManualAwake(viewData, view.transform);
 		ParticleComponent.ManualAwake(viewData, view.transform);		
 
-		if (photonView.isMine)
+		if (Constants.onlineGame && photonView.isMine)				
 			Match.instance.photonView.RPC("RegisterPlayer", PhotonTargets.AllViaServer, this.playerID, playerNickname);
 
+		if (!Constants.onlineGame)
+			Match.instance.RegisterPlayer(this.playerID, playerNickname);
+
 #if DEBUG_TOOLS
-		if (photonView.isMine)
+		if (Constants.onlineGame && photonView.isMine)
+		{
+			isMasterClient = PhotonNetwork.isMasterClient;
 			FindObjectOfType<PlayerPage>().Initialize(this);
+		}
 #endif
+	}
+
+	[PunRPC]
+	void NetworkSpawn()
+	{
+		Vector2DInt spawnTile = Level.instance.tileMap.GetSpawnPointFromSpawnID(_spawnPoint);
+
+		movementComponent.ResetAll();
+		ParticleComponent.StopAll();
+		powerUpComponent.AbortPowerUp();
+		soundComponent.StopSound(CharacterSound.Charge);
+		transform.position = new Vector3(spawnTile.x, 1, spawnTile.y);
+		movementComponent.SetSpawnTile(spawnTile);
 	}
 
 	void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
@@ -98,19 +125,17 @@ public class Character : Photon.MonoBehaviour
 				renderer.material = viewData.materials[skinID];
 		}
 	}
-
-	[PunRPC]
-	void NetworkSpawn(int spawnTileX, int spawnTileY)
-	{
-		movementComponent.ResetAll();
-		ParticleComponent.StopAll();
-		powerUpComponent.AbortPowerUp();
-		soundComponent.StopSound(CharacterSound.Charge);
-		transform.position = new Vector3(spawnTileX, 1, spawnTileY);
-		OnCharacterSpawned?.Invoke(new Vector2DInt(spawnTileX, spawnTileY));		
-	}
 		
 	void Update()
+	{
+		if (Constants.onlineGame)
+			UpdateOnline();
+
+		if (!Constants.onlineGame)
+			UpdateLocal();
+	}
+
+	void UpdateOnline()
 	{
 		if (!photonView.isMine || !Match.instance.matchStarted || stateComponent.currentState == CharacterState.Frozen)
 			return;
@@ -121,24 +146,25 @@ public class Character : Photon.MonoBehaviour
 			movementComponent.TryCharge();
 
 		if (Input.GetAxisRaw(Constants.AXIS_VERTICAL) > 0)
-			movementComponent.TryWalk(invert == false ? Vector2DInt.Up    : Vector2DInt.Down);
+			movementComponent.TryWalk(invert == false ? Vector2DInt.Up : Vector2DInt.Down);
 		if (Input.GetAxisRaw(Constants.AXIS_VERTICAL) < 0)
-			movementComponent.TryWalk(invert == false ? Vector2DInt.Down  : Vector2DInt.Up);
+			movementComponent.TryWalk(invert == false ? Vector2DInt.Down : Vector2DInt.Up);
 		if (Input.GetAxisRaw(Constants.AXIS_HORIZONTAL) < 0)
-			movementComponent.TryWalk(invert == false ? Vector2DInt.Left  : Vector2DInt.Right);
+			movementComponent.TryWalk(invert == false ? Vector2DInt.Left : Vector2DInt.Right);
 		if (Input.GetAxisRaw(Constants.AXIS_HORIZONTAL) > 0)
 			movementComponent.TryWalk(invert == false ? Vector2DInt.Right : Vector2DInt.Left);
 
-		
-
 #if DEBUG_TOOLS
-
 		if (PhotonNetwork.isMasterClient && Input.GetKeyDown(KeyCode.P))
 			movementComponent.InfiniteDash();
 
 		if (Input.GetKeyDown(KeyCode.L))
 			soundComponent.PlaySound(CharacterSound.Dash);
-
 #endif
+	}
+
+	void UpdateLocal()
+	{
+
 	}
 }
