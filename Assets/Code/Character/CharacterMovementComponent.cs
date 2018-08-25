@@ -44,8 +44,6 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 		Timing.KillCoroutines(gameObject.GetInstanceID());
 	}
 
-	#region LOCAL FUNCTION CALLS
-
 	public void SetSpawnTile(Vector2DInt inSpawnTile)
 	{
 		currentTile = _tileMap.GetTile(inSpawnTile);
@@ -112,8 +110,11 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 
 	bool DeadlyTile()
 	{
-		if (currentTile.model.data.deadly)
+		if (Constants.onlineGame && currentTile.model.data.deadly) 
 			photonView.RPC("Die", PhotonTargets.All, currentTile.position.x, currentTile.position.y);
+
+		if (!Constants.onlineGame)
+			Die(currentTile.position.x, currentTile.position.y);
 
 		return currentTile.model.data.deadly;
 	}
@@ -122,9 +123,7 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 	{
 		return currentTile.model.typeName == Constants.EDGE_TYPE;
 	}
-	#endregion
-
-	#region NETWORK FUNCTION CALLS
+		
 	[PunRPC]
 	void NetworkWalk(int fromX, int fromY, int toX, int toY)
 	{
@@ -223,7 +222,7 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 	}
 
 	[PunRPC]
-	void Die(int tileX, int tileY)
+	public void Die(int tileX, int tileY)
 	{
 		// remove reference and set state
 		currentTile.RemovePlayer();
@@ -241,8 +240,11 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 
 		_character.deathComponent.KillPlayer(deathTile);
 
-		if (PhotonNetwork.isMasterClient)
-			Match.instance.OnPlayerDie(_character.playerID, photonView.viewID);
+		if (Constants.onlineGame && PhotonNetwork.isMasterClient)
+			Match.instance.OnPlayerDie(_character.playerID);
+
+		if (!Constants.onlineGame)
+			Match.instance.OnPlayerDie(_character.playerID);
 	}
 
 	[PunRPC]
@@ -258,9 +260,9 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 		transform.position = new Vector3(px, 1, py);
 		transform.rotation = new Quaternion(rx, ry, rz, rw);
 	}
-	#endregion
+	
 
-	#region MOVEMENT ROUTINES
+	
 	IEnumerator<float> _Walk(Vector2DInt fromTilePos, Vector2DInt toTilePos)
 	{
 		_stateComponent.SetState(CharacterState.Walking);
@@ -416,53 +418,12 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 
 			_lastTargetRotation = targetRotation;
 
-
-			if (PhotonNetwork.isMasterClient) // do collision on master client
-			{
-				if (targetTile.IsOccupied())
-				{
-					// get occupying player and tell it to send an rpc that it got dashed
-					Character playerToDash = targetTile.GetOccupyingPlayer();
-
-					// save the collision on server so the clients can check that they did not stop their dash locally incorrectly 
-					_collisionTracker.AddCollision(playerToDash.photonView.viewID, targetTile.position.x, targetTile.position.y);
-
-					// tell all clients who got hit
-					playerToDash.movementComponent.OnGettingDashed(targetTile.position, direction, dashStrength - i);
-
-					// send rpc that we hit other player and cancel all our current movement
-					OnDashingOther(currentTile.position, previousLastTargetRotation, targetTile.position);
-
+			if (Constants.onlineGame)
+				if (IsCollidingOnline(previousLastTargetRotation, targetTile, direction, dashStrength, i))
 					yield break;
-				}
-			}
 
-			// stop locally aswell and dubblecheck so we had collision on server, if not the server will restart our dashroutine with the charges that was left
-			if (targetTile.IsOccupied())
-			{
-				// add cooldowns and reset last target rotation becuase we never started interpolation
-				StopMovementAndAddCooldowns();
-				_lastTargetRotation = previousLastTargetRotation;
-
-				// stop trailParticle
-				_character.ParticleComponent.EmitTrail(false, Vector3.zero);
-
-				_collisionTracker.photonView.RPC("CheckServerCollision", PhotonTargets.MasterClient,
-												targetTile.GetOccupyingPlayer().photonView.viewID,
-												photonView.viewID, currentTile.position.x, currentTile.position.y,
-												targetTile.position.x, targetTile.position.y,
-												direction.x, direction.y, dashStrength - i);
-
-				// stop and frezze character while waiting for server to register collision
-				// this becomes pretty noticable over 150 ping,
-				// but is better then keping free movement and be interpolated back when getting corrected by server
-				_character.stateComponent.SetState(CharacterState.Frozen);
-
-				yield break;
-			}
-
-			// hurt tile if it is destructible(only do break detection on server)
-			if (PhotonNetwork.isMasterClient && !currentTile.model.data.unbreakable)
+			// hurt tile if it is destructible(will only detect break on master client)
+			if (!currentTile.model.data.unbreakable)
 				Match.instance.level.BreakTile(currentTile.position.x, currentTile.position.y);
 
 			// Update tile player references 
@@ -489,22 +450,34 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 			// will be corrected by server if say a collision happened on server but not locally that would have prevented us from exiting map
 			if (DeadlyEdge())
 			{
-				if (PhotonNetwork.isMasterClient)
-					photonView.RPC("Die", PhotonTargets.All, currentTile.position.x, currentTile.position.y);
-				else
-					_stateComponent.SetState(CharacterState.Frozen);
+				if (Constants.onlineGame)
+				{
+					if (PhotonNetwork.isMasterClient)
+						photonView.RPC("Die", PhotonTargets.All, currentTile.position.x, currentTile.position.y);
+					else
+						_stateComponent.SetState(CharacterState.Frozen);
 
-				yield break;
+					yield break;
+				}
+
+				if (!Constants.onlineGame)
+					Die(currentTile.position.x, currentTile.position.y);
 			}
 
 			// check if tile contains any power up and pick it up
-			if (PhotonNetwork.isMasterClient && currentTile.ContainsPowerUp())
+			if (Constants.onlineGame && PhotonNetwork.isMasterClient && currentTile.ContainsPowerUp())
 				photonView.RPC("ClaimPowerUp", PhotonTargets.All, currentTile.position.x, currentTile.position.y);
+
+			if (!Constants.onlineGame)
+				ClaimPowerUp(currentTile.position.x, currentTile.position.y);
 		}
 
 		// check if we ended up on deadly tile
 		// only server handle death detection
-		if (PhotonNetwork.isMasterClient && DeadlyTile())
+		if (Constants.onlineGame && PhotonNetwork.isMasterClient && DeadlyTile())
+			yield break;
+
+		if (!Constants.onlineGame && DeadlyTile())
 			yield break;
 
 		// add cooldowns and stop feedback
@@ -525,9 +498,55 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 			yield return Timing.WaitForOneFrame;
 		}
 	}
-	#endregion
 
-	#region DEBUG CALLS
+	bool IsCollidingOnline(Quaternion previousLastTargetRotation, Tile targetTile, Vector2DInt direction, int dashStrength, int dashIndex)
+	{
+		if (PhotonNetwork.isMasterClient) // do collision on master client
+		{
+			if (targetTile.IsOccupied())
+			{
+				// get occupying player and tell it to send an rpc that it got dashed
+				Character playerToDash = targetTile.GetOccupyingPlayer();
+
+				// save the collision on server so the clients can check that they did not stop their dash locally incorrectly 
+				_collisionTracker.AddCollision(playerToDash.photonView.viewID, targetTile.position.x, targetTile.position.y);
+
+				// tell all clients who got hit
+				playerToDash.movementComponent.OnGettingDashed(targetTile.position, direction, dashStrength - dashIndex);
+
+				// send rpc that we hit other player and cancel all our current movement
+				OnDashingOther(currentTile.position, previousLastTargetRotation, targetTile.position);
+
+				return true;
+			}
+		}
+
+		// stop locally aswell and dubblecheck so we had collision on server, if not the server will restart our dashroutine with the charges that was left
+		if (targetTile.IsOccupied())
+		{
+			// add cooldowns and reset last target rotation becuase we never started interpolation
+			StopMovementAndAddCooldowns();
+			_lastTargetRotation = previousLastTargetRotation;
+
+			// stop trailParticle
+			_character.ParticleComponent.EmitTrail(false, Vector3.zero);
+
+			_collisionTracker.photonView.RPC("CheckServerCollision", PhotonTargets.MasterClient,
+											targetTile.GetOccupyingPlayer().photonView.viewID,
+											photonView.viewID, currentTile.position.x, currentTile.position.y,
+											targetTile.position.x, targetTile.position.y,
+											direction.x, direction.y, dashStrength - dashIndex);
+
+			// stop and frezze character while waiting for server to register collision
+			// this becomes pretty noticable over 150 ping,
+			// but is better then keping free movement and be interpolated back when getting corrected by server
+			_character.stateComponent.SetState(CharacterState.Frozen);
+
+			return true;
+		}
+		return false;
+	}
+	
 #if DEBUG_TOOLS
 	public void InfiniteDash()
 	{
@@ -540,5 +559,5 @@ public class CharacterMovementComponent : Photon.MonoBehaviour
 		}		
 	}
 #endif
-	#endregion
+	
 }

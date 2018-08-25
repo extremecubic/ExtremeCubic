@@ -15,8 +15,8 @@ public class GameModeLastMan : Photon.MonoBehaviour, IGameMode
 
 	Dictionary<int, PlayerTracker> _players;
 
-	int _numPlayers;
-	bool _winnerSet;
+	int   _numPlayers;
+	bool  _winnerSet;
 	Match _match;
 
 	void Awake()
@@ -32,6 +32,10 @@ public class GameModeLastMan : Photon.MonoBehaviour, IGameMode
 	public void OnPlayerLeft(int ID)
 	{
 		_players[ID].disconnected = true;
+
+		// need to check if we automaticly got a winner when a player left the room
+		if (PhotonNetwork.isMasterClient)
+			OnPlayerDie(ID);
 	}
 
 	public void OnPlayerRegistred(int ID)
@@ -39,7 +43,7 @@ public class GameModeLastMan : Photon.MonoBehaviour, IGameMode
 		_players.Add(ID, new PlayerTracker());
 	}
 
-	public void OnPlayerDie(int playerId, int viewID)
+	public void OnPlayerDie(int playerId)
 	{
 		if (_winnerSet) // if last player dies after winning we dont want to do nothing
 			return;
@@ -57,24 +61,37 @@ public class GameModeLastMan : Photon.MonoBehaviour, IGameMode
 				idLastAlive = p.Key;
 			}
 
-		// if all players but 1 is disconnected just give the point to this player(match should be cancelled but keep this for now to avoid nullrefs)
-		if (PhotonNetwork.room.PlayerCount == 1)
-			idLastAlive = PhotonNetwork.playerList[0].ID;
-
 		// round over
 		if (numAlive <= 1)
+		{
 			RoundOver(idLastAlive);
+			return;
+		}
+
+		// send who died to others in case of server migration
+		if (Constants.onlineGame)
+			photonView.RPC("NetworkPlayerDied", PhotonTargets.Others, playerId);
 	}
 
 	void RoundOver(int winnerId)
 	{
 		_winnerSet = true;
 
-		photonView.RPC("NetworkRoundOver", PhotonTargets.All, winnerId);
+		if (Constants.onlineGame)
+	        photonView.RPC("NetworkRoundOver", PhotonTargets.All, winnerId);
+
+		if (!Constants.onlineGame)
+			NetworkRoundOver(winnerId);
 
 		//check if the match is over or if we should start next round		
 		if (_players[winnerId].score == _numRoundsToWin)
-			_match.photonView.RPC("NetworkMatchOver", PhotonTargets.All, winnerId);
+		{
+			if (Constants.onlineGame)
+				_match.photonView.RPC("NetworkMatchOver", PhotonTargets.All, winnerId);
+
+			if (!Constants.onlineGame)
+				_match.NetworkMatchOver(winnerId);
+		}
 		else
 			_match.SetCoundownToRoundRestart(2.0f);
 	}
@@ -96,6 +113,12 @@ public class GameModeLastMan : Photon.MonoBehaviour, IGameMode
 
 		// increment score and tell match to update UI
 		_match.OnRoundOver(winnerID, _players[winnerID].score);
+	}
+
+	[PunRPC]
+	void NetworkPlayerDied(int playerId)
+	{
+		_players[playerId].dead = true;
 	}
 
 }

@@ -165,6 +165,7 @@ public class Character : Photon.MonoBehaviour
 
 	void UpdateLocal()
 	{
-
+		if (Input.GetKeyDown(KeyCode.B) && playerID == 0)
+			movementComponent.Die(movementComponent.currentTile.position.x, movementComponent.currentTile.position.y);
 	}
 }

@@ -54,7 +54,7 @@ public class Level : Photon.MonoBehaviour
 	public void ResetRound()
 	{
 		if (Constants.onlineGame)
-		   photonView.RPC("NetworkResetRound", PhotonTargets.All);
+		    photonView.RPC("NetworkResetRound", PhotonTargets.All);
 
 		if (!Constants.onlineGame)
 			NetworkResetRound();
@@ -62,7 +62,7 @@ public class Level : Photon.MonoBehaviour
 
 	public void BreakTile(int x, int y)
 	{
-		if (Constants.onlineGame)
+		if (Constants.onlineGame && PhotonNetwork.isMasterClient)
 			photonView.RPC("NetworkBreakTile", PhotonTargets.All, x, y);
 
 		if (!Constants.onlineGame)

@@ -65,7 +65,7 @@ public class Match : Photon.MonoBehaviour
 		_scoreUI.Setup(numPlayer);
 
 		if (PhotonNetwork.isMasterClient)
-			photonView.RPC("NetworkStartGame", PhotonTargets.All, PhotonNetwork.time);
+			photonView.RPC("NetworkStartGame", PhotonTargets.AllViaServer, PhotonNetwork.time);
 	}
 
 	void SetupMatchLocal()
@@ -79,13 +79,13 @@ public class Match : Photon.MonoBehaviour
 
 		_level.StartGameLocal();
 
-		_counterUI.StartCount(0, 3, () => OnCounterZero());
+		_counterUI.StartCount(0, 3, () => matchStarted = true);
 	}
 
-	// called from character(only on server) 
-	public void OnPlayerDie(int playerId, int viewID)
+	// called from character(only on server in online play) 
+	public void OnPlayerDie(int playerId)
 	{
-		_currentGameMode.OnPlayerDie(playerId, viewID);
+		_currentGameMode.OnPlayerDie(playerId);
 	}
 	
 	// called from gamemode (called on all clients)
@@ -100,13 +100,6 @@ public class Match : Photon.MonoBehaviour
 		// do small delay before we reset to new round
 		Timing.RunCoroutine(_resetDelay(delay));		
 	}
-	
-	// callback from when countdown is done
-	// matchStarted will enable input for the players
-	public void OnCounterZero()
-	{
-		matchStarted = true;
-	}
 
 	// callback from character when someone disconnects, called locally on all clients
 	public void OnPlayerLeft(int id)
@@ -116,9 +109,9 @@ public class Match : Photon.MonoBehaviour
 	}
 
 	[PunRPC]
-	void NetworkMatchOver(int id)
+	public void NetworkMatchOver(int id)
 	{
-		_winnerUI.ShowWinner(id);
+		_winnerUI.ShowWinner(_scoreUI.GetUserNameFromID(id));
 	}
 
 	[PunRPC]
@@ -131,7 +124,7 @@ public class Match : Photon.MonoBehaviour
 		_level.StartGameOnline();
 
 		// start countdown
-		_counterUI.StartCount(delta, 3, () => OnCounterZero());
+		_counterUI.StartCount(delta, 3, () => matchStarted = true);
 	}
 	
 	[PunRPC]
@@ -145,7 +138,7 @@ public class Match : Photon.MonoBehaviour
 		_level.ResetRound();
 
 		// update score ui and restart timer
-		_counterUI.StartCount(delta, 3, () => OnCounterZero());
+		_counterUI.StartCount(delta, 3, () => matchStarted = true);
 	}
 
 	[PunRPC]
@@ -165,6 +158,10 @@ public class Match : Photon.MonoBehaviour
 			yield return Timing.WaitForOneFrame;
 		}
 
-		photonView.RPC("NetworkStartNewRound", PhotonTargets.All, PhotonNetwork.time);
+		if (Constants.onlineGame)
+		    photonView.RPC("NetworkStartNewRound", PhotonTargets.All, PhotonNetwork.time);
+
+		if (!Constants.onlineGame)
+			NetworkStartNewRound(0);
 	}
 }

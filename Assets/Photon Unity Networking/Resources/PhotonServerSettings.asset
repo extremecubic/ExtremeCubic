@@ -81,4 +81,5 @@ MonoBehaviour:
   - SpawnPowerUp
   - WaitingForPlayersTimer
   - ContinueAndCloseRoom
+  - NetworkPlayerDied
   DisableAutoOpenWizard: 1

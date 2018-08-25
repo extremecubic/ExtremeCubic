@@ -66,4 +66,13 @@ public class ScoreUI : MonoBehaviour
 			}
 		}		
 	}
+
+	public string GetUserNameFromID(int playerID)
+	{
+		for (int i = 0; i < _numPlayers; i++)
+			if (_players[i].ownerID == playerID)
+				return _players[i].userName.text;
+
+		return "";										
+	}
 }
