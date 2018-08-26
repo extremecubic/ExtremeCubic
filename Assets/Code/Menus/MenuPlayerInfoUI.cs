@@ -116,8 +116,12 @@ public class MenuPlayerInfoUI : Photon.MonoBehaviour
 
 	public void SetPlayerUIByScreen(MenuScreen screen)
 	{
-		for(int i =0; i < 4; i++)		
-			_players[i].content.transform.position = _screenTransforms[(int)screen][i].position;		
+		for(int i =0; i < 4; i++)
+		{
+			_players[i].content.GetComponent<RectTransform>().anchorMin = _screenTransforms[(int)screen][i].GetComponent<RectTransform>().anchorMin;
+			_players[i].content.GetComponent<RectTransform>().anchorMax = _screenTransforms[(int)screen][i].GetComponent<RectTransform>().anchorMax;
+			_players[i].content.transform.position = _screenTransforms[(int)screen][i].position;
+		}	
 	}
 
 }

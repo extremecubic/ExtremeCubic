@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4720714810772448}
   - component: {fileID: 33082862782665632}
   - component: {fileID: 23662922145827980}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4344900212714616}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RubiksCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 4513630411264944}
   - component: {fileID: 33295502018442684}
   - component: {fileID: 23622198985802072}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Middle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ GameObject:
   - component: {fileID: 4158079485823918}
   - component: {fileID: 33568094256022468}
   - component: {fileID: 23677935976976674}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}

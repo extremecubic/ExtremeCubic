@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4785524242900398}
   - component: {fileID: 33766776591032766}
   - component: {fileID: 23494231287491452}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SimonView
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4741052300399844}
   - component: {fileID: 33337139094643264}
   - component: {fileID: 23506396069313494}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4966679597885344}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Duplo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 4481922649491804}
   - component: {fileID: 33764700264869456}
   - component: {fileID: 23939994442353640}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}

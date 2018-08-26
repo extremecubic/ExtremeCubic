@@ -28,6 +28,7 @@ public class CharacterSelectPage : MenuPage
 	[Header("3D MODEL SETTINGS"),Space(2)]
 	[SerializeField] Transform[] _modelTransforms;
 	[SerializeField] float _rotationSpeed = 1.0f;
+	[SerializeField] GameObject[] _characterRenders;
 
 	CharacterDatabase.ViewData _currentView;
 	GameObject[] _currentViewObject = new GameObject[4];
@@ -137,6 +138,8 @@ public class CharacterSelectPage : MenuPage
 		// update the 3d model of the player with this ID
 		int index = _playerInfo.GetModelTransformIndexFromID(ID);
 
+		_characterRenders[index].SetActive(true);
+
 		// destroy old character preview model
 		if (_currentViewObject[index])
 			Destroy(_currentViewObject[index]);
@@ -242,7 +245,10 @@ public class CharacterSelectPage : MenuPage
 
 		// remove 3d model of left player
 		if (_currentViewObject[index] != null)
+		{
 			Destroy(_currentViewObject[index]);
+			_characterRenders[index].SetActive(false);
+		}
 
 		// if we are last player left in room, show message and disconnect last player
 		if (PhotonNetwork.room.PlayerCount == 1)

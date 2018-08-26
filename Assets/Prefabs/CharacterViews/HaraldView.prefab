@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4840879833316416}
   - component: {fileID: 33505372344455230}
   - component: {fileID: 23593891071937976}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HaraldView
   m_TagString: Untagged
   m_Icon: {fileID: 0}

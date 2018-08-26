@@ -142,17 +142,17 @@ public class Character : Photon.MonoBehaviour
 
 		bool invert = powerUpComponent.invertControlls;
 
-		if (Input.GetButton(Constants.BUTTON_CHARGE))
-			movementComponent.TryCharge();
+		if (Input.GetButton(Constants.BUTTON_CHARGE + "0"))
+			movementComponent.OnTryCharge();
 
-		if (Input.GetAxisRaw(Constants.AXIS_VERTICAL) > 0)
-			movementComponent.TryWalk(invert == false ? Vector2DInt.Up : Vector2DInt.Down);
-		if (Input.GetAxisRaw(Constants.AXIS_VERTICAL) < 0)
-			movementComponent.TryWalk(invert == false ? Vector2DInt.Down : Vector2DInt.Up);
-		if (Input.GetAxisRaw(Constants.AXIS_HORIZONTAL) < 0)
-			movementComponent.TryWalk(invert == false ? Vector2DInt.Left : Vector2DInt.Right);
-		if (Input.GetAxisRaw(Constants.AXIS_HORIZONTAL) > 0)
-			movementComponent.TryWalk(invert == false ? Vector2DInt.Right : Vector2DInt.Left);
+		if (Input.GetAxisRaw(Constants.AXIS_VERTICAL + "0") > 0)
+			movementComponent.OnTryWalk(invert == false ? Vector2DInt.Up : Vector2DInt.Down);
+		if (Input.GetAxisRaw(Constants.AXIS_VERTICAL + "0") < 0)
+			movementComponent.OnTryWalk(invert == false ? Vector2DInt.Down : Vector2DInt.Up);
+		if (Input.GetAxisRaw(Constants.AXIS_HORIZONTAL + "0") < 0)
+			movementComponent.OnTryWalk(invert == false ? Vector2DInt.Left : Vector2DInt.Right);
+		if (Input.GetAxisRaw(Constants.AXIS_HORIZONTAL + "0") > 0)
+			movementComponent.OnTryWalk(invert == false ? Vector2DInt.Right : Vector2DInt.Left);
 
 #if DEBUG_TOOLS
 		if (PhotonNetwork.isMasterClient && Input.GetKeyDown(KeyCode.P))
@@ -165,7 +165,21 @@ public class Character : Photon.MonoBehaviour
 
 	void UpdateLocal()
 	{
-		if (Input.GetKeyDown(KeyCode.B) && playerID == 0)
-			movementComponent.Die(movementComponent.currentTile.position.x, movementComponent.currentTile.position.y);
+		if (!Match.instance.matchStarted)
+			return;
+
+		bool invert = powerUpComponent.invertControlls;
+
+		if (Input.GetButton(Constants.BUTTON_CHARGE + playerID.ToString()))
+			movementComponent.OnTryCharge();
+
+		if (Input.GetAxisRaw(Constants.AXIS_VERTICAL + playerID.ToString()) > 0)
+			movementComponent.OnTryWalk(invert == false ? Vector2DInt.Up : Vector2DInt.Down);
+		if (Input.GetAxisRaw(Constants.AXIS_VERTICAL + playerID.ToString()) < 0)
+			movementComponent.OnTryWalk(invert == false ? Vector2DInt.Down : Vector2DInt.Up);
+		if (Input.GetAxisRaw(Constants.AXIS_HORIZONTAL + playerID.ToString()) < 0)
+			movementComponent.OnTryWalk(invert == false ? Vector2DInt.Left : Vector2DInt.Right);
+		if (Input.GetAxisRaw(Constants.AXIS_HORIZONTAL + playerID.ToString()) > 0)
+			movementComponent.OnTryWalk(invert == false ? Vector2DInt.Right : Vector2DInt.Left);
 	}
 }
