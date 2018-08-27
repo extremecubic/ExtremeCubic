@@ -17,6 +17,7 @@ public class CharacterSelectPage : MenuPage
 	[Header("UI REFERENCES"), Space(2)]
 	[SerializeField] MenuPlayerInfoUI _playerInfo;
 	[SerializeField] CharacterButton[] _characterButtons;
+	[Space(5)]
 	[SerializeField] Button _readyButton;
 	[SerializeField] RectTransform _dotsParent;
 	[SerializeField] Image _dotPrefab;
@@ -57,13 +58,13 @@ public class CharacterSelectPage : MenuPage
 		// get the view from the name of selcted character
 		_currentView = CharacterDatabase.instance.GetViewFromName(name);
 
-		// tell everyone to update the 3d model
-		photonView.RPC("Update3DModel", PhotonTargets.All, PhotonNetwork.player.ID, name);
-
 		// always start with skin 0 on new character
 		_currentSkin = 0;
-		_numSkins = _currentView.materials.Length;
+		_numSkins = _currentView.prefabs.Length;
 		UpdateSkinDots();
+
+		// tell everyone to update the 3d model
+		photonView.RPC("Update3DModel", PhotonTargets.All, PhotonNetwork.player.ID, name, _currentSkin);
 
 		// tell everyone to update this players UI Box
 		_playerInfo.photonView.RPC("UpdatePlayerUI", PhotonTargets.All, PhotonNetwork.player.ID, name);
@@ -111,7 +112,7 @@ public class CharacterSelectPage : MenuPage
 
 		_dotsParent.transform.GetChild(_currentSkin).GetComponent<Image>().color = Color.green;
 
-		photonView.RPC("Update3DModelMaterial", PhotonTargets.All, PhotonNetwork.player.ID, _currentView.name, _currentSkin);
+		photonView.RPC("Update3DModel", PhotonTargets.All, PhotonNetwork.player.ID, _currentView.name, _currentSkin);
 	}
 
 	void UpdateSkinDots()
@@ -133,7 +134,7 @@ public class CharacterSelectPage : MenuPage
 	}	
 
 	[PunRPC]
-	void Update3DModel(int ID, string character)
+	void Update3DModel(int ID, string character, int skinID)
 	{
 		// update the 3d model of the player with this ID
 		int index = _playerInfo.GetModelTransformIndexFromID(ID);
@@ -144,29 +145,7 @@ public class CharacterSelectPage : MenuPage
 		if (_currentViewObject[index])
 			Destroy(_currentViewObject[index]);
 	
-		_currentViewObject[index] = Instantiate(CharacterDatabase.instance.GetViewFromName(character).prefab, _modelTransforms[index]);
-	}
-
-	[PunRPC]
-	void Update3DModelMaterial(int ID, string character, int skinID)
-	{
-		// get witch model the player with this ID owns
-		int index     = _playerInfo.GetModelTransformIndexFromID(ID);
-
-		// get skin from character name and skinID
-		Material skin = CharacterDatabase.instance.GetViewFromName(character).materials[skinID];
-
-		// set material on all renderers on model
-		Renderer renderer = _currentViewObject[index].GetComponent<Renderer>();
-		if (renderer != null)
-			renderer.material = skin;
-
-		for (int i = 0; i < _currentViewObject[index].transform.childCount; i++)
-		{
-			renderer = _currentViewObject[index].transform.GetChild(i).GetComponent<Renderer>();
-			if (renderer != null)
-				renderer.material = skin;
-		}
+		_currentViewObject[index] = Instantiate(CharacterDatabase.instance.GetViewFromName(character).prefabs[skinID], _modelTransforms[index]);
 	}
 
 	public override void OnPageEnter()
@@ -178,13 +157,13 @@ public class CharacterSelectPage : MenuPage
 
 		// get the view of first model in character database
 		_currentView = CharacterDatabase.instance.GetFirstView();
-		photonView.RPC("Update3DModel", PhotonTargets.All, PhotonNetwork.player.ID, _currentView.name);
+		photonView.RPC("Update3DModel", PhotonTargets.All, PhotonNetwork.player.ID, _currentView.name, _currentSkin);
 
 		// tell everyone to update this players UI Box
 		_playerInfo.photonView.RPC("UpdatePlayerUI", PhotonTargets.All, PhotonNetwork.player.ID, _currentView.name);
 
 		// get how many skins this character have and update dots
-		_numSkins = _currentView.materials.Length;
+		_numSkins = _currentView.prefabs.Length;
 		UpdateSkinDots();
 
 		// if masterclient tell averyone to start countdown timer

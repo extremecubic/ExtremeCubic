@@ -23,7 +23,7 @@ public class CharacterDatabase : MonoBehaviour
 	public class ViewData
 	{
 		public string name;
-		public GameObject prefab;
+		public GameObject[] prefabs;
 
 		[Header("SOUNDS"), Space(2)]
 		public AudioClip walkSound;
@@ -39,8 +39,6 @@ public class CharacterDatabase : MonoBehaviour
 		public bool trailForwardAsDashDirection;
 		public ParticleSystem chargeupParticle;
 
-		[Header("SKINS"), Space(2)]
-		public Material[] materials;
 	}
 
 	void Awake()

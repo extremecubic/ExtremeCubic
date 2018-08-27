@@ -58,9 +58,8 @@ public class Character : Photon.MonoBehaviour
 		viewData = CharacterDatabase.instance.GetViewFromName(viewname);
 
 		// Setup the correct view, probably in a view component	
-		view = Instantiate(viewData.prefab);
+		view = Instantiate(viewData.prefabs[skinID]);
 		view.transform.SetParent(transform, false);
-		SetSkin(skinID);
 
 		// gat components
 		movementComponent = GetComponent<CharacterMovementComponent>();
@@ -110,20 +109,6 @@ public class Character : Photon.MonoBehaviour
 	{		
 		if(photonView.isMine)
 		   Match.instance.OnPlayerLeft(otherPlayer.ID);
-	}
-
-	void SetSkin(int skinID)
-	{
-		Renderer renderer = view.GetComponent<Renderer>();
-		if (renderer != null)
-			renderer.material = viewData.materials[skinID];
-
-		for (int i = 0; i < view.transform.childCount; i++)
-		{
-			renderer = view.transform.GetChild(i).GetComponent<Renderer>();
-			if (renderer != null)
-				renderer.material = viewData.materials[skinID];
-		}
 	}
 		
 	void Update()
