@@ -111,54 +111,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilesToSerialize:
-  - _typeName: lava
-    _data:
-      walkable: 1
-      health: 3
-      deadly: 0
-      unbreakable: 0
-      deathType: 0
-      replaceTileOnDeath: 0
-      replacementTile: 
-      landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
-      breakSound: {fileID: 0}
-      killSound: {fileID: 0}
-      landParticle: {fileID: 0}
-      breakParticle: {fileID: 0}
-      killParticle: {fileID: 0}
-      prefab: {fileID: 1960800530658806, guid: e7a1000ef3b8e2c4cb331049fea8113a, type: 2}
-  - _typeName: ice
-    _data:
-      walkable: 1
-      health: 3
-      deadly: 0
-      unbreakable: 0
-      deathType: 0
-      replaceTileOnDeath: 0
-      replacementTile: 
-      landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
-      breakSound: {fileID: 0}
-      killSound: {fileID: 0}
-      landParticle: {fileID: 0}
-      breakParticle: {fileID: 0}
-      killParticle: {fileID: 0}
-      prefab: {fileID: 1157504412975688, guid: f7a053546d39f2e48b2cf5086a986b21, type: 2}
-  - _typeName: metal
-    _data:
-      walkable: 1
-      health: 0
-      deadly: 0
-      unbreakable: 1
-      deathType: 0
-      replaceTileOnDeath: 0
-      replacementTile: 
-      landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
-      breakSound: {fileID: 0}
-      killSound: {fileID: 0}
-      landParticle: {fileID: 0}
-      breakParticle: {fileID: 0}
-      killParticle: {fileID: 0}
-      prefab: {fileID: 1960800530658806, guid: a817afb52fc188d4aa9950402ea509aa, type: 2}
   - _typeName: empty
     _data:
       walkable: 1
@@ -168,6 +120,9 @@ MonoBehaviour:
       deathType: 0
       replaceTileOnDeath: 0
       replacementTile: 
+      isSpecialTile: 0
+      specialType: 0
+      intValue: 0
       landSound: {fileID: 0}
       breakSound: {fileID: 0}
       killSound: {fileID: 0}
@@ -175,22 +130,6 @@ MonoBehaviour:
       breakParticle: {fileID: 0}
       killParticle: {fileID: 0}
       prefab: {fileID: 0}
-  - _typeName: bricks
-    _data:
-      walkable: 1
-      health: 3
-      deadly: 0
-      unbreakable: 0
-      deathType: 0
-      replaceTileOnDeath: 0
-      replacementTile: 
-      landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
-      breakSound: {fileID: 0}
-      killSound: {fileID: 0}
-      landParticle: {fileID: 0}
-      breakParticle: {fileID: 0}
-      killParticle: {fileID: 0}
-      prefab: {fileID: 1126028828871418, guid: 8e0f46bfffbcb434a826a0c373d860ce, type: 2}
   - _typeName: desert
     _data:
       walkable: 1
@@ -200,6 +139,9 @@ MonoBehaviour:
       deathType: 0
       replaceTileOnDeath: 0
       replacementTile: 
+      isSpecialTile: 0
+      specialType: 0
+      intValue: 0
       landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
       breakSound: {fileID: 0}
       killSound: {fileID: 0}
@@ -218,6 +160,9 @@ MonoBehaviour:
       deathType: 1
       replaceTileOnDeath: 0
       replacementTile: 
+      isSpecialTile: 0
+      specialType: 0
+      intValue: 0
       landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
       breakSound: {fileID: 0}
       killSound: {fileID: 8300000, guid: 34dd74c03e9be14419eac0aada37fc58, type: 3}
@@ -226,7 +171,7 @@ MonoBehaviour:
       breakParticle: {fileID: 0}
       killParticle: {fileID: 0}
       prefab: {fileID: 1106391426825514, guid: c986eb9c24cf9d84ebcbba88659b5958, type: 2}
-  - _typeName: mine
+  - _typeName: dynamite
     _data:
       walkable: 1
       health: 0
@@ -235,6 +180,9 @@ MonoBehaviour:
       deathType: 2
       replaceTileOnDeath: 1
       replacementTile: empty
+      isSpecialTile: 0
+      specialType: 0
+      intValue: 0
       landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
       breakSound: {fileID: 0}
       killSound: {fileID: 8300000, guid: d238eef53a3b2244e9ec7213b0c7d8fa, type: 3}
@@ -243,7 +191,48 @@ MonoBehaviour:
       breakParticle: {fileID: 0}
       killParticle: {fileID: 1196796963531486, guid: 5a2f939adf7264d47b3dc173fe99241a,
         type: 2}
-      prefab: {fileID: 1349607053670304, guid: 2adba7cecc5c82a46b845b03ca13d20c, type: 2}
+      prefab: {fileID: 1083091059059668, guid: b53946a7fa644314e97c34c3aad39b77, type: 2}
+  - _typeName: dirt
+    _data:
+      walkable: 1
+      health: 3
+      deadly: 0
+      unbreakable: 0
+      deathType: 0
+      replaceTileOnDeath: 0
+      replacementTile: empty
+      isSpecialTile: 0
+      specialType: 0
+      intValue: 0
+      landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
+      breakSound: {fileID: 0}
+      killSound: {fileID: 8300000, guid: d238eef53a3b2244e9ec7213b0c7d8fa, type: 3}
+      landParticle: {fileID: 1895057872444966, guid: 84bf0b0e1c89cba4eba76ec273baa2d3,
+        type: 2}
+      breakParticle: {fileID: 0}
+      killParticle: {fileID: 1196796963531486, guid: 5a2f939adf7264d47b3dc173fe99241a,
+        type: 2}
+      prefab: {fileID: 1410145494717210, guid: 38bd81b32110fb149ad23b5306ffef46, type: 2}
+  - _typeName: speedtile
+    _data:
+      walkable: 1
+      health: 0
+      deadly: 0
+      unbreakable: 1
+      deathType: 2
+      replaceTileOnDeath: 0
+      replacementTile: empty
+      isSpecialTile: 1
+      specialType: 0
+      intValue: 5
+      landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
+      breakSound: {fileID: 0}
+      killSound: {fileID: 0}
+      landParticle: {fileID: 1895057872444966, guid: 84bf0b0e1c89cba4eba76ec273baa2d3,
+        type: 2}
+      breakParticle: {fileID: 0}
+      killParticle: {fileID: 0}
+      prefab: {fileID: 1479690417016596, guid: 27d189a1ae50a8a429259eb633eee564, type: 2}
 --- !u!114 &114660886813412552
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -416,6 +405,51 @@ MonoBehaviour:
     - {fileID: 1672633214824676, guid: 64880a282ee6eb8498a3235d552cdffc, type: 2}
     - {fileID: 1652030020755486, guid: 02cda594d309c5940a27a2f2cf8a776c, type: 2}
     - {fileID: 1667991035325290, guid: 2d43ae5356774c44f80753d772131e2f, type: 2}
+    walkSound: {fileID: 8300000, guid: 095fb456ce50a0045805adfe29e8b6a8, type: 3}
+    dashSound: {fileID: 8300000, guid: 6b4bdcd31b14b404ca707e4255795507, type: 3}
+    hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
+    deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
+    chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
+      type: 2}
+    trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
+      type: 2}
+    trailForwardAsDashDirection: 1
+    chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+  - name: duck
+    prefabs:
+    - {fileID: 1604048077099072, guid: 00f788a33dce4c64db9e327fd89bb176, type: 2}
+    walkSound: {fileID: 8300000, guid: 095fb456ce50a0045805adfe29e8b6a8, type: 3}
+    dashSound: {fileID: 8300000, guid: 6b4bdcd31b14b404ca707e4255795507, type: 3}
+    hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
+    deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
+    chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
+      type: 2}
+    trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
+      type: 2}
+    trailForwardAsDashDirection: 1
+    chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+  - name: flame
+    prefabs:
+    - {fileID: 1780485772473126, guid: 1ae71d77badfb2847bd01f6bb680499f, type: 2}
+    walkSound: {fileID: 8300000, guid: 095fb456ce50a0045805adfe29e8b6a8, type: 3}
+    dashSound: {fileID: 8300000, guid: 6b4bdcd31b14b404ca707e4255795507, type: 3}
+    hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
+    deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
+    chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
+      type: 2}
+    trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
+      type: 2}
+    trailForwardAsDashDirection: 1
+    chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+  - name: ice
+    prefabs:
+    - {fileID: 1611482428466470, guid: 0edc4e18b13462c4ba91e61cc83b79f0, type: 2}
     walkSound: {fileID: 8300000, guid: 095fb456ce50a0045805adfe29e8b6a8, type: 3}
     dashSound: {fileID: 8300000, guid: 6b4bdcd31b14b404ca707e4255795507, type: 3}
     hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}

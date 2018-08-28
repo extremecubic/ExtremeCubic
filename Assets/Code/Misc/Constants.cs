@@ -38,5 +38,5 @@ public static class Constants
 
 
 	// temp storage here for now
-	public static bool onlineGame = true;
+	public static bool onlineGame = false;
 }

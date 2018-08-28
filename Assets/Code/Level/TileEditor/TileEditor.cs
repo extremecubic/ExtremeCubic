@@ -82,8 +82,8 @@ public class TileEditor : MonoBehaviour
 			_dropDownTiles.options.Add(new Dropdown.OptionData(_tileDB.GetTile(i).typeName));
 														
 		// create tile of first type in typearray
-		_selectedTile     = Instantiate(_tileDB.GetTile(0).data.prefab, _tileFolder);
-		_selectedTileType = _tileDB.GetTile(0).typeName.ToLower();
+		_selectedTile     = Instantiate(_tileDB.GetTile(1).data.prefab, _tileFolder);
+		_selectedTileType = _tileDB.GetTile(1).typeName.ToLower();
 		_currentEditMode  = EDIT_MODE.PLACE_SINGLE;
 
 		// add collider and set layer of tile (need this to be able to select alredy placed tiles)

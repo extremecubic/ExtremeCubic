@@ -87,8 +87,8 @@ public class CharacterPowerUpComponent : MonoBehaviour
 			return;
 
 		// kill ongoing coroutine
-		if(_handle.IsRunning)
-		   Timing.KillCoroutines(_handle);
+		if (_handle.IsRunning)
+		    Timing.KillCoroutines(_handle);
 
 		// stop feedback and reset all values to default
 		AbortPowerFeedBack();

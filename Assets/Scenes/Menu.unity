@@ -6030,7 +6030,7 @@ GameObject:
   - component: {fileID: 719132595}
   - component: {fileID: 719132594}
   m_Layer: 5
-  m_Name: Dice (8)
+  m_Name: ice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6120,7 +6120,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: dice
+          m_StringArgument: ice
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 720860270}
@@ -6129,7 +6129,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
+          m_IntArgument: 13
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -6155,7 +6155,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: e6305af9fe23b074fa3105c25c30e0d0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4f3dde3ecee0ee74b906aaec6ab2fbb1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6241,6 +6241,12 @@ MonoBehaviour:
     border: {fileID: 1101850419}
   - button: {fileID: 1467625237}
     border: {fileID: 1870960637}
+  - button: {fileID: 1668551124}
+    border: {fileID: 559346396}
+  - button: {fileID: 1960416239}
+    border: {fileID: 1112131236}
+  - button: {fileID: 719132595}
+    border: {fileID: 1668728222}
   _readyButton: {fileID: 888187271}
   _dotsParent: {fileID: 92133102}
   _dotPrefab: {fileID: 114361029869915762, guid: c658fa49b732aa8438561756a105ca18,
@@ -13318,7 +13324,7 @@ GameObject:
   - component: {fileID: 1668551124}
   - component: {fileID: 1668551123}
   m_Layer: 5
-  m_Name: Dice (6)
+  m_Name: Duck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13408,7 +13414,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: dice
+          m_StringArgument: duck
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 720860270}
@@ -13417,7 +13423,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
+          m_IntArgument: 11
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -13443,7 +13449,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: e6305af9fe23b074fa3105c25c30e0d0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 77acca4cc89a1124abac1badfb410691, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -16656,7 +16662,7 @@ GameObject:
   - component: {fileID: 1960416239}
   - component: {fileID: 1960416238}
   m_Layer: 5
-  m_Name: Dice (7)
+  m_Name: flame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16746,7 +16752,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: dice
+          m_StringArgument: flame
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 720860270}
@@ -16755,7 +16761,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
+          m_IntArgument: 12
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -16781,7 +16787,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: e6305af9fe23b074fa3105c25c30e0d0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 968e4631f79b7794ea6dc64e4a0ec272, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

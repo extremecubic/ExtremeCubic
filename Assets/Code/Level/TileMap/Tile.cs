@@ -12,6 +12,11 @@ public enum TileSounds
 	Count,
 }
 
+public enum SpecialTile
+{
+	PowerDash,
+}
+
 // settings of a tile (this is exposed to the editor from TileDatabase.cs to create custom Tiletypes)
 [System.Serializable]
 public class TileModel
@@ -30,6 +35,12 @@ public class TileModel
 		public DeathType deathType; // what death scenario will play
 		public bool replaceTileOnDeath;
 		public string replacementTile;
+
+		[Header("SPECIAL TILE SETTINGS")]
+		public bool        isSpecialTile;
+		public SpecialTile specialType;
+		[Tooltip("Used for \"PowerDash\" = num tiles to dash\n")]
+		public int         intValue;
 
 		[Header("SOUNDS"), Space(3)]
 		public AudioClip   landSound;
