@@ -65,7 +65,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1355427075057948}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.078494, y: -3.9500933, z: 8.480405}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4893764240191414}
@@ -240,6 +240,28 @@ MonoBehaviour:
       breakParticle: {fileID: 0}
       killParticle: {fileID: 0}
       prefab: {fileID: 1479690417016596, guid: 27d189a1ae50a8a429259eb633eee564, type: 2}
+  - _typeName: speedtilesand
+    _data:
+      walkable: 1
+      health: 0
+      deadly: 0
+      unbreakable: 1
+      deathType: 2
+      replaceTileOnDeath: 0
+      replacementTile: empty
+      isSpecialTile: 1
+      specialType: 0
+      intValue: 5
+      landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
+      breakSound: {fileID: 0}
+      killSound: {fileID: 0}
+      specialTileSound: {fileID: 8300000, guid: 7a54b8db12c3eca4992eb06046039af8,
+        type: 3}
+      landParticle: {fileID: 1895057872444966, guid: 84bf0b0e1c89cba4eba76ec273baa2d3,
+        type: 2}
+      breakParticle: {fileID: 0}
+      killParticle: {fileID: 0}
+      prefab: {fileID: 1381398352821048, guid: 257ca0cc5d5249a4fa48d37cfcc83166, type: 2}
 --- !u!114 &114660886813412552
 MonoBehaviour:
   m_ObjectHideFlags: 1

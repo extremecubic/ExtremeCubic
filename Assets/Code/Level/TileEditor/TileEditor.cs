@@ -208,13 +208,13 @@ public class TileEditor : MonoBehaviour
 	{
 		Renderer renderer = tile.GetComponent<Renderer>();
 		if (renderer != null)
-			renderer.material.color = Color.white * strength;
+			renderer.material.color = renderer.material.color * strength;
 
 		for (int i = 0; i < tile.transform.childCount; i++)
 		{
 			renderer = tile.transform.GetChild(i).GetComponent<Renderer>();
 			if (renderer != null)
-				renderer.material.color = Color.white * strength;
+				renderer.material.color = renderer.material.color * strength;
 		}
 	}
 

@@ -13,6 +13,8 @@ public class TileVisualizer : MonoBehaviour
 	[SerializeField] TileDatabase _tileDatabase;
 	[SerializeField] Material _gridMaterial;
 
+	Color _originalColor;
+
 	int _lastX = 5;
 	int _lastY = 5;
 
@@ -143,15 +145,20 @@ public class TileVisualizer : MonoBehaviour
 
 	void TintTile(GameObject tile, float strength)
 	{
+
 		Renderer renderer = tile.GetComponent<Renderer>();
 		if (renderer != null)
-			renderer.sharedMaterial.color = Color.white * strength;
+		{			
+			renderer.material.color = renderer.sharedMaterial.color * strength;
+		}
 
 		for (int i = 0; i < tile.transform.childCount; i++)
 		{
 			renderer = tile.transform.GetChild(i).GetComponent<Renderer>();
 			if (renderer != null)
-				renderer.sharedMaterial.color = Color.white * strength;
+			{				
+				renderer.material.color = renderer.sharedMaterial.color * strength;
+			}
 		}
 	}
 }

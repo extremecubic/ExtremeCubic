@@ -40,7 +40,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 	}
 
 	[PunRPC]
-	void NetworkOnGettingDashed(int fromX, int fromY, int directionX, int directionY, int numDashtiles)
+	public void NetworkOnGettingDashed(int fromX, int fromY, int directionX, int directionY, int numDashtiles)
 	{
 		if (_stateComponent.currentState == CharacterState.Dead)
 			return;

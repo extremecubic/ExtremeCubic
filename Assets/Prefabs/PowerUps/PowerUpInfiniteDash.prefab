@@ -95,4 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rotate: 1
   _rotationSpeed: 90
+  _uvScroll: 0
+  _scrollAmount: {x: 0, y: 0}

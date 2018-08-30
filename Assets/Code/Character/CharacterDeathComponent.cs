@@ -40,9 +40,12 @@ public class CharacterDeathComponent : MonoBehaviour
 
 	public IEnumerator<float> _sink()
 	{
+		float accelearation = 1.0f;
+
 		while (_character.stateComponent.currentState == CharacterState.Dead)
 		{
-			transform.position += Vector3.down * _character.model.sinkSpeed * Time.deltaTime;
+			accelearation += _character.model.fallAcceleration * Time.deltaTime;
+			transform.position += Vector3.down * _character.model.fallSpeed * accelearation * Time.deltaTime;
 			yield return Timing.WaitForOneFrame;
 		}
 	}

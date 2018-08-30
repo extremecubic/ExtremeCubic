@@ -22,7 +22,8 @@
 //    SOFTWARE.
 
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
+using System;
 
 namespace BLINDED_AM_ME{
 
@@ -40,6 +41,10 @@ namespace BLINDED_AM_ME{
 		[HideInInspector]
 		public Path _path = new Path();
 
+		public MovingObject[] movingObjects;
+
+		List<Path_Point> _allPoints = new List<Path_Point>();
+
 		public float TotalDistance {
 
 			get{
@@ -54,8 +59,42 @@ namespace BLINDED_AM_ME{
 
 		void Awake(){
 			Update_Path();
+
+			if (!Application.isPlaying)
+				return;
+
+			for (int i = 0; i < movingObjects.Length; i++)
+			{
+				movingObjects[i].objectToMove.transform.position = transform.TransformPoint( _allPoints[movingObjects[i].firstPointIndex].point);
+				if (movingObjects[i].firstPointIndex == _allPoints.Count - 1)
+					movingObjects[i].currentPoint = 0;
+				else
+					movingObjects[i].currentPoint = movingObjects[i].firstPointIndex + 1;
+
+				
+			}
 		}
-			
+
+		void Update()
+		{
+			if (!Application.isPlaying)
+				return;
+
+			for (int i =0; i < movingObjects.Length; i++)
+			{
+				movingObjects[i].objectToMove.transform.position = Vector3.MoveTowards(movingObjects[i].objectToMove.transform.position, transform.TransformPoint(_allPoints[movingObjects[i].currentPoint].point), 5 * Time.deltaTime);
+				movingObjects[i].objectToMove.transform.forward = _allPoints[movingObjects[i].currentPoint].forward;
+				if (movingObjects[i].objectToMove.transform.position == transform.TransformPoint(_allPoints[movingObjects[i].currentPoint].point))
+				{
+					if (movingObjects[i].currentPoint == _allPoints.Count - 1)
+						movingObjects[i].currentPoint = 0;
+					else
+						movingObjects[i].currentPoint++;
+				}
+
+			}	
+		}
+
 		public void Update_Path(){
 
 			Transform[] children = new Transform[transform.childCount];
@@ -73,6 +112,8 @@ namespace BLINDED_AM_ME{
 			if (transform.childCount > 1){
 				_path.SetPoints(points, ups, isCircuit);
 			}
+
+			AddPoints();
 		}
 
 		public Path_Point GetPathPoint(float dist){
@@ -92,6 +133,33 @@ namespace BLINDED_AM_ME{
 			DrawGizmos(true);
 		}
 
+		void AddPoints()
+		{
+
+			if (transform.childCount > 1)
+			{
+
+			}
+			else
+			{
+				return;
+			}
+
+			Path_Point prev = GetPathPoint(0.0f);
+			float dist = -gizmoLineSize;
+			do
+			{
+
+				dist = Mathf.Clamp(dist + gizmoLineSize, 0, _path.TotalDistance);
+
+				Path_Point next = GetPathPoint(dist);
+
+				_allPoints.Add(next);
+
+				prev = next;
+
+			} while (dist < _path.TotalDistance);
+		}
 
 		private void DrawGizmos(bool selected)
 		{
@@ -127,6 +195,15 @@ namespace BLINDED_AM_ME{
 
 		#endregion
 
+
+		[Serializable]
+		public struct MovingObject
+		{
+			public GameObject objectToMove;
+			public int firstPointIndex;
+			public int currentPoint;
+		}
+
 	}
 
 	public struct Path_Point
@@ -150,9 +227,11 @@ namespace BLINDED_AM_ME{
 		
 		public float TotalDistance;
 
-		private Vector3[]   _points;
+		public Vector3[]   _points;
 		private Vector3[]   _upDirections;
 		private float[]     _distances;
+
+		public Path_Point _allPoints;
 
 		private bool        _isCircuit = false;
 		private int         _numPoints;

@@ -23,7 +23,7 @@ public class CharacterSpecialTileHandler : MonoBehaviour
 
 		Vector3 right = tile.view.transform.right;
 		Vector2DInt direction = new Vector2DInt((int)right.x, (int)right.z);
-		_character.movementComponent.OnGettingDashed(tile.position, direction, tile.model.data.intValue);
+		_character.movementComponent.NetworkOnGettingDashed(tile.position.x, tile.position.y, direction.x, direction.y, tile.model.data.intValue);
 	}
 	
 }

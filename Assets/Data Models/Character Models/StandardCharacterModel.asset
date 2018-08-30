@@ -19,7 +19,8 @@ MonoBehaviour:
   dashMaxCharge: 5
   dashChargeRate: 3
   dashRotationSpeed: 1
-  sinkSpeed: 5
+  fallSpeed: 5
+  fallAcceleration: 10
   startEndMoveSpeedQvick: {x: 0.1, y: 30}
   startEndRotationspeedQvick: {x: 800, y: 3000}
   durationQvick: 1.4

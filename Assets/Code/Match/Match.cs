@@ -64,13 +64,18 @@ public class Match : Photon.MonoBehaviour
 		// tell the ui how many players we are
 		_scoreUI.Setup(numPlayer);
 
+
 		if (PhotonNetwork.isMasterClient)
 			photonView.RPC("NetworkStartGame", PhotonTargets.AllViaServer, PhotonNetwork.time);
+
+#if DEBUG_TOOLS
+		new GameObject("Photon Debug", typeof(PhotonLagSimulationGui));
+#endif
 	}
 
 	void SetupMatchLocal()
 	{		
-		int numPlayer = 2;
+		int numPlayer = 4;
 
 		_currentGameMode.OnSetup(numPlayer);
 
