@@ -116,6 +116,26 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 			NetworkClaimPowerUp(currentTile.position.x, currentTile.position.y);
 	}
 
+	bool OnEnterSpecialTile()
+	{
+		if (currentTile.model.data.isSpecialTile)
+		{
+			if (Constants.onlineGame)
+			{
+				if (PhotonNetwork.isMasterClient)
+					photonView.RPC("NetworkClaimSpecialTile", PhotonTargets.All, currentTile.position.x, currentTile.position.y);
+				else
+					_stateComponent.SetState(CharacterState.Frozen);
+			}
+
+			if (!Constants.onlineGame)
+				NetworkClaimSpecialTile(currentTile.position.x, currentTile.position.y);
+
+			return true;
+		}
+		return false;
+	}
+
 	bool OnDeadlyTile()
 	{
 		if (Constants.onlineGame && PhotonNetwork.isMasterClient && currentTile.model.data.deadly)
@@ -283,6 +303,9 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		// check if tile contains any power up and pick it up
 		if (currentTile.ContainsPowerUp())
 			OnClaimPowerUp();
+
+		if (OnEnterSpecialTile())
+			yield break;
 			
 		currentTile.OnPlayerLand();
 
@@ -379,12 +402,15 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 			// check if tile contains any power up and pick it up
 			if (currentTile.ContainsPowerUp())
 				OnClaimPowerUp();
+
+			if (OnEnterSpecialTile())
+				yield break;
 		}
 
 		// check if we ended up on deadly tile
 		// only server handle death detection
 		if (OnDeadlyTile())
-			yield break;		
+			yield break;	
 
 		// add cooldowns and stop feedback
 		_character.ParticleComponent.EmitTrail(false, Vector3.zero);

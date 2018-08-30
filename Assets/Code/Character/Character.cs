@@ -10,6 +10,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterParticlesComponent))]
 [RequireComponent(typeof(CharacterDeathComponent))]
 [RequireComponent(typeof(CharacterPowerUpComponent))]
+[RequireComponent(typeof(CharacterSpecialTileHandler))]
 public class Character : Photon.MonoBehaviour
 {		
 	public CharacterModel model                {get; private set;}
@@ -19,13 +20,14 @@ public class Character : Photon.MonoBehaviour
 	public string playerNickname               {get; private set;}
 	public CharacterDatabase.ViewData viewData {get; private set;}
 
-    public CharacterMovementComponent  movementComponent {get; private set;}
-    public CharacterFlagComponent      flagComponent     {get; private set;}
-    public CharacterStateComponent     stateComponent    {get; private set;}
-	public CharacterSoundComponent     soundComponent    {get; private set;}
-	public CharacterParticlesComponent ParticleComponent {get; private set;}
-	public CharacterDeathComponent	   deathComponent    {get; private set;}
-	public CharacterPowerUpComponent   powerUpComponent  {get; private set;}
+    public CharacterMovementComponent  movementComponent  {get; private set;}
+    public CharacterFlagComponent      flagComponent      {get; private set;}
+    public CharacterStateComponent     stateComponent     {get; private set;}
+	public CharacterSoundComponent     soundComponent     {get; private set;}
+	public CharacterParticlesComponent ParticleComponent  {get; private set;}
+	public CharacterDeathComponent	   deathComponent     {get; private set;}
+	public CharacterPowerUpComponent   powerUpComponent   {get; private set;}
+	public CharacterSpecialTileHandler specialTileHandler {get; private set;}
 
 	int _spawnPoint;
 
@@ -62,20 +64,22 @@ public class Character : Photon.MonoBehaviour
 		view.transform.SetParent(transform, false);
 
 		// gat components
-		movementComponent = GetComponent<CharacterMovementComponent>();
-		flagComponent     = GetComponent<CharacterFlagComponent>();
-		stateComponent    = GetComponent<CharacterStateComponent>();
-		soundComponent    = GetComponent<CharacterSoundComponent>();
-		ParticleComponent = GetComponent<CharacterParticlesComponent>();
-		deathComponent	  = GetComponent<CharacterDeathComponent>();
-		powerUpComponent  = GetComponent<CharacterPowerUpComponent>();
+		movementComponent  = GetComponent<CharacterMovementComponent>();
+		flagComponent      = GetComponent<CharacterFlagComponent>();
+		stateComponent     = GetComponent<CharacterStateComponent>();
+		soundComponent     = GetComponent<CharacterSoundComponent>();
+		ParticleComponent  = GetComponent<CharacterParticlesComponent>();
+		deathComponent	   = GetComponent<CharacterDeathComponent>();
+		powerUpComponent   = GetComponent<CharacterPowerUpComponent>();
+		specialTileHandler = GetComponent<CharacterSpecialTileHandler>();
 
 		// initialize components
 		movementComponent.ManualAwake();
 		flagComponent.ManualAwake();
 		stateComponent.ManualAwake();
 		soundComponent.ManualAwake(viewData, view.transform);
-		ParticleComponent.ManualAwake(viewData, view.transform);		
+		ParticleComponent.ManualAwake(viewData, view.transform);
+		specialTileHandler.ManualAwake(this);
 
 		if (Constants.onlineGame && photonView.isMine)				
 			Match.instance.photonView.RPC("RegisterPlayer", PhotonTargets.AllViaServer, this.playerID, playerNickname);

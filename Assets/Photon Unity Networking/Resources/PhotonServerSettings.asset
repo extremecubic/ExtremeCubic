@@ -83,4 +83,5 @@ MonoBehaviour:
   - ContinueAndCloseRoom
   - NetworkPlayerDied
   - NetworkClaimPowerUp
+  - NetworkClaimSpecialTile
   DisableAutoOpenWizard: 1

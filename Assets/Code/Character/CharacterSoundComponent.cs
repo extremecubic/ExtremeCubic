@@ -92,7 +92,7 @@ public class CharacterSoundComponent : MonoBehaviour
 	public void StopSound(CharacterSound type, float fadeInSeconds = 0.5f)
 	{
 		if (_sounds[(int)type].audioSource.isPlaying)
-			_sounds[(int)type].fadeHandle = Timing.RunCoroutine(_fadeSound(fadeInSeconds, (int)type));
+			_sounds[(int)type].fadeHandle = Timing.RunCoroutineSingleton(_fadeSound(fadeInSeconds, (int)type), _sounds[(int)type].fadeHandle, SingletonBehavior.Abort);
 	}
 
 	public void SetClipToSound(CharacterSound type, AudioClip clip)

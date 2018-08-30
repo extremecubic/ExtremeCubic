@@ -126,6 +126,7 @@ MonoBehaviour:
       landSound: {fileID: 0}
       breakSound: {fileID: 0}
       killSound: {fileID: 0}
+      specialTileSound: {fileID: 0}
       landParticle: {fileID: 0}
       breakParticle: {fileID: 0}
       killParticle: {fileID: 0}
@@ -145,6 +146,7 @@ MonoBehaviour:
       landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
       breakSound: {fileID: 0}
       killSound: {fileID: 0}
+      specialTileSound: {fileID: 0}
       landParticle: {fileID: 1895057872444966, guid: 84bf0b0e1c89cba4eba76ec273baa2d3,
         type: 2}
       breakParticle: {fileID: 1070999266619262, guid: f6f2039916d90804c962c93ccbd71449,
@@ -166,6 +168,7 @@ MonoBehaviour:
       landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
       breakSound: {fileID: 0}
       killSound: {fileID: 8300000, guid: 34dd74c03e9be14419eac0aada37fc58, type: 3}
+      specialTileSound: {fileID: 0}
       landParticle: {fileID: 1895057872444966, guid: 84bf0b0e1c89cba4eba76ec273baa2d3,
         type: 2}
       breakParticle: {fileID: 0}
@@ -186,6 +189,7 @@ MonoBehaviour:
       landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
       breakSound: {fileID: 0}
       killSound: {fileID: 8300000, guid: d238eef53a3b2244e9ec7213b0c7d8fa, type: 3}
+      specialTileSound: {fileID: 0}
       landParticle: {fileID: 1895057872444966, guid: 84bf0b0e1c89cba4eba76ec273baa2d3,
         type: 2}
       breakParticle: {fileID: 0}
@@ -207,6 +211,7 @@ MonoBehaviour:
       landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
       breakSound: {fileID: 0}
       killSound: {fileID: 8300000, guid: d238eef53a3b2244e9ec7213b0c7d8fa, type: 3}
+      specialTileSound: {fileID: 0}
       landParticle: {fileID: 1895057872444966, guid: 84bf0b0e1c89cba4eba76ec273baa2d3,
         type: 2}
       breakParticle: {fileID: 0}
@@ -228,6 +233,8 @@ MonoBehaviour:
       landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
       breakSound: {fileID: 0}
       killSound: {fileID: 0}
+      specialTileSound: {fileID: 8300000, guid: 7a54b8db12c3eca4992eb06046039af8,
+        type: 3}
       landParticle: {fileID: 1895057872444966, guid: 84bf0b0e1c89cba4eba76ec273baa2d3,
         type: 2}
       breakParticle: {fileID: 0}

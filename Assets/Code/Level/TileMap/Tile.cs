@@ -8,6 +8,7 @@ public enum TileSounds
 	Land,
 	Break,
 	Kill,
+	Special,
 
 	Count,
 }
@@ -46,6 +47,7 @@ public class TileModel
 		public AudioClip   landSound;
 		public AudioClip   breakSound;
 		public AudioClip   killSound;
+		public AudioClip   specialTileSound;
 
 		[Header("PARTICLES"), Space(3)]
 		public GameObject landParticle;
@@ -81,7 +83,7 @@ public class Tile
     TileDatabase _tileDB;
 	AudioSource[] _sounds;
 
-    GameObject _view;
+    public GameObject view { get; private set; }
 	Character  _character;
 
 	PowerUpType _powerUp = PowerUpType.None;
@@ -103,7 +105,7 @@ public class Tile
 		Level.instance.tileMap.GetTile(position + offset);
 
 	public void Delete(float delay) =>
-		Object.Destroy(_view, delay);
+		Object.Destroy(view, delay);
 
 	public bool ContainsPowerUp() =>
 		_powerUp != PowerUpType.None;
@@ -140,28 +142,31 @@ public class Tile
 		if (model.data.prefab == null)
 			return;
 
-		_view = Object.Instantiate(model.data.prefab, tilesFolder);
-		_view.transform.rotation = _view.transform.rotation * Quaternion.Euler(new Vector3(0, yRotation, 0));
-		_view.transform.position = new Vector3(position.x, 0, position.y);
+		view = Object.Instantiate(model.data.prefab, tilesFolder);
+		view.transform.rotation = view.transform.rotation * Quaternion.Euler(new Vector3(0, yRotation, 0));
+		view.transform.position = new Vector3(position.x, 0, position.y);
 
-		TintTile(_view, tintStrength);
+		TintTile(view, tintStrength);
 	}
 
 	void CreateSounds()
 	{
-		if (_view == null)
+		if (view == null)
 			return;
 
 		_sounds = new AudioSource[(int)TileSounds.Count];
 
 		GameObject soundHolderLand = new GameObject("landSound", typeof(AudioSource));
-		soundHolderLand.transform.SetParent(_view.transform);
+		soundHolderLand.transform.SetParent(view.transform);
 
 		GameObject soundHolderBreak = new GameObject("breakSound", typeof(AudioSource));
-		soundHolderBreak.transform.SetParent(_view.transform);
+		soundHolderBreak.transform.SetParent(view.transform);
 
 		GameObject soundHolderKill = new GameObject("KillSound", typeof(AudioSource));
-		soundHolderKill.transform.SetParent(_view.transform);
+		soundHolderKill.transform.SetParent(view.transform);
+
+		GameObject soundHolderSpecial = new GameObject("SpecialSound", typeof(AudioSource));
+		soundHolderSpecial.transform.SetParent(view.transform);
 
 		_sounds[(int)TileSounds.Land] = soundHolderLand.GetComponent<AudioSource>();
 		_sounds[(int)TileSounds.Land].clip = model.data.landSound;
@@ -171,12 +176,15 @@ public class Tile
 
 		_sounds[(int)TileSounds.Kill] = soundHolderKill.GetComponent<AudioSource>();
 		_sounds[(int)TileSounds.Kill].clip = model.data.killSound;
+
+		_sounds[(int)TileSounds.Special] = soundHolderSpecial.GetComponent<AudioSource>();
+		_sounds[(int)TileSounds.Special].clip = model.data.specialTileSound;
 	}
 
 	// play a sound belonging to the tile as child
 	public void PlaySound(TileSounds type)
 	{
-		if (_view == null)
+		if (view == null)
 			return;
 
 		if (_sounds[(int)type].clip != null)
@@ -231,7 +239,7 @@ public class Tile
 	{
 		currentHealth--;
 
-		_view.GetComponent<Animator>().SetInteger("health", currentHealth);
+		view.GetComponent<Animator>().SetInteger("health", currentHealth);
 
 		PlaySound(TileSounds.Break);
 

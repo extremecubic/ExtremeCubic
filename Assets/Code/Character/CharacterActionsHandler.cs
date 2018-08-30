@@ -121,6 +121,13 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 	}
 
 	[PunRPC]
+	void NetworkClaimSpecialTile(int tileX, int tileY)
+	{
+		Tile tile = _tileMap.GetTile(new Vector2DInt(tileX, tileY));
+		_character.specialTileHandler.OnEnterSpecialTile(tile);
+	}
+
+	[PunRPC]
 	public void FinishCancelledDash(int fromX, int fromY, int directionX, int directionY, int dashCharges)
 	{
 		if (_stateComponent.currentState == CharacterState.Dead)
