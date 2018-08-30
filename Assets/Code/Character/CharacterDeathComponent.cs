@@ -23,6 +23,11 @@ public class CharacterDeathComponent : MonoBehaviour
 	{
 		DeathType type = deathTile.model.data.deathType;
 
+		if (deathTile.model.typeName == "empty" || deathTile.model.typeName == Constants.EDGE_TYPE)
+		{
+			print("Will do level specific death feedback here");
+		}
+
 		if (type == DeathType.Sink)
 		   Timing.RunCoroutineSingleton(_sink(), gameObject.GetInstanceID(), SingletonBehavior.Overwrite);
 		else if(type == DeathType.Quicksand)
