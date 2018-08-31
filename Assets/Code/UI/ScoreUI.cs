@@ -12,6 +12,7 @@ public class ScoreUI : MonoBehaviour
 		public GameObject content;
 		public Text scoreText;
 		public Text userName;
+		public Image icon;
 
 		[HideInInspector] public int ownerID;
 		[HideInInspector] public bool taken;
@@ -28,7 +29,7 @@ public class ScoreUI : MonoBehaviour
 			_players[i].content.SetActive(true);
 	}
 
-	public void RegisterPlayer(int playerID, string name)
+	public void RegisterPlayer(int playerID, string nickName, string viewName)
 	{
 		// loop over all 4 UI spots and use the first that is not taken
 		for(int i =0; i < _numPlayers; i++)
@@ -37,7 +38,9 @@ public class ScoreUI : MonoBehaviour
 			{
 				_players[i].ownerID = playerID;
 				_players[i].taken = true;
-				_players[i].userName.text = name;
+				_players[i].userName.text = nickName;
+				_players[i].icon.sprite = CharacterDatabase.instance.GetViewFromName(viewName).iconUI;
+				_players[i].scoreText.text = "0";
 				return;
 			}
 		}

@@ -147,11 +147,11 @@ public class Match : Photon.MonoBehaviour
 	}
 
 	[PunRPC]
-	public void RegisterPlayer(int id, string name)
+	public void RegisterPlayer(int id, string nickName, string viewName)
 	{
 		// register a player by id for scorekepping and ui
 		_currentGameMode.OnPlayerRegistred(id);
-		_scoreUI.RegisterPlayer(id, name);
+		_scoreUI.RegisterPlayer(id, nickName, viewName);
 	}
 
 	IEnumerator<float> _resetDelay(float delay)

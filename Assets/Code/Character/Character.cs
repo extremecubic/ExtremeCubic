@@ -82,10 +82,10 @@ public class Character : Photon.MonoBehaviour
 		specialTileHandler.ManualAwake(this);
 
 		if (Constants.onlineGame && photonView.isMine)				
-			Match.instance.photonView.RPC("RegisterPlayer", PhotonTargets.AllViaServer, this.playerID, playerNickname);
+			Match.instance.photonView.RPC("RegisterPlayer", PhotonTargets.AllViaServer, this.playerID, playerNickname, viewname);
 
 		if (!Constants.onlineGame)
-			Match.instance.RegisterPlayer(this.playerID, playerNickname);
+			Match.instance.RegisterPlayer(this.playerID, playerNickname, viewname);
 
 #if DEBUG_TOOLS
 		if (Constants.onlineGame && photonView.isMine)

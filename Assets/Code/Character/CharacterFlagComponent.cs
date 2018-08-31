@@ -22,7 +22,6 @@ public class CharacterFlagComponent : MonoBehaviour
     public void SetFlag(CharacterFlag flag, bool value)
     {
         // Sets the flag directly
-
         Timing.KillCoroutines(_durationHandles[flag]);
 
         _flags[flag] = value;
@@ -31,7 +30,6 @@ public class CharacterFlagComponent : MonoBehaviour
     public void SetFlag(CharacterFlag flag, bool value, float duration, SingletonBehavior collisionBehaviour)
     {
         // Sets the flag and inverts it after 'inDuration'
-
         if (duration <= 0)
             throw new System.Exception("SetFlag parameter 'inDuration' cannot be zero or lower.");
 

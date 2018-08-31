@@ -110,7 +110,7 @@ Material:
     - _Offset: 0.00008
     - _RefractAmt: 0
     - _S: 1
-    - _ShorelineFoamMinDepth: 1.66
+    - _ShorelineFoamMinDepth: 0.01
     - _StartLevel: 0.157
     - _SubSurfaceBase: 0.24
     - _SubSurfaceCrestColour: 1
@@ -127,17 +127,17 @@ Material:
     - _TextureRes: 1024
     - _Transparency: 1
     - _Update: 0.083
-    - _WaveFoamBubblesCoverage: 3.42
+    - _WaveFoamBubblesCoverage: 2.7
     - _WaveFoamBubblesFeather: 0.32
     - _WaveFoamBubblesStart: 0.115
     - _WaveFoamBubblesStrength: 0.637
     - _WaveFoamCoverage: 0.38
     - _WaveFoamFeather: 1
-    - _WaveFoamLightScale: 1.353
-    - _WaveFoamNormalStrength: 3.5
+    - _WaveFoamLightScale: 1.32
+    - _WaveFoamNormalStrength: 6.7
     - _WaveFoamNormalsY: 0.253
-    - _WaveFoamSpecularBoost: 0.15
-    - _WaveFoamSpecularFallOff: 293
+    - _WaveFoamSpecularBoost: 1.72
+    - _WaveFoamSpecularFallOff: 207
     - _WaveFoamStart: 0
     - _WaveFoamStrength: 1
     m_Colors:

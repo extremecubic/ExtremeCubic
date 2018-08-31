@@ -22,7 +22,9 @@ public class CharacterDatabase : MonoBehaviour
 	[Serializable]
 	public class ViewData
 	{
+		[Header("MAIN SETTINGS")]
 		public string name;
+		public Sprite iconUI;
 		public GameObject[] prefabs;
 
 		[Header("SOUNDS"), Space(2)]
@@ -38,7 +40,6 @@ public class CharacterDatabase : MonoBehaviour
 		[Tooltip("will always set the forward of trails transform to the direction of the player dash")]
 		public bool trailForwardAsDashDirection;
 		public ParticleSystem chargeupParticle;
-
 	}
 
 	void Awake()
