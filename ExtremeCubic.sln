@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtremeCubic", "com.unity.postprocessing.Runtime.csproj", "{6EE7536B-7B6C-F6C6-BD29-7CF3C4B14CB8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.unity.postprocessing.Runtime", "com.unity.postprocessing.Runtime.csproj", "{6EE7536B-7B6C-F6C6-BD29-7CF3C4B14CB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtremeCubic", "Assembly-CSharp.csproj", "{A15CC055-E5B2-8330-16EE-41221F82D290}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{A15CC055-E5B2-8330-16EE-41221F82D290}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtremeCubic", "Assembly-CSharp-firstpass.csproj", "{81565667-24E4-177C-CE48-A07DC655A009}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "Assembly-CSharp-firstpass.csproj", "{81565667-24E4-177C-CE48-A07DC655A009}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtremeCubic", "Assembly-CSharp-Editor.csproj", "{479A21B5-2AB7-03E1-E6B4-6723C9FA9841}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{479A21B5-2AB7-03E1-E6B4-6723C9FA9841}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtremeCubic", "com.unity.postprocessing.Editor.csproj", "{B2727E48-FAD2-3142-90FD-B69DD811E0DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.unity.postprocessing.Editor", "com.unity.postprocessing.Editor.csproj", "{B2727E48-FAD2-3142-90FD-B69DD811E0DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

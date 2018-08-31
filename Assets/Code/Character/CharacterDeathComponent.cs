@@ -23,9 +23,19 @@ public class CharacterDeathComponent : MonoBehaviour
 	{
 		DeathType type = deathTile.model.data.deathType;
 
+		// spawn level specific feedback from edge and empty tiles
 		if (deathTile.model.typeName == "empty" || deathTile.model.typeName == Constants.EDGE_TYPE)
 		{
-			print("Will do level specific death feedback here");
+			Level lvl = Level.instance;
+			type = lvl.deathType;
+			if (lvl.emptyDeathParticle != null)
+			{
+				ParticleSystem particle = Instantiate(lvl.emptyDeathParticle, transform.position, lvl.emptyDeathParticle.transform.rotation);
+				Destroy(particle, 10);
+			}
+
+			if (lvl.emptyDeathsound != null)
+				MusicManager.instance.SpawnAndPlaySound(lvl.emptyDeathsound, 5);
 		}
 
 		if (type == DeathType.Sink)

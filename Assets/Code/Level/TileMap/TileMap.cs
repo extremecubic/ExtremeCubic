@@ -33,32 +33,36 @@ public class TileMap
 	  
     public void BinaryLoad()
     {
-        using (FileStream stream = new FileStream(Path.Combine(Constants.TILEMAP_SAVE_FOLDER, mapName), FileMode.Open, FileAccess.Read))
-        using (BinaryReader reader = new BinaryReader(stream))
-        {
-            int gridSizeY = reader.ReadInt32();        // Read: Num tiles Vertical
-			int gridSizeX = reader.ReadInt32();        // Read: Num tiles Horizontal
+		if (File.Exists(Path.Combine(Constants.TILEMAP_SAVE_FOLDER, mapName)))
+		{
+			using (FileStream stream = new FileStream(Path.Combine(Constants.TILEMAP_SAVE_FOLDER, mapName), FileMode.Open, FileAccess.Read))
+			using (BinaryReader reader = new BinaryReader(stream))
+			{
+				int gridSizeY = reader.ReadInt32();        // Read: Num tiles Vertical
+				int gridSizeX = reader.ReadInt32();        // Read: Num tiles Horizontal
 
-			int tileCount = gridSizeY * gridSizeX;        // Num tiles in total
+				int tileCount = gridSizeY * gridSizeX;        // Num tiles in total
 
-			_gridSize = new Vector2DInt(gridSizeX, gridSizeY); // save gridsize if we need it later
+				_gridSize = new Vector2DInt(gridSizeX, gridSizeY); // save gridsize if we need it later
 
-			for (int i = 0; i < tileCount; i++)
-            {
-                Vector2DInt tilePosition = Vector2DInt.Zero;
-                tilePosition.BinaryLoad(reader);       // Read: Position
+				for (int i = 0; i < tileCount; i++)
+				{
+					Vector2DInt tilePosition = Vector2DInt.Zero;
+					tilePosition.BinaryLoad(reader);       // Read: Position
 
-                string typeName = reader.ReadString(); // Read: Tile type name  
+					string typeName = reader.ReadString(); // Read: Tile type name  
 
-				float yRot = reader.ReadSingle();
+					float yRot = reader.ReadSingle();
 
-				float tintStrength = reader.ReadSingle();
+					float tintStrength = reader.ReadSingle();
 
-                _tiles.Add(tilePosition, new Tile(tilePosition, typeName, yRot, tintStrength, tilesFolder));
-            }
+					_tiles.Add(tilePosition, new Tile(tilePosition, typeName, yRot, tintStrength, tilesFolder));
+				}
 
-			AddEdgeTiles(gridSizeX, gridSizeY);
-        }
+				AddEdgeTiles(gridSizeX, gridSizeY);
+			}
+		}
+		
     }
 
 	public void AddEdgeTiles(int sizeX, int sizeY)

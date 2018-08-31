@@ -48,6 +48,20 @@ public class MusicManager : MonoBehaviour
 		_sharedPowerUpSoundLoop.fadeHandle = Timing.RunCoroutine(_FadeSound(fadeTime, _sharedPowerUpSoundLoop));
 	}
 
+	public void SpawnAndPlaySound(AudioClip clip, float destroyAfter)
+	{
+		// spawn object with audiosource
+		GameObject soundHolder = new GameObject("soundOneUse", typeof(AudioSource));
+		AudioSource audio = soundHolder.GetComponent<AudioSource>();
+
+		// asign clip and play
+		audio.clip = clip;
+		audio.Play();
+
+		// delete after delay
+		Object.Destroy(soundHolder, destroyAfter);
+	}
+
 	IEnumerator<float> _PlayForDuration(float time, SoundData sound)
 	{
 		sound.audioSource.Play();

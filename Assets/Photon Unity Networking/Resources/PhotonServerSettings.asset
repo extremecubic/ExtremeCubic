@@ -3,7 +3,7 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -28,60 +28,43 @@ MonoBehaviour:
   RunInBackground: 1
   RpcList:
   - Chat
+  - CheckServerCollision
+  - ClaimUIBox
+  - ContinueAndCloseRoom
+  - ContinueToLevelselect
   - DestroyRpc
+  - Die
+  - DisableUIOfPlayer
+  - FinishCancelledDash
   - InstantiateRpc
+  - LevelToPlay
+  - NetworkBreakTile
+  - NetworkCharge
+  - NetworkClaimPowerUp
+  - NetworkClaimSpecialTile
+  - NetworkDash
+  - NetworkInitialize
+  - NetworkMatchOver
+  - NetworkOnDashingOther
+  - NetworkOnGettingDashed
+  - NetworkPlayerDied
+  - NetworkResetRound
+  - NetworkRoundOver
+  - NetworkSpawn
+  - NetworkStartGame
+  - NetworkStartNewRound
+  - NetworkWalk
   - PickupItemInit
   - PunPickup
   - PunPickupSimple
   - PunRespawn
+  - RegisterPlayer
   - RequestForPickupItems
   - RequestForPickupTimes
-  - NetworkInitialize
-  - NetworkSpawn
-  - NetworkWalk
-  - NetworkCharge
-  - NetworkDash
-  - NetworkOnDashingOther
-  - NetworkOnGettingDashed
-  - CheckServerCollision
-  - FinishCancelledDash
-  - NetworkResetRound
-  - NetworkStartGame
-  - UpdateNumPlayersInRoom
-  - ContinueToLevelselect
-  - SetLevelAndGoToCharacter
-  - AddPlayerReady
-  - OnPlayerDie
-  - AllIsLoaded
-  - NetworkStartNewRound
-  - DisablePlayerUI
-  - RegisterPlayer
-  - RegisterPlayerUI
-  - RoundWinner
-  - SetSpawnDataToPlayerID
-  - ShowWinner
-  - Die
-  - SetSpawnPointFromPlayerID
-  - NetworkMatchOver
-  - NetworkRoundOver
-  - NetworkBreakTile
-  - SyncTransform
-  - ClaimUIBox
   - SetReadyUI
-  - UpdatePlayerUI
-  - DisableUIOfPlayer
-  - StartCountdown
-  - Update3DModel
-  - Update3DModelMaterial
-  - CheckAllReady
-  - LevelToPlay
-  - ClaimPowerUp
-  - SpawnPowerup
-  - SpawnPowerup2
   - SpawnPowerUp
-  - WaitingForPlayersTimer
-  - ContinueAndCloseRoom
-  - NetworkPlayerDied
-  - NetworkClaimPowerUp
-  - NetworkClaimSpecialTile
+  - StartCountdown
+  - SyncTransform
+  - Update3DModel
+  - UpdatePlayerUI
   DisableAutoOpenWizard: 1

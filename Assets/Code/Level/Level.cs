@@ -5,11 +5,16 @@ using UnityEngine;
 public class Level : Photon.MonoBehaviour
 {
 	public TileMap tileMap { get; private set; }
-	
-	[SerializeField] string     _mapToLoad;
-	[SerializeField] Transform  _tilesFolder;
-	[SerializeField] Transform  _powerUpFolder;
+
+	[SerializeField] string _mapToLoad;
+	[SerializeField] Transform _tilesFolder;
+	[SerializeField] Transform _powerUpFolder;
 	[SerializeField] GameObject _characterPrefab;
+
+	[Header("Level Specific death feedback on empty tiles")]
+	[SerializeField] ParticleSystem _emptyDeathParticle; public ParticleSystem emptyDeathParticle { get {return _emptyDeathParticle; } }
+	[SerializeField] AudioClip      _emptyDeathSound;    public AudioClip emptyDeathsound         { get { return _emptyDeathSound; } }
+	[SerializeField] DeathType      _deathType;          public DeathType deathType               { get { return _deathType; } }
 
     List<Character> _characters = new List<Character>();
 
