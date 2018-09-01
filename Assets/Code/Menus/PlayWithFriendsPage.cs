@@ -20,6 +20,12 @@ public class PlayWithFriendsPage : MenuPage
 	
 	public void HostRoom()
 	{
+		if (PhotonNetwork.room != null)
+		{
+			Debug.Log("Trying to host when already connected to room, add so we disconnect and rehost like in random matchmaking");
+			return;
+		}
+
 		// create a private room that can only be joined from invite
 		RoomOptions roomOptions = new RoomOptions();
 		roomOptions.IsVisible = false;
@@ -27,13 +33,18 @@ public class PlayWithFriendsPage : MenuPage
 		
 		// generate a random name, if we let photon create a name for us its about 100 characters long, works untill we intergrate steam
 		string roomName = Random.Range(100, 9000).ToString();
-
+		
 		PhotonNetwork.CreateRoom(roomName, roomOptions, TypedLobby.Default);
 	}
 
 	// called from button
 	public void JoinRoom()
 	{
+		if(_joinRoomInput.text == "")
+		{
+			Debug.Log("Trying to join room with empty string");
+		}
+
 		if (!PhotonNetwork.isMasterClient)
 		   PhotonNetwork.JoinRoom(_joinRoomInput.text);
 	}
