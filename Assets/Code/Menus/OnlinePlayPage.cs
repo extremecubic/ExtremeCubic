@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class OnlinePlayPage : MenuPage
 {
@@ -9,11 +10,15 @@ public class OnlinePlayPage : MenuPage
 	[SerializeField] MessagePromt _promt;
 
 	[SerializeField] Button[] _buttons;
+	[SerializeField] Button _returnButton;
 
 	public override void OnPageEnter()
 	{
 		if (PhotonNetwork.connected)
+		{
+			EventSystem.current.SetSelectedGameObject(_firstSelectable);
 			return;
+		}
 
 		for (int i = 0; i < _buttons.Length; i++)
 			_buttons[i].interactable = false;
@@ -30,17 +35,14 @@ public class OnlinePlayPage : MenuPage
 
 	public override void OnPageExit()
 	{
-		
 	}
 
 	public override void OnPlayerLeftRoom(PhotonPlayer player)
 	{
-		
 	}
 
 	public override void UpdatePage()
-	{
-		
+	{		
 	}
 
 	void OnConnectedToMaster()
@@ -52,6 +54,8 @@ public class OnlinePlayPage : MenuPage
 
 		for (int i = 0; i < _buttons.Length; i++)
 			_buttons[i].interactable = true;
+
+		EventSystem.current.SetSelectedGameObject(_firstSelectable);
 	}
 
 	void OnFailedToConnectToPhoton(DisconnectCause cause)
@@ -60,7 +64,11 @@ public class OnlinePlayPage : MenuPage
 			return;
 
 		_connectingParent.SetActive(false);
-		_promt.SetAndShow(string.Format("Failed to Connect to Server!\nError : {0}", cause.ToString()), () => MainMenuSystem.instance.SetToPage(Constants.SCREEN_START));
+		_promt.SetAndShow(string.Format("Failed to Connect to Server!\nError : {0}", cause.ToString()), () => 
+		{
+			MainMenuSystem.instance.SetToPage(Constants.SCREEN_START);
+			EventSystem.current.SetSelectedGameObject(_returnButton.gameObject);
+		});
 	}
 
 

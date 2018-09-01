@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class RandomMatchMakingPage : MenuPage
 {
@@ -23,11 +24,12 @@ public class RandomMatchMakingPage : MenuPage
 	{
 		// move all player UI boxes to the prefered positions of this page
 		_playerInfo.SetPlayerUIByScreen(MenuScreen.Connect);
+
+		EventSystem.current.SetSelectedGameObject(_firstSelectable);
 	}
 
 	public override void OnPageExit()
 	{
-		
 	}
 
 	public override void OnPlayerLeftRoom(PhotonPlayer player)
@@ -45,7 +47,7 @@ public class RandomMatchMakingPage : MenuPage
 			_counter.gameObject.SetActive(true);
 
 			// if max players have joined the room continue to next screen without waiting for timer
-			if (_preferedPlayers != 0 && PhotonNetwork.room.PlayerCount == PhotonNetwork.room.MaxPlayers)			
+			if (PhotonNetwork.room.PlayerCount == PhotonNetwork.room.MaxPlayers)			
 				ContinueAndCloseRoom();			
 			
 			if (PhotonNetwork.isMasterClient)
@@ -135,6 +137,16 @@ public class RandomMatchMakingPage : MenuPage
 			PhotonNetwork.room.IsOpen = false;
 
 		MainMenuSystem.instance.SetToPage(Constants.SCREEN_ONLINE_LEVELSELECT);
+	}
+
+	public void OnLeave()
+	{
+		if (PhotonNetwork.room != null)
+			PhotonNetwork.LeaveRoom();
+
+		_playerInfo.DisableAllPlayerUI();
+
+		MainMenuSystem.instance.SetToPage(Constants.SCREEN_START);
 	}
 
 	void UpdateTimer()

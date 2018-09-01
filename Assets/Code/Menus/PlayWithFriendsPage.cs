@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class PlayWithFriendsPage : MenuPage
 {
@@ -17,6 +18,10 @@ public class PlayWithFriendsPage : MenuPage
 
 	[Header("SHARED UI REFERENCES")]
 	[SerializeField] Button _continueButton;
+
+	[Header("FIRST SELECTABLE OBJECT")]
+	[SerializeField] GameObject _generalPageFirstSelectable;
+	[SerializeField] GameObject _steamPageFirstSelectable;
 	
 	public void HostRoom()
 	{
@@ -130,11 +135,13 @@ public class PlayWithFriendsPage : MenuPage
 #if STEAM_VERSION
 		_steamPage.SetActive(true);
 		_generalPage.SetActive(false);
+		EventSystem.current.SetSelectedGameObject(_steamPageFirstSelectable);
 #endif
 
 #if NO_SERVICE_VERSION
 		_steamPage.SetActive(false);
 		_generalPage.SetActive(true);
+		EventSystem.current.SetSelectedGameObject(_generalPageFirstSelectable);
 #endif
 	}
 }

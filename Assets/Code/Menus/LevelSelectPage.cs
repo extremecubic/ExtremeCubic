@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System;
 using Random = UnityEngine.Random;
 using MEC;
+using UnityEngine.EventSystems;
 
 public class LevelSelectPage : MenuPage
 {
@@ -64,6 +65,8 @@ public class LevelSelectPage : MenuPage
 		
 		_selectScreen.SetActive(true);
 		_nominatedScreen.SetActive(false);
+
+		EventSystem.current.SetSelectedGameObject(_firstSelectable);
 
 		// if masterclient tell everyone to start countdown timer
 		if (PhotonNetwork.isMasterClient)

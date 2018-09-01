@@ -57,7 +57,7 @@ public class MainMenuSystem : Photon.MonoBehaviour
 		if (currentPage == null)
 			return;
 
-		currentPage.UpdatePage();
+		currentPage.UpdatePage();		
 	}
 
 	void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)

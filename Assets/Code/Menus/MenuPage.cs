@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class MenuPage : Photon.MonoBehaviour
 {
 	[SerializeField] protected GameObject _content;
+	[SerializeField] protected GameObject _firstSelectable;
 
 	public string pageName { get { return name; } }
 

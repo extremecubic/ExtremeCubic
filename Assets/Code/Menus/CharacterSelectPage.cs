@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.EventSystems;
 
 public class CharacterSelectPage : MenuPage
 {
@@ -43,14 +44,11 @@ public class CharacterSelectPage : MenuPage
 	public void OnCharacterSelcted(int buttonIndex)
 	{
 		// unselect last selected character
-		if(_currentPressedIndex >= 0)
-		{
-			UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
-			_characterButtons[_currentPressedIndex].border.gameObject.SetActive(false);
-		}		
+		if(_currentPressedIndex >= 0)					
+			_characterButtons[_currentPressedIndex].border.gameObject.SetActive(false);	
 
 		_currentPressedIndex = buttonIndex;
-		_characterButtons[_currentPressedIndex].border.gameObject.SetActive(true);
+		_characterButtons[_currentPressedIndex].border.gameObject.SetActive(true);		
 	}
 
 	public void OnCharacterSelected(string name)
@@ -166,6 +164,8 @@ public class CharacterSelectPage : MenuPage
 		_numSkins = _currentView.prefabs.Length;
 		UpdateSkinDots();
 
+		EventSystem.current.SetSelectedGameObject(_firstSelectable);
+
 		// if masterclient tell averyone to start countdown timer
 		if (PhotonNetwork.isMasterClient)
 			photonView.RPC("StartCountdown", PhotonTargets.All, PhotonNetwork.time);
@@ -187,9 +187,6 @@ public class CharacterSelectPage : MenuPage
 			if (_currentViewObject[i] != null)
 				_currentViewObject[i].transform.rotation = Quaternion.Euler(_rotation);
 		}
-
-		if (_currentPressedIndex >= 0)		
-			_characterButtons[_currentPressedIndex].button.Select();
 
 		CheckAllReady();
 	}
@@ -255,12 +252,9 @@ public class CharacterSelectPage : MenuPage
 		_playerInfo.DisableAllPlayerUI();
 
 		// remove highlight of selected character
-		if(_currentPressedIndex >= 0)
-		{
-			UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
+		if(_currentPressedIndex >= 0)					
 			_characterButtons[_currentPressedIndex].border.gameObject.SetActive(false);
-		}
-
+		
 		// reset page properties		
 		_currentSkin = 0;
 		_currentPressedIndex = -1;
