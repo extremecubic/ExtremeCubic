@@ -39,16 +39,15 @@ public class CharacterSelectPage : MenuPage
 	int _numSkins;
 	int _currentSkin;
 	bool _imReady;
-	int _currentPressedIndex = -1;
+	int _currentPressedIndex = 0;
 
 	public void OnCharacterSelcted(int buttonIndex)
 	{
-		// unselect last selected character
-		if(_currentPressedIndex >= 0)					
-			_characterButtons[_currentPressedIndex].border.gameObject.SetActive(false);	
+		// change boarder				
+		_characterButtons[_currentPressedIndex].border.gameObject.SetActive(false);	
+		_characterButtons[buttonIndex].border.gameObject.SetActive(true);		
 
 		_currentPressedIndex = buttonIndex;
-		_characterButtons[_currentPressedIndex].border.gameObject.SetActive(true);		
 	}
 
 	public void OnCharacterSelected(string name)
@@ -151,20 +150,21 @@ public class CharacterSelectPage : MenuPage
 		// move all player UI boxes to the prefered positions of this page
 		// unselect ready arrows from last screen
 		_playerInfo.SetPlayerUIByScreen(MenuScreen.CharacterSelect);
-		_playerInfo.photonView.RPC("SetReadyUI", PhotonTargets.All, PhotonNetwork.player.ID, false);
+		_playerInfo.photonView.RPC("SetReadyUI", PhotonTargets.AllViaServer, PhotonNetwork.player.ID, false);
 
 		// get the view of first model in character database
-		_currentView = CharacterDatabase.instance.GetFirstView();
-		photonView.RPC("Update3DModel", PhotonTargets.All, PhotonNetwork.player.ID, _currentView.name, _currentSkin);
+		_currentView = CharacterDatabase.instance.GetViewFromName(_characterButtons[0].button.name.ToLower());
+		photonView.RPC("Update3DModel", PhotonTargets.AllViaServer, PhotonNetwork.player.ID, _currentView.name, _currentSkin);
 
 		// tell everyone to update this players UI Box
-		_playerInfo.photonView.RPC("UpdatePlayerUI", PhotonTargets.All, PhotonNetwork.player.ID, _currentView.name);
+		_playerInfo.photonView.RPC("UpdatePlayerUI", PhotonTargets.AllViaServer, PhotonNetwork.player.ID, _currentView.name);
 
 		// get how many skins this character have and update dots
 		_numSkins = _currentView.prefabs.Length;
 		UpdateSkinDots();
 
 		EventSystem.current.SetSelectedGameObject(_firstSelectable);
+		_characterButtons[0].border.SetActive(true);
 
 		// if masterclient tell averyone to start countdown timer
 		if (PhotonNetwork.isMasterClient)
@@ -187,6 +187,12 @@ public class CharacterSelectPage : MenuPage
 			if (_currentViewObject[i] != null)
 				_currentViewObject[i].transform.rotation = Quaternion.Euler(_rotation);
 		}
+
+		if (Input.GetButtonDown(Constants.BUTTON_LB + "0"))
+			OnChangeSkin(false);
+
+		if (Input.GetButtonDown(Constants.BUTTON_RB + "0"))
+			OnChangeSkin(true);		
 
 		CheckAllReady();
 	}
@@ -257,7 +263,7 @@ public class CharacterSelectPage : MenuPage
 		
 		// reset page properties		
 		_currentSkin = 0;
-		_currentPressedIndex = -1;
+		_currentPressedIndex = 0;
 
 		// reset custom properties and leave room
 		PhotonNetwork.RemovePlayerCustomProperties(null);

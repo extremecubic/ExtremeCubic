@@ -46,9 +46,15 @@ public class LevelSelectPage : MenuPage
 	[SerializeField] int        _loopsWithoutTimeIncrease = 12;
 
 	CoroutineHandle _handle;
+	bool _selected;
 
 	public void OnLevelSelected(int level)
 	{
+		if (_selected)
+			return;
+
+		_selected = true;
+		
 		// set level ID of nominated level and set that we are ready
 		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.PLAYER_READY, true);
 		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.NOMINATED_LEVEL, level);
@@ -62,6 +68,8 @@ public class LevelSelectPage : MenuPage
 	{
 		// move all player UI boxes to the prefered positions of this page
 		_playerInfo.SetPlayerUIByScreen(MenuScreen.LevelSelect);
+
+		_selected = false;
 		
 		_selectScreen.SetActive(true);
 		_nominatedScreen.SetActive(false);

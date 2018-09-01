@@ -34,7 +34,7 @@ public class Character : Photon.MonoBehaviour
 	public void Initialize(string viewName, int playerID, string nickname, int skinID, int spawnPoint)
     {
 		if (Constants.onlineGame)
-		    photonView.RPC("NetworkInitialize", PhotonTargets.AllBuffered, viewName, playerID, nickname, skinID, spawnPoint); // wont need be buffered later when level loading is synced
+		    photonView.RPC("NetworkInitialize", PhotonTargets.All, viewName, playerID, nickname, skinID, spawnPoint); 
 
 		if (!Constants.onlineGame)
 			NetworkInitialize(viewName, playerID, nickname, skinID, spawnPoint);
@@ -43,7 +43,7 @@ public class Character : Photon.MonoBehaviour
 	public void Spawn()
 	{
 		if (Constants.onlineGame)
-			photonView.RPC("NetworkSpawn", PhotonTargets.AllBuffered); // wont need be buffered later when level loading is synced
+			photonView.RPC("NetworkSpawn", PhotonTargets.All); 
 
 		if (!Constants.onlineGame)
 			NetworkSpawn();

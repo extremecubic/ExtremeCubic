@@ -21,8 +21,8 @@ public class MainMenuSystem : Photon.MonoBehaviour
 
 	void Start()
 	{
-		if(reclaimPlayerUI)
-			_playerInfo.photonView.RPC("ClaimUIBox", PhotonTargets.AllBufferedViaServer, PhotonNetwork.player.ID, "SteamNick", "??????????");
+		if (reclaimPlayerUI)
+			_playerInfo.photonView.RPC("ClaimUIBox", PhotonTargets.AllViaServer, PhotonNetwork.player.ID, "SteamNick", "??????????");
 
 		SetToPage(startPage);
 	}
