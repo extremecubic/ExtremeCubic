@@ -32,23 +32,23 @@ public class TileEditor : MonoBehaviour
 
 	//UI
 	[Header("UI")]
-	[SerializeField] InputField _inputLoad;
-	[SerializeField] InputField _inputSave;
-	[SerializeField] Dropdown _dropDownTiles;
-	[SerializeField] Text _gridSizeText;
-	[SerializeField] Slider _sliderSizeX;
-	[SerializeField] Slider _sliderSizeY;
-	[SerializeField] Text _editModeText;
+	[SerializeField] InputField   _inputLoad;
+	[SerializeField] InputField   _inputSave;
+	[SerializeField] Dropdown     _dropDownTiles;
+	[SerializeField] Text         _gridSizeText;
+	[SerializeField] Slider       _sliderSizeX;
+	[SerializeField] Slider       _sliderSizeY;
+	[SerializeField] Text         _editModeText;
 	[SerializeField] MessagePromt _promt;
-	[SerializeField] Slider _tintMin;
-	[SerializeField] Slider _tintMax;
-	[SerializeField] Text _currentTint;
-	[SerializeField] Text _currentMinTintText;
-	[SerializeField] Text _currentMaxTintText;
+	[SerializeField] Slider       _tintMin;
+	[SerializeField] Slider       _tintMax;
+	[SerializeField] Text         _currentTint;
+	[SerializeField] Text         _currentMinTintText;
+	[SerializeField] Text         _currentMaxTintText;
 
 	// grid
 	[Header("Grid")]
-	[SerializeField] Material _gridmaterial;
+	[SerializeField] Material  _gridmaterial;
 	[SerializeField] Transform _tileFolder;
 
 	// privates

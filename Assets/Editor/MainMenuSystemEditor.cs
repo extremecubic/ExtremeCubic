@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-
 [CustomEditor(typeof(MainMenuSystem))]
 public class MainMenuSystemEditor : Editor
 {
@@ -23,6 +22,5 @@ public class MainMenuSystemEditor : Editor
 				MMS.SetToPage(MMS.menuPages[i].gameObject.name);
 				_index = i;
 			}
-
 	}
 }

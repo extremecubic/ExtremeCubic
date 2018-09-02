@@ -6,15 +6,18 @@ using UnityEngine.EventSystems;
 
 public class PlayWithFriendsPage : MenuPage
 {
+	[Header("MISC REFERENCES")]
 	[SerializeField] MenuPlayerInfoUI _playerInfo;
+	[SerializeField] MessagePromt     _promt;
 
 	[Header("SUB PAGES")]
 	[SerializeField] GameObject _generalPage;
 	[SerializeField] GameObject _steamPage;
 
 	[Header("NON STEAM UI REFERENCES")]
-	[SerializeField] Text _roomNameText;
-	[SerializeField] Text _joinRoomInput;
+	[SerializeField] Text   _roomNameText;
+	[SerializeField] Text   _joinRoomInput;
+	[SerializeField] Button _joinRoomButton;
 
 	[Header("SHARED UI REFERENCES")]
 	[SerializeField] Button _continueButton;
@@ -48,6 +51,7 @@ public class PlayWithFriendsPage : MenuPage
 		if(_joinRoomInput.text == "")
 		{
 			Debug.Log("Trying to join room with empty string");
+			return;
 		}
 
 		if (!PhotonNetwork.isMasterClient)
@@ -63,6 +67,9 @@ public class PlayWithFriendsPage : MenuPage
 
 	void OnCreatedRoom()
 	{
+		if (MainMenuSystem.instance.currentPage != this)
+			return;
+
 		_roomNameText.text = PhotonNetwork.room.Name + " As Host";
 	}
 
@@ -76,7 +83,15 @@ public class PlayWithFriendsPage : MenuPage
 				
 		_playerInfo.photonView.RPC("ClaimUIBox", PhotonTargets.AllBufferedViaServer, PhotonNetwork.player.ID, "SteamNick", "??????????");
 	}
-	
+
+	void OnPhotonJoinRoomFailed(object[] codeAndMsg)
+	{
+		if (MainMenuSystem.instance.currentPage != this)
+			return;
+
+		_promt.SetAndShow("Failed to join room!!\n" + codeAndMsg[1].ToString(), () => EventSystem.current.SetSelectedGameObject(_joinRoomButton.gameObject));
+	}
+
 	[PunRPC]
 	void ContinueToLevelselect()
 	{
@@ -96,7 +111,10 @@ public class PlayWithFriendsPage : MenuPage
 	public override void UpdatePage()
 	{
 		if (PhotonNetwork.room == null)
+		{
+			_roomNameText.text = "Not Connected";
 			return;
+		}
 
 		// when more then two players in room the host can chose to continue to next screen
 		if (PhotonNetwork.isMasterClient && PhotonNetwork.room.PlayerCount > 1)
@@ -106,8 +124,7 @@ public class PlayWithFriendsPage : MenuPage
 	}
 
 	public override void OnPageExit()
-	{
-		_roomNameText.text = "Not Connected";
+	{		
 	}
 
 	public override void OnPlayerLeftRoom(PhotonPlayer player)

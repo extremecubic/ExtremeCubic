@@ -152,7 +152,7 @@ public class RandomMatchMakingPage : MenuPage
 	void UpdateTimer()
 	{		
 		// countdown the timer on master client
-		// if more then i player is connected to room
+		// if more then 1 player is connected to room
 		// start the game even if the prefered player count of room was higher
 		_timer -= Time.deltaTime;
 		if (_timer <= 0)

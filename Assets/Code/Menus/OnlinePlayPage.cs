@@ -65,8 +65,7 @@ public class OnlinePlayPage : MenuPage
 
 		_connectingParent.SetActive(false);
 		_promt.SetAndShow(string.Format("Failed to Connect to Server!\nError : {0}", cause.ToString()), () => 
-		{
-			MainMenuSystem.instance.SetToPage(Constants.SCREEN_START);
+		{			
 			EventSystem.current.SetSelectedGameObject(_returnButton.gameObject);
 		});
 	}

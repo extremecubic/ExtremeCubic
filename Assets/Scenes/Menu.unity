@@ -7897,7 +7897,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &843617078
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18484,7 +18484,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1948375140
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21061,10 +21061,12 @@ MonoBehaviour:
   _content: {fileID: 843617077}
   _firstSelectable: {fileID: 0}
   _playerInfo: {fileID: 2138981392}
+  _promt: {fileID: 1370652994}
   _generalPage: {fileID: 1169186947}
   _steamPage: {fileID: 2076382855}
   _roomNameText: {fileID: 1139837808}
   _joinRoomInput: {fileID: 640622315}
+  _joinRoomButton: {fileID: 226611926}
   _continueButton: {fileID: 1868966767}
   _generalPageFirstSelectable: {fileID: 777805629}
   _steamPageFirstSelectable: {fileID: 0}
