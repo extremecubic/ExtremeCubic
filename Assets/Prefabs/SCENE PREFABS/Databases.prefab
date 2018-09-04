@@ -504,6 +504,38 @@ MonoBehaviour:
     trailForwardAsDashDirection: 1
     chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
       type: 2}
+  - name: blueman
+    iconUI: {fileID: 21300000, guid: b2ca8e9d65036254c8141e3a00264a64, type: 3}
+    prefabs:
+    - {fileID: 1113231416418890, guid: b1378e8b547e2334e9d786e2577c0d41, type: 2}
+    walkSound: {fileID: 8300000, guid: 095fb456ce50a0045805adfe29e8b6a8, type: 3}
+    dashSound: {fileID: 8300000, guid: 6b4bdcd31b14b404ca707e4255795507, type: 3}
+    hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
+    deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
+    chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
+      type: 2}
+    trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
+      type: 2}
+    trailForwardAsDashDirection: 1
+    chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+  - name: faceman
+    iconUI: {fileID: 21300000, guid: 655051eacd219b743bf81c0b0372cff9, type: 3}
+    prefabs:
+    - {fileID: 1920608421618768, guid: ff7fe1728b6c9954e9f7ddb175e49def, type: 2}
+    walkSound: {fileID: 8300000, guid: 095fb456ce50a0045805adfe29e8b6a8, type: 3}
+    dashSound: {fileID: 8300000, guid: 6b4bdcd31b14b404ca707e4255795507, type: 3}
+    hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
+    deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
+    chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
+      type: 2}
+    trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
+      type: 2}
+    trailForwardAsDashDirection: 1
+    chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
   _fallBackView:
     name: matti
     iconUI: {fileID: 21300000, guid: b4f8f2547b756ce408fb7ee446fa9d2a, type: 3}
