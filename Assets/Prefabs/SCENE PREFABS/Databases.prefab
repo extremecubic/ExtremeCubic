@@ -262,6 +262,26 @@ MonoBehaviour:
       breakParticle: {fileID: 0}
       killParticle: {fileID: 0}
       prefab: {fileID: 1381398352821048, guid: 257ca0cc5d5249a4fa48d37cfcc83166, type: 2}
+  - _typeName: dirtpillar
+    _data:
+      walkable: 0
+      health: 0
+      deadly: 0
+      unbreakable: 1
+      deathType: 0
+      replaceTileOnDeath: 0
+      replacementTile: 
+      isSpecialTile: 0
+      specialType: 0
+      intValue: 0
+      landSound: {fileID: 0}
+      breakSound: {fileID: 0}
+      killSound: {fileID: 0}
+      specialTileSound: {fileID: 0}
+      landParticle: {fileID: 0}
+      breakParticle: {fileID: 0}
+      killParticle: {fileID: 0}
+      prefab: {fileID: 1167541518567216, guid: 62287eaa937d2a04587341e955f228a5, type: 2}
 --- !u!114 &114660886813412552
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -116,6 +116,20 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 			NetworkClaimPowerUp(currentTile.position.x, currentTile.position.y);
 	}
 
+	void OnHittingObstacle(Vector2DInt direction)
+	{
+		if (Constants.onlineGame)
+		{
+			if (PhotonNetwork.isMasterClient)
+				photonView.RPC("NetworkOnhittingObstacle", PhotonTargets.All, currentTile.position.x, currentTile.position.y, direction.x, direction.y);
+			else
+				_character.stateComponent.SetState(CharacterState.Frozen);
+		}
+
+		if (!Constants.onlineGame)
+			NetworkOnhittingObstacle(currentTile.position.x, currentTile.position.y, direction.x, direction.y);
+	}
+
 	bool OnEnterSpecialTile()
 	{
 		if (currentTile.model.data.isSpecialTile)
@@ -328,8 +342,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 			_character.ParticleComponent.EmitTrail(true, (new Vector3(targetPos.x, 1, targetPos.y) - new Vector3(currentPos.x, 1, currentPos.y)).normalized);
 		}
 
-		// stop feedback from charge
-		_character.ParticleComponent.EmitCharge(false);
+		// stop feedback from charge		
 		_character.soundComponent.StopSound(CharacterSound.Charge);
 
 		// loop over all dash charges
@@ -337,11 +350,14 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		{
 			// get next tile in dash path			
 			// current tile is corrected before coroutine if lagging so this is safe
-			Tile targetTile = currentTile.GetRelativeTile(direction);			
+			Tile targetTile = currentTile.GetRelativeTile(direction);
 
 			// abort dash if running into non walkable tile
 			if (!targetTile.model.data.walkable)
+			{
+				OnHittingObstacle(direction);
 				yield break;
+			}
 
 			// Calculate lerp positions
 			Vector3 fromPosition   = transform.position; // interpolate from current position to avoid teleporting if lagging
@@ -417,6 +433,68 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 
 		// add cooldowns and stop feedback
 		_character.ParticleComponent.EmitTrail(false, Vector3.zero);
+		StopMovementAndAddCooldowns();
+	}
+
+	public IEnumerator<float> _ObstacleCollide(Vector2DInt tile, Vector2DInt direction)
+	{
+		// get references to tiles
+		Tile fromTile = _tileMap.GetTile(tile);
+		Tile targetTile = fromTile.GetRelativeTile(direction);
+
+		Vector3 targetPosition = new Vector3(targetTile.position.x, 1, targetTile.position.y);
+
+		// Calculate lerp rotations
+		// get the movement direction based on vector between starttile and endtile
+		// flip x and z to get the correct rotation in worldspace
+		Vector3 movementDirection = (targetPosition - new Vector3(fromTile.position.x, 1, fromTile.position.y)).normalized;
+		Vector3 movementDirectionRight = new Vector3(-movementDirection.z, movementDirection.y, movementDirection.x);
+
+		// do lerp from current rotation if desynced(will catch up)
+		// target is calculated using the target rotation we had during last movement if we are lagging behind
+		// this prevents crooked target rotations
+		Quaternion fromRotation = transform.rotation;
+		Quaternion targetRotation = Quaternion.Euler(movementDirectionRight * 90) * _lastTargetRotation;
+
+		int rollCount = 1;
+
+		// save our target rotation so we can use this as fromrotation if we would get interupted by dash and not have time to finish the lerp
+		_lastTargetRotation = targetRotation;
+
+		// do the movement itself
+		float movementProgress = 0;
+		float rotationProgress = 0;
+		while (movementProgress < 1)
+		{
+			rotationProgress += ((_model.collideSpeed * _character.powerUpComponent.speedMultiplier) * _model.numCollideRolls) * Time.deltaTime;
+			movementProgress += (_model.collideSpeed * _character.powerUpComponent.speedMultiplier) * Time.deltaTime;
+			movementProgress = Mathf.Clamp01(movementProgress);
+
+			if (movementProgress >= 1)
+				rotationProgress = 1;
+
+			float yPos = 1 + (Mathf.Sin(movementProgress * (float)Math.PI) * _model.collideBounceHeight);
+			float xPos = fromTile.position.x + ((-movementDirection.x) * (Mathf.Sin(movementProgress * (float)Math.PI) * _model.collideFlyBackAmount));
+			float zPos = fromTile.position.y + ((-movementDirection.z) * (Mathf.Sin(movementProgress * (float)Math.PI) * _model.collideFlyBackAmount));
+
+			transform.position = new Vector3(xPos, yPos, zPos);
+			transform.rotation = Quaternion.Lerp(fromRotation, targetRotation, rotationProgress);
+
+			if (rotationProgress >= 1 && rollCount < _model.numCollideRolls)
+			{
+				fromRotation = transform.rotation;
+				targetRotation = Quaternion.Euler(movementDirectionRight * 90) * _lastTargetRotation;
+				_lastTargetRotation = targetRotation;
+
+				rotationProgress = 0;
+				rollCount++;
+			}
+
+			yield return Timing.WaitForOneFrame;
+		}
+
+		yield return Timing.WaitForSeconds(_model.collideStunTime);
+
 		StopMovementAndAddCooldowns();
 	}
 	

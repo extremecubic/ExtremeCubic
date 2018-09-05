@@ -67,4 +67,5 @@ MonoBehaviour:
   - SyncTransform
   - Update3DModel
   - UpdatePlayerUI
+  - NetworkOnhittingObstacle
   DisableAutoOpenWizard: 1

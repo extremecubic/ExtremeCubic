@@ -20,8 +20,7 @@ public enum CharacterState
     Walking,
     Charging,
     Dashing,
-    Dashed,
 	Frozen,
-
+	
     Dead,
 }

@@ -22,6 +22,9 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 
 		_stateComponent.SetState(CharacterState.Charging);
 
+		// abort all current particleFeedBack
+		_character.ParticleComponent.StopAll();
+
 		// start feedback
 		_character.ParticleComponent.EmitCharge(true);
 		_character.soundComponent.PlaySound(CharacterSound.Charge);
@@ -32,6 +35,9 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 	{
 		if (_stateComponent.currentState == CharacterState.Dead)
 			return;
+
+		// abort all current particleFeedBack
+		_character.ParticleComponent.StopAll();
 
 		// set new current tile if desynced
 		SetNewTileReferences(new Vector2DInt(fromX, fromY));
@@ -44,6 +50,8 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 	{
 		if (_stateComponent.currentState == CharacterState.Dead)
 			return;
+
+		_character.ParticleComponent.StopAll();
 
 		// kill all coroutines on this layer
 		Timing.KillCoroutines(gameObject.GetInstanceID());
@@ -61,6 +69,9 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		if (_stateComponent.currentState == CharacterState.Dead)
 			return;
 
+		// abort all current particleFeedBack
+		_character.ParticleComponent.StopAll();
+
 		// kill all coroutines on this layer
 		Timing.KillCoroutines(gameObject.GetInstanceID());
 
@@ -77,14 +88,23 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		// set last target rotation to current rotation(we never started lerping towards target)
 		_lastTargetRotation = new Quaternion(rotX, rotY, rotZ, rotW);
 
-		// stop trail emitter
-		_character.ParticleComponent.EmitTrail(false, Vector3.zero);
-
 		// add cooldowns
 		StopMovementAndAddCooldowns();
 
 		// check if we got stopped on deadly tile(only server handles deathchecks)
 		OnDeadlyTile();
+	}
+
+	[PunRPC]
+	public void NetworkOnhittingObstacle(int tileX, int tileY, int directionX, int directionY)
+	{
+		// set new current tile if desynced
+		SetNewTileReferences(new Vector2DInt(tileX, tileY));
+
+		_character.ParticleComponent.EmitTrail(false, Vector3.zero);
+		transform.position = new Vector3(tileX, 1, tileY);
+
+		Timing.RunCoroutineSingleton(_ObstacleCollide(new Vector2DInt(tileX, tileY), new Vector2DInt(directionX, directionY)), gameObject.GetInstanceID(), SingletonBehavior.Overwrite);
 	}
 
 	[PunRPC]

@@ -17,6 +17,13 @@ public class CharacterModel : ScriptableObject
     public float dashChargeRate   = 2.0f;    // Dash tiles per second
 	public int   dashRotationSpeed = 1;      // How many 90 degree rotations per tile the character does during a dash
 
+	[Header("Colliding")]
+	public float collideSpeed = 1.0f;
+	public int numCollideRolls = 3;
+	public float collideBounceHeight = 1;
+	public float collideFlyBackAmount = 0.75f;
+	public float collideStunTime = 3.0f;
+
 	[Header("Fall")]
 	public float fallSpeed = 5.0f;
 	public float fallAcceleration = 10.0f;
