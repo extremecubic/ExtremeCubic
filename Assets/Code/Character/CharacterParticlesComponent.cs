@@ -10,29 +10,25 @@ public class CharacterParticlesComponent : MonoBehaviour
 	ParticleSystem _hit;
 	ParticleSystem _charge;
 	ParticleSystem _powerUpLoop;
+	ParticleSystem _stunned;
 
 	Vector3 _dashForward;
 
 	public void ManualAwake(CharacterDatabase.ViewData data, Transform parent)
 	{
 		_data = data;
-		CreateTrail(parent);
-		CreateCharge(parent);
+		CreateParticle(parent, ref _trail,   _data.trailParticle);
+		CreateParticle(parent, ref _charge,  _data.chargeupParticle);
+		CreateParticle(parent, ref _stunned, _data.stunnedParticle);
 	}
-
-	void CreateTrail(Transform parent)
+	
+	void CreateParticle(Transform parent, ref ParticleSystem system, ParticleSystem systemPrefab)
 	{
-		if (_data.trailParticle == null)
+		if (systemPrefab == null)
 			return;
 
-		_trail = Instantiate(_data.trailParticle, transform.position, _data.trailParticle.transform.rotation, parent);
-		_trail.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-	}
-
-	void CreateCharge(Transform parent)
-	{
-		_charge = Instantiate(_data.chargeupParticle, transform.position, _data.chargeupParticle.transform.rotation, parent);
-		_charge.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+		system = Instantiate(systemPrefab, transform.position, systemPrefab.transform.rotation, parent);
+		system.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 	}
 
 	public void EmitTrail(bool emit, Vector3 dashForward)
@@ -55,7 +51,7 @@ public class CharacterParticlesComponent : MonoBehaviour
 
 	public void EmitCharge(bool emit)
 	{
-		if (_data.chargeupParticle == null)
+		if (_charge == null)
 			return;		
 
 		if (emit)		
@@ -64,7 +60,7 @@ public class CharacterParticlesComponent : MonoBehaviour
 			_charge.Stop(true, ParticleSystemStopBehavior.StopEmitting);					
 	}
 
-	public void StartPowerUpParticle(ParticleSystem system, bool emit)
+	public void EmitPowerUp(ParticleSystem system, bool emit)
 	{
 		if (!emit)
 		{
@@ -92,6 +88,20 @@ public class CharacterParticlesComponent : MonoBehaviour
 		Destroy(p, 8);
 	}
 
+	public void EmitStunned(bool emit)
+	{
+		if (_stunned == null)
+			return;
+
+		if (emit)
+		{
+			_stunned.transform.position = transform.position + Vector3.up;
+			_stunned.Play(true);
+		}
+		else
+			_stunned.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+	}
+
 	void LateUpdate()
 	{
 		if (_trail.isEmitting && _data.trailForwardAsDashDirection)
@@ -106,6 +116,9 @@ public class CharacterParticlesComponent : MonoBehaviour
 			_charge.Stop(true, ParticleSystemStopBehavior.StopEmitting);			
 		
 		if (_trail != null)		
-			_trail.Stop(true, ParticleSystemStopBehavior.StopEmitting);		
+			_trail.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+
+		if (_stunned != null)
+			_stunned.Stop(true, ParticleSystemStopBehavior.StopEmitting);
 	}
 }

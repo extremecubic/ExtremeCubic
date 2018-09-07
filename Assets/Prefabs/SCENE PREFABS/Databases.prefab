@@ -274,7 +274,7 @@ MonoBehaviour:
       isSpecialTile: 0
       specialType: 0
       intValue: 0
-      landSound: {fileID: 0}
+      landSound: {fileID: 8300000, guid: 8bb6ae8889252984f88a4d30c61eef7a, type: 3}
       breakSound: {fileID: 0}
       killSound: {fileID: 0}
       specialTileSound: {fileID: 0}
@@ -304,12 +304,15 @@ MonoBehaviour:
     hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
     deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
     chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    stunnedSound: {fileID: 8300000, guid: 922f7d14a2a53824486dde09ffd23462, type: 3}
     hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
       type: 2}
     trailParticle: {fileID: 198766545261693686, guid: 2c3c552477372574f9720fd7389f1251,
       type: 2}
     trailForwardAsDashDirection: 0
     chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+    stunnedParticle: {fileID: 198650944266004816, guid: bb8859e7f483be54391fa8ac9d45123e,
       type: 2}
   - name: simon
     iconUI: {fileID: 21300000, guid: 79f044903ab0fd14bac38fd69e7f362f, type: 3}
@@ -320,12 +323,15 @@ MonoBehaviour:
     hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
     deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
     chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    stunnedSound: {fileID: 8300000, guid: 922f7d14a2a53824486dde09ffd23462, type: 3}
     hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
       type: 2}
     trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
       type: 2}
     trailForwardAsDashDirection: 1
     chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+    stunnedParticle: {fileID: 198650944266004816, guid: bb8859e7f483be54391fa8ac9d45123e,
       type: 2}
   - name: duplo
     iconUI: {fileID: 21300000, guid: 9724090c80d0c2c4c8d9ef36a229ec1b, type: 3}
@@ -336,12 +342,15 @@ MonoBehaviour:
     hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
     deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
     chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    stunnedSound: {fileID: 8300000, guid: 922f7d14a2a53824486dde09ffd23462, type: 3}
     hitParticle: {fileID: 198330214428362902, guid: a97415c6b57076f41a6621a7b51d63a3,
       type: 2}
     trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
       type: 2}
     trailForwardAsDashDirection: 1
     chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+    stunnedParticle: {fileID: 198650944266004816, guid: bb8859e7f483be54391fa8ac9d45123e,
       type: 2}
   - name: rubikscube
     iconUI: {fileID: 21300000, guid: 296c5eaff9b1ed54a9648b595e65f314, type: 3}
@@ -353,12 +362,15 @@ MonoBehaviour:
     hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
     deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
     chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    stunnedSound: {fileID: 8300000, guid: 922f7d14a2a53824486dde09ffd23462, type: 3}
     hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
       type: 2}
     trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
       type: 2}
     trailForwardAsDashDirection: 1
     chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+    stunnedParticle: {fileID: 198650944266004816, guid: bb8859e7f483be54391fa8ac9d45123e,
       type: 2}
   - name: cheese
     iconUI: {fileID: 21300000, guid: befa81cce173f6b45b7e14548d4c5bb8, type: 3}
@@ -371,12 +383,15 @@ MonoBehaviour:
     hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
     deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
     chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    stunnedSound: {fileID: 8300000, guid: 922f7d14a2a53824486dde09ffd23462, type: 3}
     hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
       type: 2}
     trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
       type: 2}
     trailForwardAsDashDirection: 1
     chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+    stunnedParticle: {fileID: 198650944266004816, guid: bb8859e7f483be54391fa8ac9d45123e,
       type: 2}
   - name: dice
     iconUI: {fileID: 21300000, guid: e6305af9fe23b074fa3105c25c30e0d0, type: 3}
@@ -387,12 +402,15 @@ MonoBehaviour:
     hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
     deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
     chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    stunnedSound: {fileID: 8300000, guid: 922f7d14a2a53824486dde09ffd23462, type: 3}
     hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
       type: 2}
     trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
       type: 2}
     trailForwardAsDashDirection: 1
     chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+    stunnedParticle: {fileID: 198650944266004816, guid: bb8859e7f483be54391fa8ac9d45123e,
       type: 2}
   - name: horse
     iconUI: {fileID: 21300000, guid: 6079a333df325fc4b941d1535bfdba78, type: 3}
@@ -403,11 +421,14 @@ MonoBehaviour:
     hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
     deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
     chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    stunnedSound: {fileID: 8300000, guid: 922f7d14a2a53824486dde09ffd23462, type: 3}
     hitParticle: {fileID: 19800000, guid: f2dba9e16cd347f44a395b8204544ee5, type: 2}
     trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
       type: 2}
     trailForwardAsDashDirection: 1
     chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+    stunnedParticle: {fileID: 198650944266004816, guid: bb8859e7f483be54391fa8ac9d45123e,
       type: 2}
   - name: cow
     iconUI: {fileID: 21300000, guid: 0a77da5fdd3011044a2f8838f5020bdd, type: 3}
@@ -418,12 +439,15 @@ MonoBehaviour:
     hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
     deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
     chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    stunnedSound: {fileID: 8300000, guid: 922f7d14a2a53824486dde09ffd23462, type: 3}
     hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
       type: 2}
     trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
       type: 2}
     trailForwardAsDashDirection: 1
     chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+    stunnedParticle: {fileID: 198650944266004816, guid: bb8859e7f483be54391fa8ac9d45123e,
       type: 2}
   - name: chicken
     iconUI: {fileID: 21300000, guid: cee46d5f2faf10c4dba57d8f19e8b1c4, type: 3}
@@ -434,12 +458,15 @@ MonoBehaviour:
     hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
     deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
     chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    stunnedSound: {fileID: 8300000, guid: 922f7d14a2a53824486dde09ffd23462, type: 3}
     hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
       type: 2}
     trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
       type: 2}
     trailForwardAsDashDirection: 1
     chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+    stunnedParticle: {fileID: 198650944266004816, guid: bb8859e7f483be54391fa8ac9d45123e,
       type: 2}
   - name: cuber
     iconUI: {fileID: 21300000, guid: d900b120ddad4b348a3640b87245658f, type: 3}
@@ -450,12 +477,15 @@ MonoBehaviour:
     hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
     deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
     chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    stunnedSound: {fileID: 8300000, guid: 922f7d14a2a53824486dde09ffd23462, type: 3}
     hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
       type: 2}
     trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
       type: 2}
     trailForwardAsDashDirection: 1
     chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+    stunnedParticle: {fileID: 198650944266004816, guid: bb8859e7f483be54391fa8ac9d45123e,
       type: 2}
   - name: cagedtoy
     iconUI: {fileID: 21300000, guid: 6e150484006401a42ab7d342a7785828, type: 3}
@@ -469,12 +499,15 @@ MonoBehaviour:
     hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
     deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
     chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    stunnedSound: {fileID: 8300000, guid: 922f7d14a2a53824486dde09ffd23462, type: 3}
     hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
       type: 2}
     trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
       type: 2}
     trailForwardAsDashDirection: 1
     chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+    stunnedParticle: {fileID: 198650944266004816, guid: bb8859e7f483be54391fa8ac9d45123e,
       type: 2}
   - name: duck
     iconUI: {fileID: 21300000, guid: 77acca4cc89a1124abac1badfb410691, type: 3}
@@ -485,12 +518,15 @@ MonoBehaviour:
     hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
     deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
     chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    stunnedSound: {fileID: 8300000, guid: 922f7d14a2a53824486dde09ffd23462, type: 3}
     hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
       type: 2}
     trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
       type: 2}
     trailForwardAsDashDirection: 1
     chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+    stunnedParticle: {fileID: 198650944266004816, guid: bb8859e7f483be54391fa8ac9d45123e,
       type: 2}
   - name: flame
     iconUI: {fileID: 21300000, guid: 968e4631f79b7794ea6dc64e4a0ec272, type: 3}
@@ -501,12 +537,15 @@ MonoBehaviour:
     hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
     deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
     chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    stunnedSound: {fileID: 8300000, guid: 922f7d14a2a53824486dde09ffd23462, type: 3}
     hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
       type: 2}
     trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
       type: 2}
     trailForwardAsDashDirection: 1
     chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+    stunnedParticle: {fileID: 198650944266004816, guid: bb8859e7f483be54391fa8ac9d45123e,
       type: 2}
   - name: ice
     iconUI: {fileID: 21300000, guid: 4f3dde3ecee0ee74b906aaec6ab2fbb1, type: 3}
@@ -517,12 +556,15 @@ MonoBehaviour:
     hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
     deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
     chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    stunnedSound: {fileID: 8300000, guid: 922f7d14a2a53824486dde09ffd23462, type: 3}
     hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
       type: 2}
     trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
       type: 2}
     trailForwardAsDashDirection: 1
     chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+    stunnedParticle: {fileID: 198650944266004816, guid: bb8859e7f483be54391fa8ac9d45123e,
       type: 2}
   - name: blueman
     iconUI: {fileID: 21300000, guid: b2ca8e9d65036254c8141e3a00264a64, type: 3}
@@ -533,12 +575,15 @@ MonoBehaviour:
     hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
     deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
     chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    stunnedSound: {fileID: 8300000, guid: 922f7d14a2a53824486dde09ffd23462, type: 3}
     hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
       type: 2}
     trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
       type: 2}
     trailForwardAsDashDirection: 1
     chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+    stunnedParticle: {fileID: 198650944266004816, guid: bb8859e7f483be54391fa8ac9d45123e,
       type: 2}
   - name: faceman
     iconUI: {fileID: 21300000, guid: 655051eacd219b743bf81c0b0372cff9, type: 3}
@@ -549,12 +594,15 @@ MonoBehaviour:
     hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
     deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
     chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    stunnedSound: {fileID: 8300000, guid: 922f7d14a2a53824486dde09ffd23462, type: 3}
     hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
       type: 2}
     trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
       type: 2}
     trailForwardAsDashDirection: 1
     chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+    stunnedParticle: {fileID: 198650944266004816, guid: bb8859e7f483be54391fa8ac9d45123e,
       type: 2}
   _fallBackView:
     name: matti
@@ -565,6 +613,7 @@ MonoBehaviour:
     hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
     deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
     chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    stunnedSound: {fileID: 0}
     hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
       type: 2}
     trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
@@ -572,3 +621,4 @@ MonoBehaviour:
     trailForwardAsDashDirection: 1
     chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
       type: 2}
+    stunnedParticle: {fileID: 0}

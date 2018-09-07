@@ -493,8 +493,15 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 			yield return Timing.WaitForOneFrame;
 		}
 
+		if (OnDeadlyTile())
+			yield break;
+
+		_character.soundComponent.PlaySound(CharacterSound.StunnedSound, _model.collideStunTime - 0.3f);
+		_character.ParticleComponent.EmitStunned(true);
+
 		yield return Timing.WaitForSeconds(_model.collideStunTime);
 
+		_character.ParticleComponent.EmitStunned(false);
 		StopMovementAndAddCooldowns();
 	}
 	

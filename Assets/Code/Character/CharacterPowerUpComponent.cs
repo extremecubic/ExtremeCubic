@@ -138,14 +138,14 @@ public class CharacterPowerUpComponent : MonoBehaviour
 
 		// start particle on player during powerup
 		if (powerUp.characterParticle)
-			_character.ParticleComponent.StartPowerUpParticle(powerUp.characterParticle, true);
+			_character.ParticleComponent.EmitPowerUp(powerUp.characterParticle, true);
 	}
 
 	void AbortPowerFeedBack()
 	{
 		// stop sound and particle that was used during powerup
 		_character.soundComponent.StopSound(CharacterSound.PowerupLoop);
-		_character.ParticleComponent.StartPowerUpParticle(null, false);
+		_character.ParticleComponent.EmitPowerUp(null, false);
 	}
 
 	void ResetAll()

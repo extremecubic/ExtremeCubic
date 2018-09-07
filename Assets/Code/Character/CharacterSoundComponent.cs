@@ -21,6 +21,7 @@ public enum CharacterSound
 	Death,
 	Charge,
 	PowerupLoop,
+	StunnedSound,
 
 	Count,
 }
@@ -58,6 +59,9 @@ public class CharacterSoundComponent : MonoBehaviour
 		GameObject soundHolderpowerLoop = new GameObject("PowerUpLoopSound", typeof(AudioSource));
 		soundHolderpowerLoop.transform.SetParent(parent);
 
+		GameObject soundHolderStunned = new GameObject("StunnedSound", typeof(AudioSource));
+		soundHolderStunned.transform.SetParent(parent);
+
 		_sounds[(int)CharacterSound.Walk].audioSource = soundHolderWalk.GetComponent<AudioSource>();
 		_sounds[(int)CharacterSound.Walk].audioSource.clip = data.walkSound;
 
@@ -76,9 +80,13 @@ public class CharacterSoundComponent : MonoBehaviour
 
 		_sounds[(int)CharacterSound.PowerupLoop].audioSource = soundHolderpowerLoop.GetComponent<AudioSource>();
 		_sounds[(int)CharacterSound.PowerupLoop].audioSource.loop = true;
+
+		_sounds[(int)CharacterSound.StunnedSound].audioSource = soundHolderStunned.GetComponent<AudioSource>();
+		_sounds[(int)CharacterSound.StunnedSound].audioSource.clip = data.stunnedSound;
+		_sounds[(int)CharacterSound.StunnedSound].audioSource.loop = true;
 	}
 
-	public void PlaySound(CharacterSound type)
+	public void PlaySound(CharacterSound type, float duration = 0)
 	{
 		if (_sounds[(int)type].fadeHandle.IsRunning)
 		{
@@ -86,13 +94,16 @@ public class CharacterSoundComponent : MonoBehaviour
 			_sounds[(int)type].audioSource.volume = _sounds[(int)type].originalVolume;
 		}
 
-		_sounds[(int)type].audioSource.Play();
+		if (duration == 0)
+			_sounds[(int)type].audioSource.Play();
+		else
+			_sounds[(int)type].playDurationHandle = Timing.RunCoroutineSingleton(_PlayForDuration(duration, type), _sounds[(int)type].playDurationHandle, SingletonBehavior.Overwrite);
 	}
 
 	public void StopSound(CharacterSound type, float fadeInSeconds = 0.5f)
 	{
 		if (_sounds[(int)type].audioSource.isPlaying)
-			_sounds[(int)type].fadeHandle = Timing.RunCoroutineSingleton(_fadeSound(fadeInSeconds, (int)type), _sounds[(int)type].fadeHandle, SingletonBehavior.Abort);
+			_sounds[(int)type].fadeHandle = Timing.RunCoroutineSingleton(_FadeSound(fadeInSeconds, (int)type), _sounds[(int)type].fadeHandle, SingletonBehavior.Abort);		
 	}
 
 	public void SetClipToSound(CharacterSound type, AudioClip clip)
@@ -100,7 +111,14 @@ public class CharacterSoundComponent : MonoBehaviour
 		_sounds[(int)type].audioSource.clip = clip;
 	}
 
-	IEnumerator<float> _fadeSound(float time, int sound)
+	IEnumerator<float> _PlayForDuration(float time, CharacterSound type)
+	{
+		_sounds[(int)type].audioSource.Play();
+		yield return Timing.WaitForSeconds(time);
+		_sounds[(int)type].fadeHandle = Timing.RunCoroutine(_FadeSound(0.5f, (int)type));
+	}
+
+	IEnumerator<float> _FadeSound(float time, int sound)
 	{
 		float startVolume = _sounds[sound].audioSource.volume;
 		_sounds[sound].originalVolume = startVolume;

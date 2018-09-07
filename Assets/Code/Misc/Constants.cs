@@ -39,6 +39,6 @@ public static class Constants
 	public static readonly string SCREEN_ONLINE_RANDOM_MATCHMAKING = "RandomPlayScreen";
 
 	// temp storage here for now
-	public static bool onlineGame = true;
+	public static bool onlineGame = false;
 
 }

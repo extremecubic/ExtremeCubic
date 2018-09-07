@@ -52,6 +52,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 			return;
 
 		_character.ParticleComponent.StopAll();
+		_character.soundComponent.StopSound(CharacterSound.StunnedSound, 0.2f);
 
 		// kill all coroutines on this layer
 		Timing.KillCoroutines(gameObject.GetInstanceID());
@@ -101,7 +102,13 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		// set new current tile if desynced
 		SetNewTileReferences(new Vector2DInt(tileX, tileY));
 
-		_character.ParticleComponent.EmitTrail(false, Vector3.zero);
+		// the feedback when hitting the obstacle is stored in the obstacles "land properties"
+		_tileMap.GetTile(new Vector2DInt(tileX + directionX, tileY + directionY)).OnPlayerLand();
+
+		// stop potencial feedback
+		_character.ParticleComponent.StopAll();
+
+		// set position to this tile (no point in lerping here, will look worse if having alot of desync)
 		transform.position = new Vector3(tileX, 1, tileY);
 
 		Timing.RunCoroutineSingleton(_ObstacleCollide(new Vector2DInt(tileX, tileY), new Vector2DInt(directionX, directionY)), gameObject.GetInstanceID(), SingletonBehavior.Overwrite);
