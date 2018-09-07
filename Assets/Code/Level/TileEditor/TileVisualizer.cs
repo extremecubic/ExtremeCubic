@@ -47,7 +47,7 @@ public class TileVisualizer : MonoBehaviour
 
 						for (int i = 0; i < _tileDatabase.tilesToSerialize.Count; i++)
 						{
-							if (_tileDatabase.tilesToSerialize[i].typeName == typeName.ToLower())
+							if (_tileDatabase.tilesToSerialize[i].typeName == typeName)
 								model = _tileDatabase.tilesToSerialize[i].data.prefab;
 						}
 

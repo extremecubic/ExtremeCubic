@@ -218,6 +218,90 @@ MonoBehaviour:
       killParticle: {fileID: 1196796963531486, guid: 5a2f939adf7264d47b3dc173fe99241a,
         type: 2}
       prefab: {fileID: 1410145494717210, guid: 38bd81b32110fb149ad23b5306ffef46, type: 2}
+  - _typeName: templestandard1
+    _data:
+      walkable: 1
+      health: 3
+      deadly: 0
+      unbreakable: 0
+      deathType: 0
+      replaceTileOnDeath: 0
+      replacementTile: empty
+      isSpecialTile: 0
+      specialType: 0
+      intValue: 0
+      landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
+      breakSound: {fileID: 0}
+      killSound: {fileID: 8300000, guid: d238eef53a3b2244e9ec7213b0c7d8fa, type: 3}
+      specialTileSound: {fileID: 0}
+      landParticle: {fileID: 1895057872444966, guid: 84bf0b0e1c89cba4eba76ec273baa2d3,
+        type: 2}
+      breakParticle: {fileID: 0}
+      killParticle: {fileID: 0}
+      prefab: {fileID: 1278740352139158, guid: 3fb0c710ac738044397953895ad01432, type: 2}
+  - _typeName: templestandard2
+    _data:
+      walkable: 1
+      health: 3
+      deadly: 0
+      unbreakable: 0
+      deathType: 0
+      replaceTileOnDeath: 0
+      replacementTile: empty
+      isSpecialTile: 0
+      specialType: 0
+      intValue: 0
+      landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
+      breakSound: {fileID: 0}
+      killSound: {fileID: 8300000, guid: d238eef53a3b2244e9ec7213b0c7d8fa, type: 3}
+      specialTileSound: {fileID: 0}
+      landParticle: {fileID: 1895057872444966, guid: 84bf0b0e1c89cba4eba76ec273baa2d3,
+        type: 2}
+      breakParticle: {fileID: 0}
+      killParticle: {fileID: 0}
+      prefab: {fileID: 1568046613434702, guid: 5cbaed4273cac5940b64a2ec2aa11ff7, type: 2}
+  - _typeName: templeunbreak1
+    _data:
+      walkable: 1
+      health: 0
+      deadly: 0
+      unbreakable: 1
+      deathType: 0
+      replaceTileOnDeath: 0
+      replacementTile: empty
+      isSpecialTile: 0
+      specialType: 0
+      intValue: 0
+      landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
+      breakSound: {fileID: 0}
+      killSound: {fileID: 8300000, guid: d238eef53a3b2244e9ec7213b0c7d8fa, type: 3}
+      specialTileSound: {fileID: 0}
+      landParticle: {fileID: 1895057872444966, guid: 84bf0b0e1c89cba4eba76ec273baa2d3,
+        type: 2}
+      breakParticle: {fileID: 0}
+      killParticle: {fileID: 0}
+      prefab: {fileID: 1046712373383376, guid: da71e8f7c861478489bef543c5ba8299, type: 2}
+  - _typeName: templeunbreak2
+    _data:
+      walkable: 1
+      health: 0
+      deadly: 0
+      unbreakable: 1
+      deathType: 0
+      replaceTileOnDeath: 0
+      replacementTile: empty
+      isSpecialTile: 0
+      specialType: 0
+      intValue: 0
+      landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
+      breakSound: {fileID: 0}
+      killSound: {fileID: 8300000, guid: d238eef53a3b2244e9ec7213b0c7d8fa, type: 3}
+      specialTileSound: {fileID: 0}
+      landParticle: {fileID: 1895057872444966, guid: 84bf0b0e1c89cba4eba76ec273baa2d3,
+        type: 2}
+      breakParticle: {fileID: 0}
+      killParticle: {fileID: 0}
+      prefab: {fileID: 1887855735801274, guid: 1d318b57e91b0824eb659423804b1856, type: 2}
   - _typeName: speedtile
     _data:
       walkable: 1
@@ -262,7 +346,7 @@ MonoBehaviour:
       breakParticle: {fileID: 0}
       killParticle: {fileID: 0}
       prefab: {fileID: 1381398352821048, guid: 257ca0cc5d5249a4fa48d37cfcc83166, type: 2}
-  - _typeName: dirtpillar
+  - _typeName: templepillar
     _data:
       walkable: 0
       health: 0
@@ -281,7 +365,7 @@ MonoBehaviour:
       landParticle: {fileID: 0}
       breakParticle: {fileID: 0}
       killParticle: {fileID: 0}
-      prefab: {fileID: 1167541518567216, guid: 62287eaa937d2a04587341e955f228a5, type: 2}
+      prefab: {fileID: 1376491197742020, guid: de971f60e869ebb4eac32e666184eb0a, type: 2}
 --- !u!114 &114660886813412552
 MonoBehaviour:
   m_ObjectHideFlags: 1

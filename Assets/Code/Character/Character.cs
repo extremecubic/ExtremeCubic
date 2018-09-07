@@ -104,7 +104,7 @@ public class Character : Photon.MonoBehaviour
 		movementComponent.ResetAll();
 		ParticleComponent.StopAll();
 		powerUpComponent.AbortPowerUp();
-		soundComponent.StopSound(CharacterSound.Charge);
+		soundComponent.StopAll();
 		transform.position = new Vector3(spawnTile.x, 1, spawnTile.y);
 		movementComponent.SetSpawnTile(spawnTile);
 	}

@@ -111,6 +111,15 @@ public class CharacterSoundComponent : MonoBehaviour
 		_sounds[(int)type].audioSource.clip = clip;
 	}
 
+	public void StopAll()
+	{
+		for (int i =0; i< _sounds.Length; i++)
+		{
+			if (_sounds[i].audioSource.isPlaying)
+				_sounds[i].fadeHandle = Timing.RunCoroutineSingleton(_FadeSound(0.5f, i), _sounds[i].fadeHandle, SingletonBehavior.Abort);
+		}
+	}
+
 	IEnumerator<float> _PlayForDuration(float time, CharacterSound type)
 	{
 		_sounds[(int)type].audioSource.Play();

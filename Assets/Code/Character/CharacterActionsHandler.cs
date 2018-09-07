@@ -122,11 +122,11 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		_stateComponent.SetState(CharacterState.Dead);
 
 		// stop all possible feedback
-		_character.soundComponent.PlaySound(CharacterSound.Death);
-		_character.soundComponent.StopSound(CharacterSound.Charge);
+		_character.soundComponent.StopAll();
 		_character.ParticleComponent.StopAll();
 		_character.powerUpComponent.AbortPowerUp();
 
+		_character.soundComponent.PlaySound(CharacterSound.Death);
 		Tile deathTile = _tileMap.GetTile(new Vector2DInt(tileX, tileY));
 
 		transform.position = new Vector3(deathTile.position.x, 1, deathTile.position.y);

@@ -11364,7 +11364,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: f464a1dd3ce6e8543b11d6c77e135205, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e4e698c29c4b10d44bc0f9cf90376298, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -20274,7 +20274,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Crystal Mine
+  m_Text: Temple Ruins
 --- !u!222 &2050969805
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20509,10 +20509,10 @@ MonoBehaviour:
     sceneName: SeaLevel
     button: {fileID: 90413172}
     sprite: {fileID: 21300000, guid: 27927fc0065291e418fd73fb4ae6eacd, type: 3}
-  - name: Crystal Mine
+  - name: Temple Ruins
     sceneName: TempleLevel
     button: {fileID: 1272525998}
-    sprite: {fileID: 21300000, guid: f464a1dd3ce6e8543b11d6c77e135205, type: 3}
+    sprite: {fileID: 21300000, guid: e4e698c29c4b10d44bc0f9cf90376298, type: 3}
   - name: Crystal Mine
     sceneName: MineLevel
     button: {fileID: 1473660700}

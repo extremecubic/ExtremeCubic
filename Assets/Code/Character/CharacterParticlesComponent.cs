@@ -77,17 +77,6 @@ public class CharacterParticlesComponent : MonoBehaviour
 		_powerUpLoop = Instantiate(system, transform.position, system.transform.rotation, transform);			
 	}
 
-	public void SpawnHitEffect(Vector2DInt a, Vector2DInt b)
-	{
-		if (_data.hitParticle == null)
-			return;
-
-		// spawn hit particle abit away from dahing player in the direction of player getting dashed
-		Vector3 spawnPosition = new Vector3(a.x, 1, a.y) + ((new Vector3(b.x, 1, b.y) - new Vector3(a.x, 1, a.y)) * 2.0f);
-		ParticleSystem p = Instantiate(_data.hitParticle, spawnPosition, _data.hitParticle.transform.rotation);
-		Destroy(p, 8);
-	}
-
 	public void EmitStunned(bool emit)
 	{
 		if (_stunned == null)
@@ -100,6 +89,17 @@ public class CharacterParticlesComponent : MonoBehaviour
 		}
 		else
 			_stunned.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+	}
+
+	public void SpawnHitEffect(Vector2DInt a, Vector2DInt b)
+	{
+		if (_data.hitParticle == null)
+			return;
+
+		// spawn hit particle abit away from dahing player in the direction of player getting dashed
+		Vector3 spawnPosition = new Vector3(a.x, 1, a.y) + ((new Vector3(b.x, 1, b.y) - new Vector3(a.x, 1, a.y)) * 2.0f);
+		ParticleSystem p = Instantiate(_data.hitParticle, spawnPosition, _data.hitParticle.transform.rotation);
+		Destroy(p, 8);
 	}
 
 	void LateUpdate()

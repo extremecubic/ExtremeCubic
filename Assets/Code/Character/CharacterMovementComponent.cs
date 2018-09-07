@@ -330,7 +330,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 
 	public IEnumerator<float> _Dash(Vector2DInt direction, int dashStrength, bool fromCollision = false)
 	{
-		_stateComponent.SetState(CharacterState.Dashing); // set state to dashing
+		_stateComponent.SetState(CharacterState.Dashing); // set state to dashing	
 
 		// only play dash sound if this was a volentary dash
 		if (!fromCollision)
