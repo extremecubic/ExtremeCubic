@@ -466,13 +466,16 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		float rotationProgress = 0;
 		while (movementProgress < 1)
 		{
-			rotationProgress += ((_model.collideSpeed * _character.powerUpComponent.speedMultiplier) * _model.numCollideRolls) * Time.deltaTime;
-			movementProgress += (_model.collideSpeed * _character.powerUpComponent.speedMultiplier) * Time.deltaTime;
+			// rotation progress is muliplied by how many 90 degree rotations we want to do during the movement
+			rotationProgress += (_model.collideSpeed * _model.numCollideRolls) * Time.deltaTime;
+			movementProgress += _model.collideSpeed * Time.deltaTime;
 			movementProgress = Mathf.Clamp01(movementProgress);
 
+			// make sure we set the last rotation progress to 1 if the movement is done
 			if (movementProgress >= 1)
 				rotationProgress = 1;
 
+			// offset position in oposite direction of dash
 			float yPos = 1 + (Mathf.Sin(movementProgress * (float)Math.PI) * _model.collideBounceHeight);
 			float xPos = fromTile.position.x + ((-movementDirection.x) * (Mathf.Sin(movementProgress * (float)Math.PI) * _model.collideFlyBackAmount));
 			float zPos = fromTile.position.y + ((-movementDirection.z) * (Mathf.Sin(movementProgress * (float)Math.PI) * _model.collideFlyBackAmount));
@@ -480,6 +483,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 			transform.position = new Vector3(xPos, yPos, zPos);
 			transform.rotation = Quaternion.Lerp(fromRotation, targetRotation, rotationProgress);
 
+			// reset rotation progress and add another 90 degress to target
 			if (rotationProgress >= 1 && rollCount < _model.numCollideRolls)
 			{
 				fromRotation = transform.rotation;
@@ -504,7 +508,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		_character.ParticleComponent.EmitStunned(false);
 		StopMovementAndAddCooldowns();
 	}
-	
+
 	public IEnumerator<float> _Correct(Vector3 from, Vector3 to, Quaternion fromRot, Quaternion toRot, float time)
 	{
 		float fraction = 0;
@@ -512,13 +516,13 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		while (fraction < 1)
 		{
 			timer += Time.deltaTime;
-			fraction           = Mathf.InverseLerp(0, time, timer);
+			fraction = Mathf.InverseLerp(0, time, timer);
 			transform.position = Vector3.Lerp(from, to, fraction);
 			transform.rotation = Quaternion.Lerp(fromRot, toRot, fraction);
 			yield return Timing.WaitForOneFrame;
 		}
 	}
-	
+
 #if DEBUG_TOOLS
 	public void InfiniteDash()
 	{

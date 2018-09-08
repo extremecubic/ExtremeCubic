@@ -51,6 +51,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		if (_stateComponent.currentState == CharacterState.Dead)
 			return;
 
+		// stop all potencial ongoing feedback
 		_character.ParticleComponent.StopAll();
 		_character.soundComponent.StopSound(CharacterSound.StunnedSound, 0.2f);
 
@@ -92,6 +93,9 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		// add cooldowns
 		StopMovementAndAddCooldowns();
 
+		// do Camerashake
+		Match.instance.gameCamera.DoShake(_model.dashCameraShakeDuration, _model.dashCameraShakeSpeed, _model.dashCameraShakeIntensity, _model.dashCameraShakeIntensityDamping);
+
 		// check if we got stopped on deadly tile(only server handles deathchecks)
 		OnDeadlyTile();
 	}
@@ -111,6 +115,9 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		// set position to this tile (no point in lerping here, will look worse if having alot of desync)
 		transform.position = new Vector3(tileX, 1, tileY);
 
+		// do Camerashake
+		Match.instance.gameCamera.DoShake(_model.collideCameraShakeDuration, _model.collideCameraShakeSpeed, _model.collideCameraShakeIntensity, _model.collideCameraShakeIntensityDamping);
+
 		Timing.RunCoroutineSingleton(_ObstacleCollide(new Vector2DInt(tileX, tileY), new Vector2DInt(directionX, directionY)), gameObject.GetInstanceID(), SingletonBehavior.Overwrite);
 	}
 
@@ -126,11 +133,14 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		_character.ParticleComponent.StopAll();
 		_character.powerUpComponent.AbortPowerUp();
 
+		// play character death sound and get the tile we died on
 		_character.soundComponent.PlaySound(CharacterSound.Death);
 		Tile deathTile = _tileMap.GetTile(new Vector2DInt(tileX, tileY));
 
+		// set position
 		transform.position = new Vector3(deathTile.position.x, 1, deathTile.position.y);
 
+		// play death feedback depending on tileType
 		_character.deathComponent.KillPlayer(deathTile);
 
 		if (Constants.onlineGame && PhotonNetwork.isMasterClient)

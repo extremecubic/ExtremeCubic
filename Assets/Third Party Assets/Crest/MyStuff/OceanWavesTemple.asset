@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33068fc021dadc04dab6e00e4ff45c00, type: 3}
+  m_Name: OceanWavesTemple
+  m_EditorClassIdentifier: 
+  _waveDirectionVariance: 177
+  _gravityScale: 3.1
+  _powerLog:
+  - -5.7073355
+  - -4.9547677
+  - -4.202222
+  - -3.4497635
+  - -2.6976547
+  - -1.9469444
+  - -1.201828
+  - -0.4790878
+  - 0.15432969
+  - 0.87338084
+  - -0.72746223
+  - -6
+  _powerDisabled: 000000000000000000000000
+  _chopScales:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  _gravityScales:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  _chop: 1
+  _showAdvancedControls: 0

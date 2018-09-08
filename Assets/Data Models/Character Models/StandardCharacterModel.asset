@@ -19,10 +19,19 @@ MonoBehaviour:
   dashMaxCharge: 5
   dashChargeRate: 3
   dashRotationSpeed: 1
+  dashCameraShakeDuration: 0.2
+  dashCameraShakeSpeed: 50
+  dashCameraShakeIntensity: 0.3
+  dashCameraShakeIntensityDamping: 0.1
   collideSpeed: 3
   numCollideRolls: 6
   collideBounceHeight: 1.5
   collideFlyBackAmount: 0.3
+  collideStunTime: 3
+  collideCameraShakeDuration: 0.2
+  collideCameraShakeSpeed: 50
+  collideCameraShakeIntensity: 0.4
+  collideCameraShakeIntensityDamping: 0.4
   fallSpeed: 5
   fallAcceleration: 10
   startEndMoveSpeedQvick: {x: 0.1, y: 30}

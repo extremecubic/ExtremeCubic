@@ -91,8 +91,8 @@ public class CharacterDeathComponent : MonoBehaviour
 
 	public IEnumerator<float> _Explode(Tile deathTile)
 	{
-		deathTile.SpawnAndPlaySound(TileSounds.Kill, 5);
-
+		MusicManager.instance.SpawnAndPlaySound(deathTile.model.data.killSound, 5);
+		
 		if (deathTile.model.data.killParticle)
 		{
 			GameObject particle = Instantiate(deathTile.model.data.killParticle, new Vector3(deathTile.position.x, 0, deathTile.position.y), deathTile.model.data.killParticle.transform.rotation);

@@ -22,6 +22,10 @@ public struct PowerUp
 	public float       duration;
 	public GameObject  prefab;
 
+	[Header("Spawn Feedback")]
+	public AudioClip      spawnSound;
+	public GameObject     spawnParticle;
+
 	[Header("Pickup Feedback")]
 	public AudioClip      pickupSound;
 	public ParticleSystem pickupParticle;

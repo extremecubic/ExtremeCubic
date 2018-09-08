@@ -124,6 +124,14 @@ public class Tile
 	{
 		_powerUp = power.type;
 		_powerView = Object.Instantiate(power.prefab, new Vector3(position.x, 1, position.y), power.prefab.transform.rotation, powerUpFolder);
+
+		MusicManager.instance.SpawnAndPlaySound(power.spawnSound, 5);
+
+		if (power.spawnParticle != null)
+		{
+			GameObject system = Object.Instantiate(power.spawnParticle, new Vector3(position.x, 0, position.y), power.spawnParticle.transform.rotation);
+			Object.Destroy(system, 10);
+		}
 	}
 
 	public Tile(Vector2DInt position, string tileName, float yRotation, float tintStrength, Transform tilesFolder)
@@ -189,21 +197,6 @@ public class Tile
 
 		if (_sounds[(int)type].clip != null)
 			_sounds[(int)type].Play();
-	}
-
-	// spawn a sound and play it, good if a sound needs to outlive the tile when destroyed
-	public void SpawnAndPlaySound(TileSounds type, float destroyAfter)
-	{
-		// spawn object with audiosource
-		GameObject soundHolder = new GameObject("soundOneUse", typeof(AudioSource));
-		AudioSource audio = soundHolder.GetComponent<AudioSource>();
-
-		// asign clip and play
-		audio.clip = _sounds[(int)type].clip;
-		audio.Play();
-
-		// delete after delay
-		Object.Destroy(soundHolder, destroyAfter);
 	}
 
 	public void OnPlayerLand()

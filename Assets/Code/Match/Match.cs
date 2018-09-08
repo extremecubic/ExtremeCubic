@@ -5,8 +5,9 @@ using MEC;
 
 public class Match : Photon.MonoBehaviour
 {
-	public static Match instance { get; private set; }
-	public bool matchStarted     { get; private set; }
+	public static Match instance       { get; private set; }
+	public bool matchStarted           { get; private set; }
+	public CameraController gameCamera { get; private set; }
 
 	[Header("GAME REFERENCES")]
 	[SerializeField] Level _level; public Level level { get { return _level; } }
@@ -25,6 +26,7 @@ public class Match : Photon.MonoBehaviour
 
 		// only have one gamemode for now
 		_currentGameMode = GetComponent<GameModeLastMan>();
+		gameCamera = FindObjectOfType<CameraController>();
 	}
 
 	void Start()
@@ -36,18 +38,11 @@ public class Match : Photon.MonoBehaviour
 
 		_musicManager = MusicManager.instance;
 
-		// check if we start from menu or the simple network starter directly from level scen
-		if (Constants.onlineGame && FindObjectOfType<SimpleNetworkStarter>() == null)		
+		if (Constants.onlineGame)		
 			SetupMatchOnline();
 					
 		if (!Constants.onlineGame)
 			SetupMatchLocal();
-	}
-
-	// only used directly from starting game from levelscene
-	public void SimpleStart()
-	{
-		SetupMatchOnline();		
 	}
 
 	void OnDestroy()

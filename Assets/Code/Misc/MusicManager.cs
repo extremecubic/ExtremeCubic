@@ -50,6 +50,9 @@ public class MusicManager : MonoBehaviour
 
 	public void SpawnAndPlaySound(AudioClip clip, float destroyAfter)
 	{
+		if (clip == null)
+			return;
+
 		// spawn object with audiosource
 		GameObject soundHolder = new GameObject("soundOneUse", typeof(AudioSource));
 		AudioSource audio = soundHolder.GetComponent<AudioSource>();

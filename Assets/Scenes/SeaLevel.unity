@@ -5901,9 +5901,9 @@ GameObject:
   - component: {fileID: 906677701}
   - component: {fileID: 906677700}
   - component: {fileID: 906677699}
-  - component: {fileID: 906677698}
   - component: {fileID: 906677697}
   - component: {fileID: 906677696}
+  - component: {fileID: 906677694}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5911,6 +5911,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &906677694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 906677693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86100b3577149bd4c8eaec37c90c1f6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _freeFlightRotationSpeed: 100
+  _freeFlightMovementSpeed: 15
+  _frozen: 1
+  _model: {fileID: 11400000, guid: 5da90e43f2a9d5f4fbdd085fe4fcf930, type: 2}
 --- !u!114 &906677696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5986,45 +6001,6 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
---- !u!114 &906677698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114821550028426048, guid: 435c3c21160850f4f9939d2aea37b8f9,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 906677693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d37446ea74c7dbc41889f6bc21fbc010, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _boost: 3.5
-  _positionLerpTime: 0.2
-  _mouseSensitivityCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0.5
-      inSlope: 0
-      outSlope: 5
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 2.5
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  _rotationLerpTime: 0.01
 --- !u!81 &906677699
 AudioListener:
   m_ObjectHideFlags: 0

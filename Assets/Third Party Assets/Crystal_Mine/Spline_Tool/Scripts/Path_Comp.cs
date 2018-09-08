@@ -82,7 +82,7 @@ namespace BLINDED_AM_ME{
 
 			for (int i =0; i < movingObjects.Length; i++)
 			{
-				movingObjects[i].objectToMove.transform.position = Vector3.MoveTowards(movingObjects[i].objectToMove.transform.position, transform.TransformPoint(_allPoints[movingObjects[i].currentPoint].point), 5 * Time.deltaTime);
+				movingObjects[i].objectToMove.transform.position = Vector3.MoveTowards(movingObjects[i].objectToMove.transform.position, transform.TransformPoint(_allPoints[movingObjects[i].currentPoint].point), 2.5f * Time.deltaTime);
 				movingObjects[i].objectToMove.transform.forward = _allPoints[movingObjects[i].currentPoint].forward;
 				if (movingObjects[i].objectToMove.transform.position == transform.TransformPoint(_allPoints[movingObjects[i].currentPoint].point))
 				{

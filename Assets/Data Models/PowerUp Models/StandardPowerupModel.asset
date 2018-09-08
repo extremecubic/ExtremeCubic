@@ -3,7 +3,7 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -15,6 +15,9 @@ MonoBehaviour:
   - type: 1
     duration: 10
     prefab: {fileID: 1568687623006260, guid: 858d10bbfc4dac4449b9786756c4acb7, type: 2}
+    spawnSound: {fileID: 8300000, guid: df8575c1909a51c4a91f223dd5ee32b8, type: 3}
+    spawnParticle: {fileID: 1174389602157614, guid: 0148a43fa54a0884cbac24bd39cd7ea6,
+      type: 2}
     pickupSound: {fileID: 8300000, guid: 6cc7f9c62d56ff147a1c45bd732ad65e, type: 3}
     pickupParticle: {fileID: 198914476518634566, guid: d23510484b8edbd43b62983cf3147e55,
       type: 2}
@@ -27,6 +30,9 @@ MonoBehaviour:
   - type: 2
     duration: 10
     prefab: {fileID: 1454881615725070, guid: e7feaafa79477064599f5220fe203da4, type: 2}
+    spawnSound: {fileID: 8300000, guid: df8575c1909a51c4a91f223dd5ee32b8, type: 3}
+    spawnParticle: {fileID: 1174389602157614, guid: 0148a43fa54a0884cbac24bd39cd7ea6,
+      type: 2}
     pickupSound: {fileID: 8300000, guid: 6cc7f9c62d56ff147a1c45bd732ad65e, type: 3}
     pickupParticle: {fileID: 198914476518634566, guid: d23510484b8edbd43b62983cf3147e55,
       type: 2}
@@ -39,6 +45,9 @@ MonoBehaviour:
   - type: 65539
     duration: 10
     prefab: {fileID: 1454881615725070, guid: 0a601ff9320b148479dfc6c96e262e6d, type: 2}
+    spawnSound: {fileID: 8300000, guid: df8575c1909a51c4a91f223dd5ee32b8, type: 3}
+    spawnParticle: {fileID: 1174389602157614, guid: 0148a43fa54a0884cbac24bd39cd7ea6,
+      type: 2}
     pickupSound: {fileID: 8300000, guid: 6cc7f9c62d56ff147a1c45bd732ad65e, type: 3}
     pickupParticle: {fileID: 198914476518634566, guid: d23510484b8edbd43b62983cf3147e55,
       type: 2}
@@ -50,6 +59,9 @@ MonoBehaviour:
   - type: 65540
     duration: 10
     prefab: {fileID: 1643365813406466, guid: 442f1584d728b3a45ad4ac7f07cfc800, type: 2}
+    spawnSound: {fileID: 8300000, guid: df8575c1909a51c4a91f223dd5ee32b8, type: 3}
+    spawnParticle: {fileID: 1174389602157614, guid: 0148a43fa54a0884cbac24bd39cd7ea6,
+      type: 2}
     pickupSound: {fileID: 8300000, guid: 6cc7f9c62d56ff147a1c45bd732ad65e, type: 3}
     pickupParticle: {fileID: 198914476518634566, guid: d23510484b8edbd43b62983cf3147e55,
       type: 2}
