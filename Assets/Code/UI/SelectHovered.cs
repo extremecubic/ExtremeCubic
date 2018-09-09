@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SelectHovered : MonoBehaviour, IPointerEnterHandler, IDeselectHandler, IPointerExitHandler
+public class SelectHovered : MonoBehaviour, IPointerEnterHandler, IDeselectHandler
 {
 	public void OnPointerEnter(PointerEventData eventData)
 	{
@@ -17,9 +17,4 @@ public class SelectHovered : MonoBehaviour, IPointerEnterHandler, IDeselectHandl
 		GetComponent<Selectable>().OnPointerExit(null);
 	}
 
-	public void OnPointerExit(PointerEventData eventData)
-	{		
-		if (EventSystem.current.currentSelectedGameObject == gameObject)
-			EventSystem.current.SetSelectedGameObject(null);
-	}
 }

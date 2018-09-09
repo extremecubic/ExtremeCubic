@@ -135,6 +135,11 @@ public class CharacterSoundComponent : MonoBehaviour
 		float fraction = 0;
 		while(fraction < 1.0f)
 		{
+			// sound can be null if sound is fading out while unity is destroying objects on scene change
+			// null check to be safe
+			if (_sounds[sound] == null)
+				yield break;
+
 			fraction = time == 0 ? 1.0f : fraction + Time.deltaTime / time;
 
 			_sounds[sound].audioSource.volume = Mathf.Lerp(startVolume, 0.0f, fraction);

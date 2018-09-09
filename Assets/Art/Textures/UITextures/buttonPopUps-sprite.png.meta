@@ -1,10 +1,8 @@
 fileFormatVersion: 2
-guid: d8ce74ad2d36efa4b9a12b39b99aea54
+guid: c85503afee5d3824495e2bcd2a2120fe
 TextureImporter:
   fileIDToRecycleName:
-    21300000: BrownBoarder
-    21300002: whiteBoarder
-    21300004: greyBoarder
+    21300000: buttonPopUps-sprite_0
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -109,53 +107,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BrownBoarder
+      name: buttonPopUps-sprite_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 369
-        width: 190
-        height: 45
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d0c97060621da05408323775af90cf6b
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: whiteBoarder
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 136
-        width: 190
-        height: 45
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dd59be5ac888d3c41aa7f870771bec91
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: greyBoarder
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 324
-        width: 190
-        height: 45
+        x: 7
+        y: 45
+        width: 206
+        height: 42
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -163,7 +121,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 866b33792ddb1f44390a3e7699e0def0
+      spriteID: e645c733c22cbdd41895c1cd25a49457
       vertices: []
       indices: 
       edges: []
@@ -171,7 +129,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 89846c6f46ae9df449b55073358a1ca6
+    spriteID: 9264f31bf4f9268448ee268a9b02ed88
     vertices: []
     indices: 
     edges: []
