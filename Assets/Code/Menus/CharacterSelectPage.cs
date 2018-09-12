@@ -20,6 +20,7 @@ public class CharacterSelectPage : MenuPage
 	[SerializeField] CharacterButton[] _characterButtons;
 	[Space(5)]
 	[SerializeField] Button _readyButton;
+	[SerializeField] Button _leaveButton;
 	[SerializeField] RectTransform _dotsParent;
 	[SerializeField] Image _dotPrefab;
 	[SerializeField] MessagePromt _promt;
@@ -74,6 +75,7 @@ public class CharacterSelectPage : MenuPage
 
 		_imReady = true;
 		ChangeAllButtonsState(false);
+		EventSystem.current.SetSelectedGameObject(_leaveButton.gameObject);
 
 		// set nickname to the name of the character for now (this will store the steam nick later instead)
 		PhotonNetwork.player.NickName = _currentView.name;
@@ -175,7 +177,6 @@ public class CharacterSelectPage : MenuPage
 	{
 		ChangeAllButtonsState(true);
 		_imReady = false;
-		CancelInvoke("CheckAllReady");
 	}
 
 	public override void UpdatePage()

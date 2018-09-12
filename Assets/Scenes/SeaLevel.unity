@@ -616,10 +616,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &84931807
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -704,10 +708,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &91133410
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -865,10 +873,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &112447067
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1217,10 +1229,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &146060079
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1815,10 +1831,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &183370062
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1994,10 +2014,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &204820570
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2621,10 +2645,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &402373011
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2709,10 +2737,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &438571604
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3500,10 +3532,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &555044276
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4206,10 +4242,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &634897080
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4294,10 +4334,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &659826122
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4864,10 +4908,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &729183013
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5087,10 +5135,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &789834425
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5521,10 +5573,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &861385825
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5682,10 +5738,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &878817068
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5770,10 +5830,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &886385815
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6842,10 +6906,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &997716407
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6935,10 +7003,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &1000723254
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7375,10 +7447,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &1092921349
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7505,10 +7581,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &1147926408
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7796,10 +7876,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &1247402286
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8642,10 +8726,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &1401192260
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8730,10 +8818,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &1417741804
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9223,10 +9315,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &1546711187
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9709,6 +9805,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1107376956258808, guid: d1f36f09b8defd54b8dd03f9ec31f2ab, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1f36f09b8defd54b8dd03f9ec31f2ab, type: 2}
   m_IsPrefabAsset: 0
@@ -9996,10 +10096,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &1670345762
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10576,10 +10680,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &1771570417
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11418,10 +11526,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &1953691372
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11728,10 +11840,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &2002727416
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11883,10 +11999,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &2030426322
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12044,10 +12164,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &2095687473
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12405,10 +12529,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &2117875791
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12493,10 +12621,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3867609fb9049744e96cc3a230dca30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotate: 0
-  _rotationSpeed: 90
+  _decalRotate: 0
+  _decalRotationSpeed: 90
   _uvScroll: 1
   _scrollAmount: {x: -2, y: 0}
+  _3DRotation: 0
+  _randomizeStartRotation: 0
+  _rotationMin: {x: 0, y: 0, z: 0}
+  _rotationMax: {x: 0, y: 0, z: 0}
 --- !u!23 &2123891014
 MeshRenderer:
   m_ObjectHideFlags: 0

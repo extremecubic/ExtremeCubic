@@ -92,6 +92,7 @@ public class CharacterDeathComponent : MonoBehaviour
 	public IEnumerator<float> _Explode(Tile deathTile)
 	{
 		MusicManager.instance.SpawnAndPlaySound(deathTile.model.data.killSound, 5);
+		Match.instance.gameCamera.DoShake(_character.model.collideCameraShakeDuration, _character.model.collideCameraShakeSpeed, _character.model.collideCameraShakeIntensity, _character.model.collideCameraShakeIntensityDamping);
 		
 		if (deathTile.model.data.killParticle)
 		{

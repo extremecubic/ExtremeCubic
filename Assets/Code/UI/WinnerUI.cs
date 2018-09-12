@@ -10,7 +10,6 @@ public class WinnerUI : MonoBehaviour
 	[SerializeField] GameObject _content;
 	[SerializeField] Text _winnerNameText;
 
-
 	public void ShowWinner(string userName)
 	{
 		Timing.RunCoroutine(_showWinner(userName));
@@ -29,16 +28,14 @@ public class WinnerUI : MonoBehaviour
 			GameOnlineOver();
 
 		if (!Constants.onlineGame)
-			GameLocalOver();
-		
+			GameLocalOver();		
 	}
 	
-
 	void GameOnlineOver()
 	{
 		// set witch page to set active when returning to menu scene and that all players left in room need to claim a UIPlayerBox
 		MainMenuSystem.reclaimPlayerUI = true;
-		MainMenuSystem.startPage = Constants.SCREEN_ONLINE_CHARACTERSELECT;
+		MainMenuSystem.startPage = Constants.SCREEN_ONLINE_LEVELSELECT;
 
 		// set player property ready to false before we go back to menu
 		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.PLAYER_READY, false);
