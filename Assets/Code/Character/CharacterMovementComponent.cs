@@ -134,35 +134,27 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 	{
 		if (currentTile.model.data.isSpecialTile)
 		{
+			// create empty targetTileCoords if this special tile need a target to do its thing
+			// teleport is example of this, if not needing target these wont be used in specialTileHandler
+			// but is always sent to avoid having to deal with specialtiles in two different ways
+			Vector2DInt targetTile = new Vector2DInt(0, 0);
+
+			// if need target, find non ocupied tile of same type
+			// that is not the same as current
+			if (currentTile.model.data.needTargetTileSameType)
+				targetTile = _tileMap.GetRandomTileCoordsFromType(currentTile.model.typeName, currentTile);
+
 			if (Constants.onlineGame)
 			{				
-				if (PhotonNetwork.isMasterClient)
-				{
-					// create empty targetTileCoords if this special tile need a target to do its thing
-					// teleport is example of this, if not needing target these wont be used in specialTileHandler
-					Vector2DInt targetTile = new Vector2DInt(0, 0);
-
-					// if need target, find non ocupied tile of same type
-					// that is not the same as current
-					if (currentTile.model.data.needTargetTileSameType)
-						targetTile = _tileMap.GetRandomTileCoordsFromType(currentTile.model.typeName, currentTile);
-
-					photonView.RPC("NetworkClaimSpecialTile", PhotonTargets.All, currentTile.position.x, currentTile.position.y, targetTile.x, targetTile.y);
-				}
+				if (PhotonNetwork.isMasterClient)									
+					photonView.RPC("NetworkClaimSpecialTile", PhotonTargets.All, currentTile.position.x, currentTile.position.y, targetTile.x, targetTile.y);				
 				else
 					_stateComponent.SetState(CharacterState.Frozen);
 			}
 
-			if (!Constants.onlineGame)
-			{
-				Vector2DInt targetTile = new Vector2DInt(0, 0);
-
-				if (currentTile.model.data.needTargetTileSameType)
-					targetTile = _tileMap.GetRandomTileCoordsFromType(currentTile.model.typeName, currentTile);
-
+			if (!Constants.onlineGame)							
 				NetworkClaimSpecialTile(currentTile.position.x, currentTile.position.y, targetTile.x, targetTile.y);
-			}
-
+			
 			return true;
 		}
 		return false;
