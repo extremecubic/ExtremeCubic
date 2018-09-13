@@ -16,6 +16,7 @@ public enum TileSounds
 public enum SpecialTile
 {
 	PowerDash,
+	Teleport,
 }
 
 // settings of a tile (this is exposed to the editor from TileDatabase.cs to create custom Tiletypes)
@@ -40,6 +41,7 @@ public class TileModel
 		[Header("SPECIAL TILE SETTINGS")]
 		public bool        isSpecialTile;
 		public SpecialTile specialType;
+		public bool        needTargetTileSameType;
 		[Tooltip("Used for \"PowerDash\" = num tiles to dash\n")]
 		public int         intValue;
 

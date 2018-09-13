@@ -4,6 +4,9 @@ using UnityEngine;
 using MEC;
 using System;
 
+// EVERYTHING HERE IS CALLED LOCALLY ON ALL CLIENTS
+// RPC HAVE ALREADY BEEN SENT FROM MASTERCLIENT BEFORE WE END UP HERE
+// SO DONT CALL ANY RPC´S FROM HERE TO AVOID DUPLICATE CALLS
 public class CharacterPowerUpComponent : MonoBehaviour
 {
 	[SerializeField] PowerUpModel _powerUps;

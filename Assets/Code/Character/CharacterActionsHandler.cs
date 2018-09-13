@@ -158,10 +158,10 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 	}
 
 	[PunRPC]
-	void NetworkClaimSpecialTile(int tileX, int tileY)
+	void NetworkClaimSpecialTile(int tileX, int tileY, int targetTileX, int targetTileY)
 	{
 		Tile tile = _tileMap.GetTile(new Vector2DInt(tileX, tileY));
-		_character.specialTileHandler.OnEnterSpecialTile(tile);
+		_character.specialTileHandler.OnEnterSpecialTile(tile, new Vector2DInt(targetTileX,targetTileY));
 	}
 
 	[PunRPC]

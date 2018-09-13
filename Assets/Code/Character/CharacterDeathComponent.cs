@@ -10,6 +10,9 @@ public enum DeathType
 	Mine,
 }
 
+// EVERYTHING HERE IS CALLED LOCALLY ON ALL CLIENTS
+// RPC HAVE ALREADY BEEN SENT FROM MASTERCLIENT BEFORE WE END UP HERE
+// SO DONT CALL ANY RPC´S FROM HERE TO AVOID DUPLICATE CALLS
 public class CharacterDeathComponent : MonoBehaviour
 {
 	Character _character;

@@ -135,15 +135,33 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		if (currentTile.model.data.isSpecialTile)
 		{
 			if (Constants.onlineGame)
-			{
+			{				
 				if (PhotonNetwork.isMasterClient)
-					photonView.RPC("NetworkClaimSpecialTile", PhotonTargets.All, currentTile.position.x, currentTile.position.y);
+				{
+					// create empty targetTileCoords if this special tile need a target to do its thing
+					// teleport is example of this, if not needing target these wont be used in specialTileHandler
+					Vector2DInt targetTile = new Vector2DInt(0, 0);
+
+					// if need target, find non ocupied tile of same type
+					// that is not the same as current
+					if (currentTile.model.data.needTargetTileSameType)
+						targetTile = _tileMap.GetRandomTileCoordsFromType(currentTile.model.typeName, currentTile);
+
+					photonView.RPC("NetworkClaimSpecialTile", PhotonTargets.All, currentTile.position.x, currentTile.position.y, targetTile.x, targetTile.y);
+				}
 				else
 					_stateComponent.SetState(CharacterState.Frozen);
 			}
 
 			if (!Constants.onlineGame)
-				NetworkClaimSpecialTile(currentTile.position.x, currentTile.position.y);
+			{
+				Vector2DInt targetTile = new Vector2DInt(0, 0);
+
+				if (currentTile.model.data.needTargetTileSameType)
+					targetTile = _tileMap.GetRandomTileCoordsFromType(currentTile.model.typeName, currentTile);
+
+				NetworkClaimSpecialTile(currentTile.position.x, currentTile.position.y, targetTile.x, targetTile.y);
+			}
 
 			return true;
 		}

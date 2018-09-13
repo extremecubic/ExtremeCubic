@@ -116,6 +116,16 @@ public class TileMap
 		return null;
 	}
 
+	public Vector2DInt GetRandomTileCoordsFromType(string tileType, Tile myTile)
+	{
+		// try to find a tile
+
+		// no tile found, flag coords to magic numbers for invalid Tile coords
+		// these are used to check if we can perform whatever functionality
+		// we would like to do or not
+		return Constants.NOT_FOUND_SPECIALTILE;
+	}
+
 	public Vector2DInt GetSpawnPointFromSpawnID(int id)
 	{
 		Vector2DInt point;

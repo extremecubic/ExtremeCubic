@@ -14,6 +14,8 @@ public static class Constants
 
 	public static readonly int NUM_COLLISIONS_TO_SAVE_ON_SERVER = 10;
 
+	public static Vector2DInt NOT_FOUND_SPECIALTILE = new Vector2DInt(-1000, -1000);
+
 	// input mapping strings
 	public static readonly string AXIS_HORIZONTAL = "Horizontal";
 	public static readonly string AXIS_VERTICAL   = "Vertical";
@@ -39,6 +41,6 @@ public static class Constants
 	public static readonly string SCREEN_ONLINE_RANDOM_MATCHMAKING = "RandomPlayScreen";
 
 	// temp storage here for now
-	public static bool onlineGame = true;
+	public static bool onlineGame = false;
 
 }
