@@ -15,7 +15,10 @@ public class LevelSelectPage : MenuPage
 		public string name;
 		public string sceneName;
 		public Button button;
-		public Sprite sprite;
+		public Image buttonImage;
+		public Sprite[] sprites;
+		public GameObject dotsParent;
+		[NonSerialized] public int currentMap;
 	}
 
 	[Serializable]
@@ -32,6 +35,7 @@ public class LevelSelectPage : MenuPage
 	[SerializeField] MenuPlayerInfoUI _playerInfo;
 	[SerializeField] MessagePromt     _promt;
 	[SerializeField] StartCounterUI   _counter;
+	[SerializeField] Image            _dotPrefab;
 
 	[Header("DATA STRUCTURES FOR LEVELS")]
 	[SerializeField] LevelData[]     _levels;
@@ -47,6 +51,9 @@ public class LevelSelectPage : MenuPage
 
 	CoroutineHandle _handle;
 	bool _selected;
+	bool _mapsBeenSetup;
+
+	int _levelToChangeMap;
 
 	public void OnLevelSelected(int level)
 	{
@@ -58,6 +65,7 @@ public class LevelSelectPage : MenuPage
 		// set level ID of nominated level and set that we are ready
 		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.PLAYER_READY, true);
 		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.NOMINATED_LEVEL, level);
+		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.NOMINATED_LEVEL_TILEMAP, _levels[level].currentMap);
 		ChangeAllButtonsState(false);
 
 		// tell server that we are selected and ready
@@ -76,9 +84,63 @@ public class LevelSelectPage : MenuPage
 
 		EventSystem.current.SetSelectedGameObject(_firstSelectable);
 
+		SetUpLevelUI();
+
 		// if masterclient tell everyone to start countdown timer
 		if (PhotonNetwork.isMasterClient)
 			photonView.RPC("StartCountdown", PhotonTargets.All, PhotonNetwork.time);
+	}
+
+	void SetUpLevelUI()
+	{
+		if (_mapsBeenSetup)
+			return;
+
+		for(int i =0; i < _levels.Length; i++)
+		{
+			float xPosition = 0;
+			for (int y = 0; y < _levels[i].sprites.Length; y++)
+			{
+				xPosition = y * 40;
+				Image dot = Instantiate(_dotPrefab, _levels[i].dotsParent.transform);
+				dot.GetComponent<RectTransform>().localPosition = new Vector3(xPosition, 0, 0);
+				if (y == 0)
+					dot.GetComponent<Image>().color = Color.green;
+			}
+		}
+
+		_mapsBeenSetup = true;
+	}
+
+	public void SetLevelIndex(int index)
+	{
+		_levelToChangeMap = index;
+	}
+
+	public void OnChangeMap(bool increment)
+	{
+		LevelData lvlData = _levels[_levelToChangeMap];
+
+		if (lvlData.sprites.Length == 1)
+			return;
+
+		lvlData.dotsParent.transform.GetChild(lvlData.currentMap).GetComponent<Image>().color = Color.white;
+
+		if (increment)
+		{
+			lvlData.currentMap++;
+			if (lvlData.currentMap == lvlData.sprites.Length)
+				lvlData.currentMap = 0;
+		}
+		else
+		{
+			lvlData.currentMap--;
+			if (lvlData.currentMap < 0)
+				lvlData.currentMap = lvlData.sprites.Length - 1;
+		}
+
+		lvlData.dotsParent.transform.GetChild(lvlData.currentMap).GetComponent<Image>().color = Color.green;
+		lvlData.buttonImage.sprite = lvlData.sprites[lvlData.currentMap];
 	}
 
 	public override void OnPageExit()
@@ -102,6 +164,12 @@ public class LevelSelectPage : MenuPage
 
 	public override void UpdatePage()
 	{
+		if (Input.GetButtonDown(Constants.BUTTON_LB + "0"))
+			OnChangeMap(false);
+
+		if (Input.GetButtonDown(Constants.BUTTON_RB + "0"))
+			OnChangeMap(true);
+
 		AllNominatedLevel();
 	}
 
@@ -123,46 +191,51 @@ public class LevelSelectPage : MenuPage
 			int winner = Random.Range(0, numPlayers);
 			
 			// store all nominated level ID's in array
-			int[] nL = { 0, 0, 0, 0 };
+			int[] nL  = { 0, 0, 0, 0 };
+			int[] nLM = { 0, 0, 0, 0 };
 			string winnerLevel = "";
 			string winnerLevelName = "";
+			int winnerLevelMap = 0;
 
 			for (int i =0; i < numPlayers; i++)
 			{				
 				// store all nominated level ID's 
-				nL[i] = (int)PhotonNetwork.playerList[i].CustomProperties[Constants.NOMINATED_LEVEL];
+				nL[i]  = (int)PhotonNetwork.playerList[i].CustomProperties[Constants.NOMINATED_LEVEL];
+				nLM[i] = (int)PhotonNetwork.playerList[i].CustomProperties[Constants.NOMINATED_LEVEL_TILEMAP];
 
 				// if this player is the one that got randomized as winner, get the scene and level name of his nomination
 				if (i == winner)
 				{
 					winnerLevel     = _levels[(int)PhotonNetwork.playerList[i].CustomProperties[Constants.NOMINATED_LEVEL]].sceneName;
 					winnerLevelName = _levels[(int)PhotonNetwork.playerList[i].CustomProperties[Constants.NOMINATED_LEVEL]].name;
+					winnerLevelMap  = _levels[(int)PhotonNetwork.playerList[i].CustomProperties[Constants.NOMINATED_LEVEL]].currentMap;
 				}
 			}
 
-			// tell everyone to play nomination animation and set witch level to load
-			photonView.RPC("LevelToPlay", PhotonTargets.All, winnerLevel, winnerLevelName, winner, nL[0], nL[1], nL[2], nL[3]);
+			// tell everyone to play nomination animation and set witch level and map to load
+			photonView.RPC("LevelToPlay", PhotonTargets.All, winnerLevel, winnerLevelName, winnerLevelMap, winner, nL[0], nL[1], nL[2], nL[3], nLM[0], nLM[1], nLM[2], nLM[3]);
 		}
 	}
 
 	[PunRPC]
-	void LevelToPlay(string level, string levelName, int winnerIndex, int one, int two, int three, int four)
+	void LevelToPlay(string level, string levelName, int levelMap, int winnerIndex, int Lone, int Ltwo, int Lthree, int Lfour, int Mone, int Mtwo, int Mthree, int Mfour)
 	{
 		// stop count and cancel to keep checking if all is selected
 		_counter.CancelCount();		
 
 		// set witch level we will load later and reset ready for next screen
 		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.LEVEL_SCENE_NAME, level);
+		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.LEVEL_MAP_INDEX, levelMap);
 		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.PLAYER_READY, false);
 
-		// starrt the animation
-		_handle = Timing.RunCoroutine(_PickRandomLevel(winnerIndex, levelName, new int[]{one, two, three, four}));
+		// start the animation
+		_handle = Timing.RunCoroutine(_PickRandomLevel(winnerIndex, levelName, new int[]{Lone, Ltwo, Lthree, Lfour}, new int[] { Mone, Mtwo, Mthree, Mfour }));
 	}
 
 	[PunRPC]
 	void StartCountdown(double delta)
 	{
-		_counter.StartCount(delta, 20, () => OnLevelSelected(Random.Range(0, _levels.Length)));
+		_counter.StartCount(delta, 60, () => OnLevelSelected(Random.Range(0, _levels.Length)));
 	}
 
 	void GoToCharacter()
@@ -190,7 +263,7 @@ public class LevelSelectPage : MenuPage
 			_levels[i].button.interactable = enable;
 	}
 
-	IEnumerator<float> _PickRandomLevel(int winnerIndex, string levelName, int[] nominatedLevels)
+	IEnumerator<float> _PickRandomLevel(int winnerIndex, string levelName, int[] nominatedLevels, int[] nominatedMaps)
 	{
 		// set select screen inactive and activate nomination screen
 		_nominatedScreen.SetActive(true);
@@ -210,7 +283,7 @@ public class LevelSelectPage : MenuPage
 		{
 			// set the correct sprite of all nominated levels
 			_nominatedLevelUI[i].content.SetActive(true);
-			_nominatedLevelUI[i].image.sprite = _levels[nominatedLevels[i]].sprite;
+			_nominatedLevelUI[i].image.sprite = _levels[nominatedLevels[i]].sprites[nominatedMaps[i]];
 		}
 
 		// set count variables for randomize level animation

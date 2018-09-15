@@ -1088,6 +1088,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mapToLoad: SeaLevel
+  _mapID: 0
   _tilesFolder: {fileID: 715085061}
   _powerUpFolder: {fileID: 1079690195}
   _characterPrefab: {fileID: 1300687396863330, guid: c968007a7fbe1f942a234aa54bc2f7e9,
