@@ -119,6 +119,14 @@ public class TileMap
 	public Vector2DInt GetRandomTileCoordsFromType(string tileType, Tile myTile)
 	{
 		// try to find a tile
+		List<Tile> possibleTiles = new List<Tile>();
+
+		foreach (KeyValuePair<Vector2DInt, Tile> tile in _tiles)		
+			if (tile.Value.model.typeName == tileType && tile.Value != myTile && !tile.Value.IsOccupied())
+				possibleTiles.Add(tile.Value);
+
+		if (possibleTiles.Count > 0)
+			return possibleTiles[Random.Range(0, possibleTiles.Count)].position;
 
 		// no tile found, flag coords to magic numbers for invalid Tile coords
 		// these are used to check if we can perform whatever functionality

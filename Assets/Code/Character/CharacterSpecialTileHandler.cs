@@ -35,11 +35,35 @@ public class CharacterSpecialTileHandler : MonoBehaviour
 		{
 			// do fail feedback here that teleport could not be done
 			// the target tile is probably occupied
-			Debug.Log("Failed to preform teleport due to no tyarget tile found");
+			tile.PlaySound(TileSounds.FailedSpecial);
+
+			if (tile.model.data.enterSpecialFailedParticle)
+			{
+				GameObject particle = Instantiate(tile.model.data.enterSpecialFailedParticle, new Vector3(tile.position.x, 0, tile.position.y), tile.model.data.enterSpecialFailedParticle.transform.rotation);
+				Destroy(particle, 7);
+			}
+
+			_character.movementComponent.StopMovementAndAddWalkCooldown();
+			_character.ParticleComponent.StopAll();			
 			return;
 		}
 
-		// do Teleport here
+		// play feedback for teleport, both on the tile we are teleporting from and the tile we teleport to
+		tile.PlaySound(TileSounds.Special);
+
+		if (tile.model.data.enterSpecialParticle)
+		{
+			GameObject particle = Instantiate(tile.model.data.enterSpecialParticle, new Vector3(tile.position.x, 0, tile.position.y), tile.model.data.enterSpecialParticle.transform.rotation);
+			Destroy(particle, 7);
+		}
+
+		if (tile.model.data.targetSpecialParticle)
+		{
+			GameObject particle = Instantiate(tile.model.data.targetSpecialParticle, new Vector3(targetTileCoords.x, 0, targetTileCoords.y), tile.model.data.targetSpecialParticle.transform.rotation);
+			Destroy(particle, 7);
+		}
+
+		_character.movementComponent.TeleportToTile(targetTileCoords);
 	}
 	
 }

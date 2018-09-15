@@ -9,6 +9,7 @@ public enum TileSounds
 	Break,
 	Kill,
 	Special,
+	FailedSpecial,
 
 	Count,
 }
@@ -50,11 +51,15 @@ public class TileModel
 		public AudioClip   breakSound;
 		public AudioClip   killSound;
 		public AudioClip   specialTileSound;
+		public AudioClip   failedSpecialTileSound;
 
 		[Header("PARTICLES"), Space(3)]
 		public GameObject landParticle;
 		public GameObject breakParticle;
 		public GameObject killParticle;
+		public GameObject enterSpecialParticle;
+		public GameObject targetSpecialParticle;
+		public GameObject enterSpecialFailedParticle;
 
 		[Header("MODEL PREFAB")]
 		public GameObject prefab;
@@ -112,6 +117,29 @@ public class Tile
 	public bool ContainsPowerUp() =>
 		_powerUp != PowerUpType.None;
 
+	public Tile(Vector2DInt position, string tileName, float yRotation, float tintStrength, Transform tilesFolder)
+    {
+		_tileDB       = TileDatabase.instance;
+		model         = _tileDB.GetTile(tileName);
+		this.position = position;
+		currentHealth = model.data.health;
+
+		CreateView(position, yRotation, tintStrength, tilesFolder);		
+		CreateSounds();
+    }
+
+	void CreateView(Vector2DInt position, float yRotation, float tintStrength, Transform tilesFolder)
+	{
+		if (model.data.prefab == null)
+			return;
+
+		view = Object.Instantiate(model.data.prefab, tilesFolder);
+		view.transform.rotation = view.transform.rotation * Quaternion.Euler(new Vector3(0, yRotation, 0));
+		view.transform.position = new Vector3(position.x, 0, position.y);
+
+		TintTile(view, tintStrength);
+	}
+
 	public PowerUpType ClaimPowerUp()
 	{
 		PowerUpType power = _powerUp;
@@ -136,29 +164,6 @@ public class Tile
 		}
 	}
 
-	public Tile(Vector2DInt position, string tileName, float yRotation, float tintStrength, Transform tilesFolder)
-    {
-		_tileDB       = TileDatabase.instance;
-		model         = _tileDB.GetTile(tileName);
-		this.position = position;
-		currentHealth = model.data.health;
-
-		CreateView(position, yRotation, tintStrength, tilesFolder);		
-		CreateSounds();
-    }
-
-	void CreateView(Vector2DInt position, float yRotation, float tintStrength, Transform tilesFolder)
-	{
-		if (model.data.prefab == null)
-			return;
-
-		view = Object.Instantiate(model.data.prefab, tilesFolder);
-		view.transform.rotation = view.transform.rotation * Quaternion.Euler(new Vector3(0, yRotation, 0));
-		view.transform.position = new Vector3(position.x, 0, position.y);
-
-		TintTile(view, tintStrength);
-	}
-
 	void CreateSounds()
 	{
 		if (view == null)
@@ -178,6 +183,9 @@ public class Tile
 		GameObject soundHolderSpecial = new GameObject("SpecialSound", typeof(AudioSource));
 		soundHolderSpecial.transform.SetParent(view.transform);
 
+		GameObject soundHolderSpecialFail = new GameObject("SpecialSoundFail", typeof(AudioSource));
+		soundHolderSpecialFail.transform.SetParent(view.transform);
+
 		_sounds[(int)TileSounds.Land] = soundHolderLand.GetComponent<AudioSource>();
 		_sounds[(int)TileSounds.Land].clip = model.data.landSound;
 
@@ -189,6 +197,9 @@ public class Tile
 
 		_sounds[(int)TileSounds.Special] = soundHolderSpecial.GetComponent<AudioSource>();
 		_sounds[(int)TileSounds.Special].clip = model.data.specialTileSound;
+
+		_sounds[(int)TileSounds.FailedSpecial] = soundHolderSpecialFail.GetComponent<AudioSource>();
+		_sounds[(int)TileSounds.FailedSpecial].clip = model.data.failedSpecialTileSound;
 	}
 
 	// play a sound belonging to the tile as child

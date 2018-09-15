@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TempleLevel.unity
     guid: 55e8ed620641af040bb40a8377fc8c43
+  - enabled: 1
+    path: Assets/Scenes/Sci-FiLevel.unity
+    guid: 2ec2ef9174bdbcf4ebc3b947d7d534ec
   m_configObjects: {}

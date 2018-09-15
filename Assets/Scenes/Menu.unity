@@ -3007,7 +3007,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &290648399
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4104,7 +4104,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Crystal Mine
+  m_Text: The Future
 --- !u!222 &398455968
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14890,7 +14890,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: Level1
           m_BoolArgument: 0
@@ -14927,7 +14927,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: f464a1dd3ce6e8543b11d6c77e135205, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cdef21c6e7d250c4e9d60b985fc582d5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -21958,7 +21958,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2037948884
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22359,10 +22359,10 @@ MonoBehaviour:
     sceneName: TempleLevel
     button: {fileID: 1272525998}
     sprite: {fileID: 21300000, guid: e4e698c29c4b10d44bc0f9cf90376298, type: 3}
-  - name: Crystal Mine
-    sceneName: MineLevel
+  - name: The Future
+    sceneName: Sci-FiLevel
     button: {fileID: 1473660700}
-    sprite: {fileID: 21300000, guid: f464a1dd3ce6e8543b11d6c77e135205, type: 3}
+    sprite: {fileID: 21300000, guid: cdef21c6e7d250c4e9d60b985fc582d5, type: 3}
   - name: Crystal Mine
     sceneName: MineLevel
     button: {fileID: 1342518451}

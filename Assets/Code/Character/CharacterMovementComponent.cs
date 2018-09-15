@@ -207,12 +207,18 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		_lastTargetRotation = transform.rotation;
 	}
 
-	void StopMovementAndAddCooldowns()
+	public void StopMovementAndAddCooldowns()
 	{
 		// reset state and add cooldowns
 		_stateComponent.SetState(CharacterState.Idle);
 		_flagComponent.SetFlag(CharacterFlag.Cooldown_Walk, true, _model.walkCooldown, SingletonBehavior.Overwrite);
 		_flagComponent.SetFlag(CharacterFlag.Cooldown_Dash, true, _model.dashCooldown, SingletonBehavior.Overwrite);
+	}
+
+	public void StopMovementAndAddWalkCooldown()
+	{
+		_stateComponent.SetState(CharacterState.Idle);
+		_flagComponent.SetFlag(CharacterFlag.Cooldown_Walk, true, _model.walkCooldown, SingletonBehavior.Overwrite);
 	}
 
 	void SetNewTileReferences(Vector2DInt tile)
@@ -221,6 +227,24 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		currentTile.RemovePlayer();
 		currentTile = _tileMap.GetTile(tile);
 		currentTile.SetCharacter(_character);
+	}
+
+	public void TeleportToTile(Vector2DInt targetTile)
+	{
+		// cancel ongoing movement(the master client on the other clients can have movement left if we have very low ping)
+		Timing.KillCoroutines(gameObject.GetInstanceID());
+
+		// same as above, correct rotation if the last movement wasent quite finished when we got told to teleport
+		transform.rotation = _lastTargetRotation;
+
+		// cancel possible ongoing feedback from ex dash
+		_character.ParticleComponent.StopAll();
+
+		// teleport player, change tilereferences and add cooldown
+		// only do walk cooldown here so we can do a quick dash when teleport is done if we want to
+		transform.position = new Vector3(targetTile.x, 1, targetTile.y);
+		SetNewTileReferences(targetTile);
+		StopMovementAndAddWalkCooldown();
 	}
 
 	IEnumerator<float> _Charge()
@@ -334,8 +358,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		currentTile.OnPlayerLand();
 
 		// reset state and add cooldown
-		_stateComponent.SetState(CharacterState.Idle);
-		_flagComponent.SetFlag(CharacterFlag.Cooldown_Walk, true, _model.walkCooldown, SingletonBehavior.Overwrite);
+		StopMovementAndAddWalkCooldown();
 	}
 
 	public IEnumerator<float> _Dash(Vector2DInt direction, int dashStrength, bool fromCollision = false)
