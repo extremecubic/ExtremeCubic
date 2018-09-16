@@ -120,11 +120,13 @@ public class LevelSelectPage : MenuPage
 		_mapsBeenSetup = true;
 	}
 
+	// called from arrowbuttons before "OnMapChange" is called
 	public void SetLevelIndex(int index)
 	{
 		_levelToChangeMap = index;
 	}
 
+	// called from arrow buttons
 	public void OnChangeMap(bool increment)
 	{
 		LevelData lvlData = _levels[_levelToChangeMap];
@@ -173,12 +175,25 @@ public class LevelSelectPage : MenuPage
 	public override void UpdatePage()
 	{
 		if (Input.GetButtonDown(Constants.BUTTON_LB + "0"))
-			OnChangeMap(false);
+			FindSelectedButtonIDAndChangeMap(false);
 
 		if (Input.GetButtonDown(Constants.BUTTON_RB + "0"))
-			OnChangeMap(true);
+			FindSelectedButtonIDAndChangeMap(true);
 
 		AllNominatedLevel();
+	}
+
+	void FindSelectedButtonIDAndChangeMap(bool increment)
+	{
+		GameObject selectedObject = EventSystem.current.currentSelectedGameObject;
+
+		// will get the button index from the parent of the selected button
+		// this only have to be done on controller, mouse click will send correct index
+		if (selectedObject != null)
+		{
+			_levelToChangeMap = selectedObject.transform.parent.GetSiblingIndex();
+			OnChangeMap(increment);
+		}
 	}
 
 	void AllNominatedLevel()

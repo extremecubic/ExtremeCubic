@@ -88,7 +88,7 @@ public class Tile
 	public int currentHealth { get; private set; } = 0;
 
     TileDatabase _tileDB;
-	AudioSource[] _sounds;
+	SoundData[] _sounds;
 
     public GameObject view { get; private set; }
 	Character  _character;
@@ -169,37 +169,17 @@ public class Tile
 		if (view == null)
 			return;
 
-		_sounds = new AudioSource[(int)TileSounds.Count];
+		_sounds = new SoundData[(int)TileSounds.Count];
+		for (int i = 0; i < _sounds.Length; i++)
+			_sounds[i] = new SoundData();
 
-		GameObject soundHolderLand = new GameObject("landSound", typeof(AudioSource));
-		soundHolderLand.transform.SetParent(view.transform);
+		MusicManager MM = MusicManager.instance;
 
-		GameObject soundHolderBreak = new GameObject("breakSound", typeof(AudioSource));
-		soundHolderBreak.transform.SetParent(view.transform);
-
-		GameObject soundHolderKill = new GameObject("KillSound", typeof(AudioSource));
-		soundHolderKill.transform.SetParent(view.transform);
-
-		GameObject soundHolderSpecial = new GameObject("SpecialSound", typeof(AudioSource));
-		soundHolderSpecial.transform.SetParent(view.transform);
-
-		GameObject soundHolderSpecialFail = new GameObject("SpecialSoundFail", typeof(AudioSource));
-		soundHolderSpecialFail.transform.SetParent(view.transform);
-
-		_sounds[(int)TileSounds.Land] = soundHolderLand.GetComponent<AudioSource>();
-		_sounds[(int)TileSounds.Land].clip = model.data.landSound;
-
-		_sounds[(int)TileSounds.Break] = soundHolderBreak.GetComponent<AudioSource>();
-		_sounds[(int)TileSounds.Break].clip = model.data.breakSound;
-
-		_sounds[(int)TileSounds.Kill] = soundHolderKill.GetComponent<AudioSource>();
-		_sounds[(int)TileSounds.Kill].clip = model.data.killSound;
-
-		_sounds[(int)TileSounds.Special] = soundHolderSpecial.GetComponent<AudioSource>();
-		_sounds[(int)TileSounds.Special].clip = model.data.specialTileSound;
-
-		_sounds[(int)TileSounds.FailedSpecial] = soundHolderSpecialFail.GetComponent<AudioSource>();
-		_sounds[(int)TileSounds.FailedSpecial].clip = model.data.failedSpecialTileSound;
+		MM.CreateSound(_sounds[(int)TileSounds.Land],          "LandSound",        model.data.landSound             , false, view.transform);
+		MM.CreateSound(_sounds[(int)TileSounds.Break],         "BreakSound",       model.data.breakSound            , false, view.transform);
+		MM.CreateSound(_sounds[(int)TileSounds.Kill],          "KillSound",        model.data.killSound             , false, view.transform);
+		MM.CreateSound(_sounds[(int)TileSounds.Special],       "SpecialSound",     model.data.specialTileSound      , false, view.transform);
+		MM.CreateSound(_sounds[(int)TileSounds.FailedSpecial], "SpecialSoundFail", model.data.failedSpecialTileSound, false, view.transform);
 	}
 
 	// play a sound belonging to the tile as child
@@ -208,8 +188,8 @@ public class Tile
 		if (view == null)
 			return;
 
-		if (_sounds[(int)type].clip != null)
-			_sounds[(int)type].Play();
+		MusicManager MM = MusicManager.instance;
+		MM.PlaySound(_sounds[(int)type]);
 	}
 
 	public void OnPlayerLand()

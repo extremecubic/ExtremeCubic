@@ -3705,8 +3705,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86100b3577149bd4c8eaec37c90c1f6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _freeFlightRotationSpeed: 3
-  _freeFlightMovementSpeed: 3
+  _freeFlightRotationSpeed: 100
+  _freeFlightMovementSpeed: 15
   _frozen: 1
   _model: {fileID: 11400000, guid: 5da90e43f2a9d5f4fbdd085fe4fcf930, type: 2}
 --- !u!114 &1301049867

@@ -9,8 +9,8 @@ public class CameraController : MonoBehaviour
 	Vector3 _position;
 	Vector3 _shakeOffset = Vector3.zero;
 
-	[SerializeField] float _freeFlightRotationSpeed = 3.0f;
-	[SerializeField] float _freeFlightMovementSpeed = 3.0f;
+	[SerializeField] float _freeFlightRotationSpeed = 100.0f;
+	[SerializeField] float _freeFlightMovementSpeed = 15.0f;
 	[SerializeField] bool  _frozen = true;
 
 	[SerializeField] CharacterModel _model;

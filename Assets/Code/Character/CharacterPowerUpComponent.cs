@@ -74,14 +74,10 @@ public class CharacterPowerUpComponent : MonoBehaviour
 		PowerUp powerUp = _powerUps.GetPowerUpFromType(type);
 
 		// run Coroutine that sets a effect from powerUp and resets it after time runs out
-		if (type == PowerUpType.InfiniteDash)
-			_handle = Timing.RunCoroutine(_RunPowerUp(() => extraDashCharges = 1000, powerUp.duration));
-		else if (type == PowerUpType.SuperSpeed)
-			_handle = Timing.RunCoroutine(_RunPowerUp(() => speedMultiplier = powerUp.modifier, powerUp.duration));
-		else if (type == PowerUpType.SlowdownOthers)
-			_handle = Timing.RunCoroutine(_RunPowerUp(() => speedMultiplier = powerUp.modifier, powerUp.duration));
-		else if (type == PowerUpType.invertControllOthers)
-			_handle = Timing.RunCoroutine(_RunPowerUp(() => invertControlls = true, powerUp.duration));
+		if      (type == PowerUpType.InfiniteDash)         _handle = Timing.RunCoroutine(_RunPowerUp(() => extraDashCharges = 1000,             powerUp.duration));
+		else if (type == PowerUpType.SuperSpeed)           _handle = Timing.RunCoroutine(_RunPowerUp(() => speedMultiplier  = powerUp.modifier, powerUp.duration));
+		else if (type == PowerUpType.SlowdownOthers)       _handle = Timing.RunCoroutine(_RunPowerUp(() => speedMultiplier  = powerUp.modifier, powerUp.duration));
+		else if (type == PowerUpType.invertControllOthers) _handle = Timing.RunCoroutine(_RunPowerUp(() => invertControlls  = true,             powerUp.duration));
 	}
 	
 	public void AbortPowerUp()
@@ -104,21 +100,10 @@ public class CharacterPowerUpComponent : MonoBehaviour
 	void SpawnPickupFeedback(Vector3 pickupPos, PowerUpType type)
 	{
 		PowerUp powerUp = _powerUps.GetPowerUpFromType(type);
-
-		if (powerUp.pickupSound != null)
-		{
-			// spawn object with audiosource
-			GameObject soundHolder = new GameObject("soundOneUsePowerPickup", typeof(AudioSource));
-			AudioSource audio = soundHolder.GetComponent<AudioSource>();
-
-			// asign clip and play
-			audio.clip = powerUp.pickupSound;
-			audio.Play();
-
-			// delete after delay
-			Destroy(soundHolder, 5);
-		}
-
+		
+		MusicManager MM = MusicManager.instance;
+		MM.SpawnAndPlaySound(powerUp.pickupSound, 5);
+		
 		// spawn a pickup particle
 		if (powerUp.pickupParticle != null)
 		{
