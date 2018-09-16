@@ -136,7 +136,7 @@ MonoBehaviour:
       targetSpecialParticle: {fileID: 0}
       enterSpecialFailedParticle: {fileID: 0}
       prefab: {fileID: 0}
-  - _typeName: desert
+  - _typeName: sand
     _data:
       walkable: 1
       health: 3
@@ -347,7 +347,7 @@ MonoBehaviour:
       targetSpecialParticle: {fileID: 0}
       enterSpecialFailedParticle: {fileID: 0}
       prefab: {fileID: 1887855735801274, guid: 1d318b57e91b0824eb659423804b1856, type: 2}
-  - _typeName: speedtile
+  - _typeName: speedtileminepurple
     _data:
       walkable: 1
       health: 0
@@ -374,7 +374,34 @@ MonoBehaviour:
       targetSpecialParticle: {fileID: 0}
       enterSpecialFailedParticle: {fileID: 0}
       prefab: {fileID: 1479690417016596, guid: 27d189a1ae50a8a429259eb633eee564, type: 2}
-  - _typeName: speedtilesand
+  - _typeName: speedtileminered
+    _data:
+      walkable: 1
+      health: 0
+      deadly: 0
+      unbreakable: 1
+      deathType: 2
+      replaceTileOnDeath: 0
+      replacementTile: empty
+      isSpecialTile: 1
+      specialType: 0
+      needTargetTileSameType: 0
+      intValue: 5
+      landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
+      breakSound: {fileID: 0}
+      killSound: {fileID: 0}
+      specialTileSound: {fileID: 8300000, guid: 7a54b8db12c3eca4992eb06046039af8,
+        type: 3}
+      failedSpecialTileSound: {fileID: 0}
+      landParticle: {fileID: 1895057872444966, guid: 84bf0b0e1c89cba4eba76ec273baa2d3,
+        type: 2}
+      breakParticle: {fileID: 0}
+      killParticle: {fileID: 0}
+      enterSpecialParticle: {fileID: 0}
+      targetSpecialParticle: {fileID: 0}
+      enterSpecialFailedParticle: {fileID: 0}
+      prefab: {fileID: 1856617645985358, guid: a063f47fb2af77842b1ac22a63933cbe, type: 2}
+  - _typeName: speedtilesandblue
     _data:
       walkable: 1
       health: 0
@@ -401,6 +428,33 @@ MonoBehaviour:
       targetSpecialParticle: {fileID: 0}
       enterSpecialFailedParticle: {fileID: 0}
       prefab: {fileID: 1381398352821048, guid: 257ca0cc5d5249a4fa48d37cfcc83166, type: 2}
+  - _typeName: speedtilesandred
+    _data:
+      walkable: 1
+      health: 0
+      deadly: 0
+      unbreakable: 1
+      deathType: 2
+      replaceTileOnDeath: 0
+      replacementTile: empty
+      isSpecialTile: 1
+      specialType: 0
+      needTargetTileSameType: 0
+      intValue: 5
+      landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
+      breakSound: {fileID: 0}
+      killSound: {fileID: 0}
+      specialTileSound: {fileID: 8300000, guid: 7a54b8db12c3eca4992eb06046039af8,
+        type: 3}
+      failedSpecialTileSound: {fileID: 0}
+      landParticle: {fileID: 1895057872444966, guid: 84bf0b0e1c89cba4eba76ec273baa2d3,
+        type: 2}
+      breakParticle: {fileID: 0}
+      killParticle: {fileID: 0}
+      enterSpecialParticle: {fileID: 0}
+      targetSpecialParticle: {fileID: 0}
+      enterSpecialFailedParticle: {fileID: 0}
+      prefab: {fileID: 1458551871963020, guid: 79e03907369f37b45b5cbb2fb28a5149, type: 2}
   - _typeName: templepillar
     _data:
       walkable: 0

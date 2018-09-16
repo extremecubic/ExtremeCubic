@@ -54,22 +54,29 @@ public class LevelSelectPage : MenuPage
 	bool _mapsBeenSetup;
 
 	int _levelToChangeMap;
+	bool _randomizeMap;
 
 	public void OnLevelSelected(int level)
 	{
 		if (_selected)
 			return;
 
-		_selected = true;
-		
+		int mapID = _levels[level].currentMap;
+
+		// if timer have run out we want to randomize witch map of the level that will be played
+		if (_randomizeMap)
+			mapID = Random.Range(0, _levels[level].sprites.Length);
+
 		// set level ID of nominated level and set that we are ready
 		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.PLAYER_READY, true);
 		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.NOMINATED_LEVEL, level);
-		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.NOMINATED_LEVEL_TILEMAP, _levels[level].currentMap);
+		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.NOMINATED_LEVEL_TILEMAP, mapID);
 		ChangeAllButtonsState(false);
 
 		// tell server that we are selected and ready
 		_playerInfo.photonView.RPC("SetReadyUI", PhotonTargets.All, PhotonNetwork.player.ID, true);
+
+		_selected = true;
 	}
 
 	public override void OnPageEnter()
@@ -77,7 +84,8 @@ public class LevelSelectPage : MenuPage
 		// move all player UI boxes to the prefered positions of this page
 		_playerInfo.SetPlayerUIByScreen(MenuScreen.LevelSelect);
 
-		_selected = false;
+		_selected     = false;
+		_randomizeMap = false;
 		
 		_selectScreen.SetActive(true);
 		_nominatedScreen.SetActive(false);
@@ -199,7 +207,7 @@ public class LevelSelectPage : MenuPage
 
 			for (int i =0; i < numPlayers; i++)
 			{				
-				// store all nominated level ID's 
+				// store all nominated level ID's and map ID´s
 				nL[i]  = (int)PhotonNetwork.playerList[i].CustomProperties[Constants.NOMINATED_LEVEL];
 				nLM[i] = (int)PhotonNetwork.playerList[i].CustomProperties[Constants.NOMINATED_LEVEL_TILEMAP];
 
@@ -208,7 +216,7 @@ public class LevelSelectPage : MenuPage
 				{
 					winnerLevel     = _levels[(int)PhotonNetwork.playerList[i].CustomProperties[Constants.NOMINATED_LEVEL]].sceneName;
 					winnerLevelName = _levels[(int)PhotonNetwork.playerList[i].CustomProperties[Constants.NOMINATED_LEVEL]].name;
-					winnerLevelMap  = _levels[(int)PhotonNetwork.playerList[i].CustomProperties[Constants.NOMINATED_LEVEL]].currentMap;
+					winnerLevelMap  = nLM[i];
 				}
 			}
 
@@ -235,7 +243,11 @@ public class LevelSelectPage : MenuPage
 	[PunRPC]
 	void StartCountdown(double delta)
 	{
-		_counter.StartCount(delta, 60, () => OnLevelSelected(Random.Range(0, _levels.Length)));
+		_counter.StartCount(delta, 60, () =>
+		{
+			_randomizeMap = true;
+			OnLevelSelected(Random.Range(0, _levels.Length));			
+		});
 	}
 
 	void GoToCharacter()

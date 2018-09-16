@@ -3617,9 +3617,9 @@ GameObject:
   - component: {fileID: 1301049864}
   - component: {fileID: 1301049863}
   - component: {fileID: 1301049862}
-  - component: {fileID: 1301049866}
   - component: {fileID: 1301049867}
   - component: {fileID: 1301049868}
+  - component: {fileID: 1301049866}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3702,36 +3702,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1301049861}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d37446ea74c7dbc41889f6bc21fbc010, type: 3}
+  m_Script: {fileID: 11500000, guid: 86100b3577149bd4c8eaec37c90c1f6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _boost: 3.5
-  _positionLerpTime: 0.2
-  _mouseSensitivityCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0.5
-      inSlope: 0
-      outSlope: 5
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 2.5
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  _rotationLerpTime: 0.01
+  _freeFlightRotationSpeed: 3
+  _freeFlightMovementSpeed: 3
+  _frozen: 1
+  _model: {fileID: 11400000, guid: 5da90e43f2a9d5f4fbdd085fe4fcf930, type: 2}
 --- !u!114 &1301049867
 MonoBehaviour:
   m_ObjectHideFlags: 0

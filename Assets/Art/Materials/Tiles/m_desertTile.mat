@@ -4,7 +4,7 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: m_desertTile
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
@@ -19,7 +19,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 031ea16076d21824391995186224a6d1, type: 3}
+        m_Texture: {fileID: 2800000, guid: e6b70229308faa64880eac4945d59f5e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -72,5 +72,5 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.99766475, g: 0.99766475, b: 0.99766475, a: 0.99766475}
+    - _Color: {r: 0.966501, g: 0.966501, b: 0.966501, a: 0.966501}
     - _EmissionColor: {r: 1.7207954, g: 1.7207954, b: 1.7207954, a: 1}
