@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEngine.UI;
+using System.Linq;
 
 public class TileInfo
 {
@@ -32,7 +33,7 @@ public class TileEditor : MonoBehaviour
 
 	//UI
 	[Header("UI")]
-	[SerializeField] InputField   _inputLoad;
+	[SerializeField] Dropdown     _inputLoad;
 	[SerializeField] InputField   _inputSave;
 	[SerializeField] Dropdown     _dropDownTiles;
 	[SerializeField] Text         _gridSizeText;
@@ -63,6 +64,7 @@ public class TileEditor : MonoBehaviour
 	float        _colorStrength = 1.0f;
 	TileDatabase _tileDB;
 	TileInfo[,]  _tileProperties;
+	bool         _haveLoaded;
 			
 	void Start()
 	{
@@ -77,6 +79,8 @@ public class TileEditor : MonoBehaviour
 		_dropDownTiles.options.Clear();
 		for(int i =0; i < _tileDB.tileCount; i++)									
 			_dropDownTiles.options.Add(new Dropdown.OptionData(_tileDB.GetTile(i).typeName));
+
+		SetAllExistingLevels();
 														
 		// create tile of first type in typearray
 		_selectedTile     = Instantiate(_tileDB.GetTile(1).data.prefab, _tileFolder);
@@ -88,6 +92,16 @@ public class TileEditor : MonoBehaviour
 
 		_currentMinTintText.text = _tintMin.value.ToString("0.00");
 		_currentMaxTintText.text = _tintMax.value.ToString("0.00");
+	}
+
+	void SetAllExistingLevels()
+	{
+		_inputLoad.options.Clear();
+
+		FileInfo[] files = new DirectoryInfo(Constants.TILEMAP_SAVE_FOLDER).GetFiles();
+
+		for(int i =0; i< files.Length; i++)
+			_inputLoad.options.Add(new Dropdown.OptionData(files[i].Name));
 	}
 
 	void Update()
@@ -124,13 +138,13 @@ public class TileEditor : MonoBehaviour
 
 			// get hitpoint from ray and convert to 2d coordinates
 			Vector3 hitPoint = hitRay.GetPoint(dst);
-			int CoordY = Mathf.CeilToInt(hitPoint.z);
-			int CoordX = Mathf.CeilToInt(hitPoint.x);
+			int CoordY = Mathf.RoundToInt(hitPoint.z);
+			int CoordX = Mathf.RoundToInt(hitPoint.x);
 
 			// check so coordinates is inside grid
 			if(CoordX >= 0 && CoordX < _gridSize.x && CoordY >= 0 && CoordY < _gridSize.y)
 			{
-				// check if tile is already placed on coords (all tiles is set to "Death" by defualt meaning they are empty)
+				// check if tile is already placed on coords (all tiles is set to "empty" by defualt)
 				bool occupied = _tileProperties[CoordY, CoordX].name.ToLower() != "empty";
 				float yPos = 0.0f;
 				if (occupied)
@@ -156,7 +170,7 @@ public class TileEditor : MonoBehaviour
 					_selectedTile.transform.rotation = Quaternion.Euler(oldRotation);
 				}
 
-				_selectedTile.transform.position = new Vector3(Mathf.CeilToInt(hitPoint.x), yPos, Mathf.CeilToInt(hitPoint.z));
+				_selectedTile.transform.position = new Vector3(CoordX, yPos, CoordY);
 
 				// set the tiletype and position of this coord in the grid
 				if (!occupied)
@@ -374,7 +388,15 @@ public class TileEditor : MonoBehaviour
 		if (save)
 			BinarySave(_inputSave.text);
 		else
-			BinaryLoad(_inputLoad.text);
+			BinaryLoad(_inputLoad.options[_inputLoad.value].text);
+	}
+
+	public void Overwrite()
+	{
+		if (_haveLoaded)
+			BinarySave(_inputLoad.options[_inputLoad.value].text);
+		else
+			_promt.SetAndShow(string.Format("ERROR!! No level have been loaded to overwrite"), null);
 	}
 
 	public void ClearAllTiles()
@@ -414,6 +436,13 @@ public class TileEditor : MonoBehaviour
 	{
 		Directory.CreateDirectory(Constants.TILEMAP_SAVE_FOLDER);
 
+		if (levelName == "")
+		{
+			_promt.SetAndShow(string.Format("ERROR!\n Can't save level without a name", levelName), () => SetAllExistingLevels());
+			return;
+		}
+
+
 		using (FileStream stream = new FileStream(Path.Combine(Constants.TILEMAP_SAVE_FOLDER, levelName), FileMode.OpenOrCreate, FileAccess.Write))
 		using (BinaryWriter writer = new BinaryWriter(stream))
 		{
@@ -431,8 +460,8 @@ public class TileEditor : MonoBehaviour
 					writer.Write(_tileProperties[y, x].tintStrength);
 				}
 
-			_promt.SetAndShow(string.Format("Level {0} Was successfully saved", levelName), () => print("Ok button pressed, seems to work"));
-		}
+			_promt.SetAndShow(string.Format("Level {0} Was successfully saved", levelName), () => SetAllExistingLevels());
+		}		
 	}
 
 	public void BinaryLoad(string levelName)
@@ -478,6 +507,8 @@ public class TileEditor : MonoBehaviour
 						TintTile(tile, tintStrength);
 					}
 			}
+
+			_haveLoaded = true;
 		}
 		else
 			_promt.SetAndShow(string.Format("ERROR!! Level {0} could not be found", levelName), () => print("Ok button pressed, seems to work"));
