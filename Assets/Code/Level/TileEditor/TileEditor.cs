@@ -28,6 +28,7 @@ public class TileEditor : MonoBehaviour
 		PLACE_SINGLE,
 		PAINT,
 		DELETE,
+		SELECT,
 		NUM_MODES
 	}
 
@@ -65,6 +66,7 @@ public class TileEditor : MonoBehaviour
 	TileDatabase _tileDB;
 	TileInfo[,]  _tileProperties;
 	bool         _haveLoaded;
+	bool         _lastWasSelect;
 			
 	void Start()
 	{
@@ -117,14 +119,16 @@ public class TileEditor : MonoBehaviour
 			_editModeText.text = string.Format("EDIT MODE: {0}", _currentEditMode);
 
 			// if in place tile mode, delete tile to go into select mode
-			if (_currentEditMode == EDIT_MODE.DELETE)
+			if (_currentEditMode == EDIT_MODE.DELETE || _currentEditMode == EDIT_MODE.SELECT)
 			{
 				if (_selectedTile)
 				{
 					Destroy(_selectedTile);
 					_selectedTile = null;
 				}
-			}			
+			}
+
+			_lastWasSelect = false;
 		}
 
 		// in placetile mode
@@ -179,28 +183,60 @@ public class TileEditor : MonoBehaviour
 						return;
 
 					if (_currentEditMode == EDIT_MODE.PLACE_SINGLE && Input.GetMouseButtonDown(0))
+					{
 						PlaceTile(CoordX, CoordY, _rotationY);
+						if (_lastWasSelect)
+						{
+							_currentEditMode = EDIT_MODE.SELECT;
+							_editModeText.text = string.Format("EDIT MODE: {0}", _currentEditMode);
+							_lastWasSelect = false;
+							return;
+						}
+
+					}
 					else if(_currentEditMode == EDIT_MODE.PAINT && Input.GetMouseButton(0))
-						PlaceTile(CoordX, CoordY, _rotationY);
+						PlaceTile(CoordX, CoordY, _rotationY);					
 				}
 			}
 		}
-		else // in delete mode
+		else // in delete/select mode
 		{
 			if (Input.GetMouseButtonDown(0))
 			{
 				if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
 					return;
-
+				
 				// raycast and se if we hit a already placed tile and then we can move it
 				Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 				RaycastHit hit;
-				if(Physics.Raycast(ray, out hit))
-					if(hit.collider.gameObject.layer == 9)
-					{						
-						_tileProperties[(int)hit.transform.position.z, (int)hit.transform.position.x].name = "empty";
-						Destroy(hit.collider.gameObject);						
-					}
+				if (Physics.Raycast(ray, out hit))
+				{
+					if (hit.collider.gameObject.layer == 9)
+					{
+						if (_currentEditMode == EDIT_MODE.DELETE)
+						{
+							_tileProperties[(int)hit.transform.position.z, (int)hit.transform.position.x].name = "empty";
+							Destroy(hit.collider.gameObject);
+						}
+						else
+						{
+							int coordY = (int)hit.transform.position.z;
+							int coordX = (int)hit.transform.position.x;
+
+							_selectedTile     = hit.collider.gameObject;
+							_rotationY        = hit.collider.gameObject.transform.rotation.eulerAngles.y;
+							_colorStrength    = _tileProperties[coordY, coordX].tintStrength;
+							_selectedTileType = _tileProperties[coordY, coordX].name;
+
+							_tileProperties[coordY, coordX].name = "empty";
+							_currentEditMode = EDIT_MODE.PLACE_SINGLE;
+
+							_lastWasSelect = true;
+
+							setUIToSelectedTile();
+						}
+					}	
+				}										
 			}
 		}
 	}
@@ -270,10 +306,6 @@ public class TileEditor : MonoBehaviour
 		// dont spawn any tile if it is empty
 		if (_selectedTileType == "empty") 
 			return;
-
-		// spawn new tile
-		_selectedTile = Instantiate(_tileDB.GetTile(_selectedTileType).data.prefab, Vector3.zero, _tileDB.GetTile(_selectedTileType).data.prefab.transform.rotation * Quaternion.Euler(0, _rotationY, 0), _tileFolder);
-		AddcolliderToSelectedTile();
 	}
 
 	void ChangeTile(int index)
@@ -286,7 +318,7 @@ public class TileEditor : MonoBehaviour
 		_selectedTileType = _tileDB.GetTile(index).typeName;
 
 		// instantiate tile and add collider
-		if(_currentEditMode != EDIT_MODE.DELETE)
+		if(_currentEditMode != EDIT_MODE.DELETE && _currentEditMode != EDIT_MODE.SELECT)
 		{
 			_selectedTile = Instantiate(_tileDB.GetTile(index).data.prefab, Vector3.zero, _tileDB.GetTile(_selectedTileType).data.prefab.transform.rotation * Quaternion.Euler(0, _rotationY, 0), _tileFolder);
 			AddcolliderToSelectedTile();
@@ -430,6 +462,21 @@ public class TileEditor : MonoBehaviour
 
 				TintTile(tile, _colorStrength);
 			}
+	}
+
+	void setUIToSelectedTile()
+	{
+		_currentTint.text = _colorStrength.ToString("0.0");
+		for (int i =0; i< _dropDownTiles.options.Count; i++)
+		{
+			if (_dropDownTiles.options[i].text == _selectedTileType)
+			{
+				_dropDownTiles.value = i;
+				break;
+			}
+		}
+
+		_editModeText.text = string.Format("EDIT MODE: {0}", _currentEditMode);
 	}
 	
 	public void BinarySave(string levelName)

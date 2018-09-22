@@ -27,5 +27,4 @@ public class MessagePromt : MonoBehaviour
 
 		gameObject.SetActive(false);
 	}
-	
 }
