@@ -34,9 +34,8 @@ public class DecalRotation : MonoBehaviour
 				_currentRotation = new Vector3(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
 		}
 
-
-
-		_material = GetComponent<Renderer>().material;
+		if (_uvScroll)
+		   _material = GetComponent<Renderer>().material;
     }
 
 	void Update ()

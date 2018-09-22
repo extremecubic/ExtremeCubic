@@ -540,6 +540,162 @@ MonoBehaviour:
       enterSpecialFailedParticle: {fileID: 1473760799677456, guid: 582fd629f27cfb840ac18c489a0f09d2,
         type: 2}
       prefab: {fileID: 1383467775604100, guid: 38fef9d13fd06d748abb9ed1a5133946, type: 2}
+  - _typeName: scifiunbreakpurple
+    _data:
+      walkable: 1
+      health: 0
+      deadly: 0
+      unbreakable: 1
+      deathType: 0
+      replaceTileOnDeath: 0
+      replacementTile: 
+      isSpecialTile: 0
+      specialType: 0
+      needTargetTileSameType: 0
+      intValue: 0
+      landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
+      breakSound: {fileID: 0}
+      killSound: {fileID: 0}
+      specialTileSound: {fileID: 0}
+      failedSpecialTileSound: {fileID: 0}
+      landParticle: {fileID: 1895057872444966, guid: 84bf0b0e1c89cba4eba76ec273baa2d3,
+        type: 2}
+      breakParticle: {fileID: 0}
+      killParticle: {fileID: 0}
+      enterSpecialParticle: {fileID: 0}
+      targetSpecialParticle: {fileID: 0}
+      enterSpecialFailedParticle: {fileID: 0}
+      prefab: {fileID: 1950914887703502, guid: 240b1edbb6dc0e444958c2264d52fbe8, type: 2}
+  - _typeName: scifiunbreakgreen
+    _data:
+      walkable: 1
+      health: 0
+      deadly: 0
+      unbreakable: 1
+      deathType: 0
+      replaceTileOnDeath: 0
+      replacementTile: 
+      isSpecialTile: 0
+      specialType: 0
+      needTargetTileSameType: 0
+      intValue: 0
+      landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
+      breakSound: {fileID: 0}
+      killSound: {fileID: 0}
+      specialTileSound: {fileID: 0}
+      failedSpecialTileSound: {fileID: 0}
+      landParticle: {fileID: 1895057872444966, guid: 84bf0b0e1c89cba4eba76ec273baa2d3,
+        type: 2}
+      breakParticle: {fileID: 0}
+      killParticle: {fileID: 0}
+      enterSpecialParticle: {fileID: 0}
+      targetSpecialParticle: {fileID: 0}
+      enterSpecialFailedParticle: {fileID: 0}
+      prefab: {fileID: 1225943325988606, guid: 8b62ec0300eb96b49a5b8d3a10a566a7, type: 2}
+  - _typeName: scifiunbreakyellow
+    _data:
+      walkable: 1
+      health: 0
+      deadly: 0
+      unbreakable: 1
+      deathType: 0
+      replaceTileOnDeath: 0
+      replacementTile: 
+      isSpecialTile: 0
+      specialType: 0
+      needTargetTileSameType: 0
+      intValue: 0
+      landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
+      breakSound: {fileID: 0}
+      killSound: {fileID: 0}
+      specialTileSound: {fileID: 0}
+      failedSpecialTileSound: {fileID: 0}
+      landParticle: {fileID: 1895057872444966, guid: 84bf0b0e1c89cba4eba76ec273baa2d3,
+        type: 2}
+      breakParticle: {fileID: 0}
+      killParticle: {fileID: 0}
+      enterSpecialParticle: {fileID: 0}
+      targetSpecialParticle: {fileID: 0}
+      enterSpecialFailedParticle: {fileID: 0}
+      prefab: {fileID: 1999499798573558, guid: 5afa91510ae60bd448761821ba5684a6, type: 2}
+  - _typeName: scifibreakable
+    _data:
+      walkable: 1
+      health: 3
+      deadly: 0
+      unbreakable: 0
+      deathType: 0
+      replaceTileOnDeath: 0
+      replacementTile: 
+      isSpecialTile: 0
+      specialType: 0
+      needTargetTileSameType: 0
+      intValue: 0
+      landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
+      breakSound: {fileID: 0}
+      killSound: {fileID: 0}
+      specialTileSound: {fileID: 0}
+      failedSpecialTileSound: {fileID: 0}
+      landParticle: {fileID: 1895057872444966, guid: 84bf0b0e1c89cba4eba76ec273baa2d3,
+        type: 2}
+      breakParticle: {fileID: 0}
+      killParticle: {fileID: 0}
+      enterSpecialParticle: {fileID: 0}
+      targetSpecialParticle: {fileID: 0}
+      enterSpecialFailedParticle: {fileID: 0}
+      prefab: {fileID: 1596240804715848, guid: 72d5533e8145f0845a309bf484323ee1, type: 2}
+  - _typeName: scifispeed
+    _data:
+      walkable: 1
+      health: 3
+      deadly: 0
+      unbreakable: 1
+      deathType: 0
+      replaceTileOnDeath: 0
+      replacementTile: 
+      isSpecialTile: 1
+      specialType: 0
+      needTargetTileSameType: 0
+      intValue: 5
+      landSound: {fileID: 0}
+      breakSound: {fileID: 0}
+      killSound: {fileID: 0}
+      specialTileSound: {fileID: 8300000, guid: 7a54b8db12c3eca4992eb06046039af8,
+        type: 3}
+      failedSpecialTileSound: {fileID: 0}
+      landParticle: {fileID: 0}
+      breakParticle: {fileID: 0}
+      killParticle: {fileID: 0}
+      enterSpecialParticle: {fileID: 0}
+      targetSpecialParticle: {fileID: 0}
+      enterSpecialFailedParticle: {fileID: 0}
+      prefab: {fileID: 1670103370254666, guid: 6ec1e02c54268e1439cd1961883b7410, type: 2}
+  - _typeName: scifibomb
+    _data:
+      walkable: 1
+      health: 0
+      deadly: 1
+      unbreakable: 1
+      deathType: 2
+      replaceTileOnDeath: 1
+      replacementTile: empty
+      isSpecialTile: 0
+      specialType: 0
+      needTargetTileSameType: 0
+      intValue: 5
+      landSound: {fileID: 0}
+      breakSound: {fileID: 0}
+      killSound: {fileID: 8300000, guid: 2e731f18a8fdc4a4e909154daa0b53ab, type: 3}
+      specialTileSound: {fileID: 0}
+      failedSpecialTileSound: {fileID: 0}
+      landParticle: {fileID: 0}
+      breakParticle: {fileID: 0}
+      killParticle: {fileID: 1439366920471752, guid: 11f9bc30e64dbe3409ed8db8f3a253b5,
+        type: 2}
+      enterSpecialParticle: {fileID: 0}
+      targetSpecialParticle: {fileID: 0}
+      enterSpecialFailedParticle: {fileID: 0}
+      prefab: {fileID: 1351201423226018, guid: 31ceadb1ee25d404fad0ce57417f79c4, type: 2}
 --- !u!114 &114660886813412552
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -847,6 +1003,82 @@ MonoBehaviour:
     iconUI: {fileID: 21300000, guid: 655051eacd219b743bf81c0b0372cff9, type: 3}
     prefabs:
     - {fileID: 1920608421618768, guid: ff7fe1728b6c9954e9f7ddb175e49def, type: 2}
+    walkSound: {fileID: 8300000, guid: 095fb456ce50a0045805adfe29e8b6a8, type: 3}
+    dashSound: {fileID: 8300000, guid: 6b4bdcd31b14b404ca707e4255795507, type: 3}
+    hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
+    deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
+    chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    stunnedSound: {fileID: 8300000, guid: 922f7d14a2a53824486dde09ffd23462, type: 3}
+    hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
+      type: 2}
+    trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
+      type: 2}
+    trailForwardAsDashDirection: 1
+    chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+    stunnedParticle: {fileID: 198650944266004816, guid: bb8859e7f483be54391fa8ac9d45123e,
+      type: 2}
+  - name: andreas
+    iconUI: {fileID: 21300000, guid: 9cb8699152435c541985451f6d87cc8a, type: 3}
+    prefabs:
+    - {fileID: 1613282565920162, guid: d39717660c6a837479907415c56a8d97, type: 2}
+    walkSound: {fileID: 8300000, guid: 095fb456ce50a0045805adfe29e8b6a8, type: 3}
+    dashSound: {fileID: 8300000, guid: 6b4bdcd31b14b404ca707e4255795507, type: 3}
+    hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
+    deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
+    chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    stunnedSound: {fileID: 8300000, guid: 922f7d14a2a53824486dde09ffd23462, type: 3}
+    hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
+      type: 2}
+    trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
+      type: 2}
+    trailForwardAsDashDirection: 1
+    chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+    stunnedParticle: {fileID: 198650944266004816, guid: bb8859e7f483be54391fa8ac9d45123e,
+      type: 2}
+  - name: andree
+    iconUI: {fileID: 21300000, guid: 6bd97a0a7e8a60d4ba5936c83a6768d4, type: 3}
+    prefabs:
+    - {fileID: 1903675763534848, guid: 962a98daaa6a53c439a4a5630a5bcbd5, type: 2}
+    walkSound: {fileID: 8300000, guid: 095fb456ce50a0045805adfe29e8b6a8, type: 3}
+    dashSound: {fileID: 8300000, guid: 6b4bdcd31b14b404ca707e4255795507, type: 3}
+    hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
+    deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
+    chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    stunnedSound: {fileID: 8300000, guid: 922f7d14a2a53824486dde09ffd23462, type: 3}
+    hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
+      type: 2}
+    trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
+      type: 2}
+    trailForwardAsDashDirection: 1
+    chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+    stunnedParticle: {fileID: 198650944266004816, guid: bb8859e7f483be54391fa8ac9d45123e,
+      type: 2}
+  - name: bobban
+    iconUI: {fileID: 21300000, guid: 7148ca62db7ecfe42ab505069a30a931, type: 3}
+    prefabs:
+    - {fileID: 1444658813098866, guid: a3c37943904771642be870583a7cb409, type: 2}
+    walkSound: {fileID: 8300000, guid: 095fb456ce50a0045805adfe29e8b6a8, type: 3}
+    dashSound: {fileID: 8300000, guid: 6b4bdcd31b14b404ca707e4255795507, type: 3}
+    hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}
+    deathSound: {fileID: 8300000, guid: 63656c2c08e98db4ba320a7f7cf0f7b4, type: 3}
+    chargeSound: {fileID: 8300000, guid: f32c8af4d0815b44695253b964f8f4de, type: 3}
+    stunnedSound: {fileID: 8300000, guid: 922f7d14a2a53824486dde09ffd23462, type: 3}
+    hitParticle: {fileID: 198242875643500960, guid: 51953c835d3defd4984df602bfbca740,
+      type: 2}
+    trailParticle: {fileID: 198080089048862456, guid: 84f223d261ae02742a69c5b5f1e5413d,
+      type: 2}
+    trailForwardAsDashDirection: 1
+    chargeupParticle: {fileID: 198810938518164326, guid: caf01595d7889854d9593fea106e2b5a,
+      type: 2}
+    stunnedParticle: {fileID: 198650944266004816, guid: bb8859e7f483be54391fa8ac9d45123e,
+      type: 2}
+  - name: johan
+    iconUI: {fileID: 21300000, guid: af1de00d8855f554da0534a4d4ee8c80, type: 3}
+    prefabs:
+    - {fileID: 1151906055750084, guid: 1088b8bb1f7c3654989b73bb99767320, type: 2}
     walkSound: {fileID: 8300000, guid: 095fb456ce50a0045805adfe29e8b6a8, type: 3}
     dashSound: {fileID: 8300000, guid: 6b4bdcd31b14b404ca707e4255795507, type: 3}
     hitSound: {fileID: 8300000, guid: ff599b04c20bdcd43a6d37844305cc6f, type: 3}

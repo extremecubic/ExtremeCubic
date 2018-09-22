@@ -100,10 +100,7 @@ public class MusicManager : MonoBehaviour
 			if (duration == 0)
 				data.audioSource.Play();
 			else
-				data.playDurationHandle = Timing.RunCoroutineSingleton(_PlayForDuration(duration, data), data.playDurationHandle, SingletonBehavior.Overwrite);
-
-			data.audioSource.volume = Constants.masterEffectVolume;
-			data.audioSource.Play();
+				data.playDurationHandle = Timing.RunCoroutineSingleton(_PlayForDuration(duration, data), data.playDurationHandle, SingletonBehavior.Overwrite);			
 		}
 	}
 

@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 5c45409ff9df3894997dd3ffcfe9cd8b, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,8 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1316501668}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.00022325854, g: 0.00022325854, b: 0.00022325854,
+    a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3348,7 +3349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &290648399
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5156,7 +5157,7 @@ GameObject:
   - component: {fileID: 470681867}
   - component: {fileID: 470681871}
   m_Layer: 5
-  m_Name: Dice (13)
+  m_Name: Bobban
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5246,7 +5247,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: dice
+          m_StringArgument: bobban
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 720860270}
@@ -5255,7 +5256,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
+          m_IntArgument: 18
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -5281,7 +5282,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: e6305af9fe23b074fa3105c25c30e0d0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7148ca62db7ecfe42ab505069a30a931, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8807,6 +8808,14 @@ MonoBehaviour:
     border: {fileID: 352288887}
   - button: {fileID: 1669684479}
     border: {fileID: 350554697}
+  - button: {fileID: 944664805}
+    border: {fileID: 1424260406}
+  - button: {fileID: 856200173}
+    border: {fileID: 626076360}
+  - button: {fileID: 470681868}
+    border: {fileID: 1796309838}
+  - button: {fileID: 1406706429}
+    border: {fileID: 718431894}
   _readyButton: {fileID: 888187271}
   _leaveButton: {fileID: 1743002821}
   _dotsParent: {fileID: 92133102}
@@ -9838,7 +9847,7 @@ GameObject:
   - component: {fileID: 856200172}
   - component: {fileID: 856200176}
   m_Layer: 5
-  m_Name: Dice (12)
+  m_Name: Andree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9928,7 +9937,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: dice
+          m_StringArgument: andree
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 720860270}
@@ -9937,7 +9946,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
+          m_IntArgument: 17
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -9963,7 +9972,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: e6305af9fe23b074fa3105c25c30e0d0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6bd97a0a7e8a60d4ba5936c83a6768d4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10996,7 +11005,7 @@ GameObject:
   - component: {fileID: 944664804}
   - component: {fileID: 944664808}
   m_Layer: 5
-  m_Name: Dice (11)
+  m_Name: Andreas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11086,7 +11095,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: dice
+          m_StringArgument: andreas
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 720860270}
@@ -11095,7 +11104,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
+          m_IntArgument: 16
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -11121,7 +11130,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: e6305af9fe23b074fa3105c25c30e0d0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9cb8699152435c541985451f6d87cc8a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -15828,7 +15837,7 @@ GameObject:
   - component: {fileID: 1406706428}
   - component: {fileID: 1406706432}
   m_Layer: 5
-  m_Name: Dice (14)
+  m_Name: Johan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15918,7 +15927,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: dice
+          m_StringArgument: johan
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 720860270}
@@ -15927,7 +15936,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
+          m_IntArgument: 19
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -15953,7 +15962,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: e6305af9fe23b074fa3105c25c30e0d0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: af1de00d8855f554da0534a4d4ee8c80, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -23274,7 +23283,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1948375140
 RectTransform:
   m_ObjectHideFlags: 0
