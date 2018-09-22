@@ -418,11 +418,8 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 
 			// handle collision in local game
 			if (!Constants.onlineGame)
-				if (IsCollidingLocal(previousLastTargetRotation, targetTile, direction, dashStrength, i))
-				{
-					OnDeadlyTile();
-					yield break;
-				}
+				if (IsCollidingLocal(previousLastTargetRotation, targetTile, direction, dashStrength, i))									
+					yield break;				
 
 			// hurt tile if it is destructible(will only detect break on master client)
 			if (!currentTile.model.data.unbreakable)

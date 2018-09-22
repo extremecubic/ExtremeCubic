@@ -61,13 +61,9 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 
 			playerToDash.movementComponent.OnGettingDashed(targetTile.position, direction, dashStrength - dashIndex);
 			OnDashingOther(currentTile.position, previousLastTargetRotation, targetTile.position);
-
-			StopMovementAndAddCooldowns();
+			
 			_lastTargetRotation = previousLastTargetRotation;
-
-			// stop trailParticle
-			_character.ParticleComponent.EmitTrail(false, Vector3.zero);
-
+			
 			return true;
 		}
 		return false;
