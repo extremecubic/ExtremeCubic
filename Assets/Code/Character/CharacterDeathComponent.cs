@@ -8,6 +8,7 @@ public enum DeathType
 	Sink,
 	Quicksand,
 	Mine,
+	FlyToTarget,
 }
 
 // EVERYTHING HERE IS CALLED LOCALLY ON ALL CLIENTS
@@ -47,6 +48,8 @@ public class CharacterDeathComponent : MonoBehaviour
 			Timing.RunCoroutineSingleton(_quicksand(deathTile), gameObject.GetInstanceID(), SingletonBehavior.Overwrite);
 		else if (type == DeathType.Mine)
 			Timing.RunCoroutineSingleton(_Explode(deathTile), gameObject.GetInstanceID(), SingletonBehavior.Overwrite);
+		else if (type == DeathType.FlyToTarget)
+			Timing.RunCoroutineSingleton(_FlyToTarget(), gameObject.GetInstanceID(), SingletonBehavior.Overwrite);
 
 		// replace old tile with a new one if flaged from editor
 		if (deathTile.model.data.replaceTileOnDeath)
@@ -108,6 +111,29 @@ public class CharacterDeathComponent : MonoBehaviour
 		while (_character.stateComponent.currentState == CharacterState.Dead)
 		{
 			transform.position += direction * _character.model.speedExplode * Time.deltaTime;
+			yield return Timing.WaitForOneFrame;
+		}
+	}
+
+	IEnumerator<float> _FlyToTarget()
+	{
+		float accelearation = 1.0f;
+		Vector3 targetPosition = Match.instance.level.flyToTargetTransform.position;
+
+		float timeTofall = 0.05f;
+		while (timeTofall > 0)
+		{
+			timeTofall -= Time.deltaTime;
+			transform.position += Vector3.down * 30 * Time.deltaTime;
+			yield return Timing.WaitForOneFrame;
+		}
+
+		Vector3 direction = (targetPosition - transform.position).normalized;
+
+		while (_character.stateComponent.currentState == CharacterState.Dead)
+		{
+			accelearation += _character.model.flyAcceleration * Time.deltaTime;
+			transform.position += direction * _character.model.flySpeed * accelearation * Time.deltaTime;
 			yield return Timing.WaitForOneFrame;
 		}
 	}

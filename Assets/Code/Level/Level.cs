@@ -12,10 +12,11 @@ public class Level : Photon.MonoBehaviour
 	[SerializeField] Transform _powerUpFolder;
 	[SerializeField] GameObject _characterPrefab;
 
-	[Header("Level Specific death feedback on empty tiles")]
-	[SerializeField] ParticleSystem _emptyDeathParticle; public ParticleSystem emptyDeathParticle { get {return _emptyDeathParticle; } }
-	[SerializeField] AudioClip      _emptyDeathSound;    public AudioClip emptyDeathsound         { get { return _emptyDeathSound; } }
-	[SerializeField] DeathType      _deathType;          public DeathType deathType               { get { return _deathType; } }
+	[Header("LEVEL SPECIFIC DEATH FEEDBACK ON EDGES AND EMPTY TILES")]
+	[SerializeField] ParticleSystem _emptyDeathParticle;   public ParticleSystem emptyDeathParticle { get { return _emptyDeathParticle; } }
+	[SerializeField] AudioClip      _emptyDeathSound;      public AudioClip emptyDeathsound         { get { return _emptyDeathSound; } }
+	[SerializeField] DeathType      _deathType;            public DeathType deathType               { get { return _deathType; } }
+	[SerializeField] Transform      _flyToTargetTransform; public Transform flyToTargetTransform    { get { return _flyToTargetTransform; } }
 
     List<Character> _characters = new List<Character>();
 
@@ -48,6 +49,8 @@ public class Level : Photon.MonoBehaviour
 
 	public void StartGameLocal()
 	{
+		// just spawn 4 duplo right now
+		// this will change once menus for starting local play is done
 		tileMap = new TileMap(_mapToLoad + _mapID.ToString(), _tilesFolder, _powerUpFolder);
 
 		for(int i =0; i< 4; i++)

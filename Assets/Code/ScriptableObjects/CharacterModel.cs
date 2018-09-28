@@ -23,7 +23,7 @@ public class CharacterModel : ScriptableObject
 
 	[Header("Colliding")]
 	public float collideSpeed = 1.0f;
-	public int numCollideRolls = 3;
+	public int   numCollideRolls = 3;
 	public float collideBounceHeight = 1;
 	public float collideFlyBackAmount = 0.75f;
 	public float collideStunTime = 3.0f;
@@ -32,6 +32,7 @@ public class CharacterModel : ScriptableObject
 	public float collideCameraShakeIntensity = 0.3f;
 	public float collideCameraShakeIntensityDamping = 0.1f;
 
+	[Header("DEATH SETTINGS"), Space(10)]
 	[Header("Fall")]
 	public float fallSpeed = 5.0f;
 	public float fallAcceleration = 10.0f;
@@ -45,5 +46,9 @@ public class CharacterModel : ScriptableObject
 
 	[Header("explode")]
 	public float speedExplode;
+
+	[Header("Fly to target")]
+	public float flySpeed = 10.0f;
+	public float flyAcceleration = 5.0f;
 
 }

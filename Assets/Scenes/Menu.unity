@@ -3349,7 +3349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &290648399
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21511,7 +21511,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: cdef21c6e7d250c4e9d60b985fc582d5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 458b06e50625e2a469d8ea42d7ff96c8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -23283,7 +23283,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1948375140
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25443,12 +25443,13 @@ MonoBehaviour:
     - {fileID: 21300000, guid: e4e698c29c4b10d44bc0f9cf90376298, type: 3}
     - {fileID: 21300000, guid: 69b9e5ce20f4bfa4dbfec069df549e65, type: 3}
     dotsParent: {fileID: 538187654}
-  - name: The Future
-    sceneName: Sci-FiLevel
+  - name: Empty Space
+    sceneName: SpaceLevel
     button: {fileID: 1833727846}
     buttonImage: {fileID: 1833727847}
     sprites:
-    - {fileID: 21300000, guid: cdef21c6e7d250c4e9d60b985fc582d5, type: 3}
+    - {fileID: 21300000, guid: 458b06e50625e2a469d8ea42d7ff96c8, type: 3}
+    - {fileID: 21300000, guid: 32b2fdc97ad13e341aa8ab35b45fd90d, type: 3}
     dotsParent: {fileID: 1923312893}
   - name: Crystal Mine
     sceneName: MineLevel

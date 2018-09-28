@@ -122,3 +122,5 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   speedExplode: 40
+  flySpeed: 10
+  flyAcceleration: 50
