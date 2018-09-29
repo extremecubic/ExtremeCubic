@@ -15,6 +15,7 @@ public class Match : Photon.MonoBehaviour
 	ScoreUI        _scoreUI;
 	StartCounterUI _counterUI;
 	WinnerUI       _winnerUI;
+	MessagePromt   _msgPromt;
 
 	MusicManager _musicManager;
 
@@ -35,6 +36,7 @@ public class Match : Photon.MonoBehaviour
 		_scoreUI    = UI.scoreUI;
 		_counterUI  = UI.startCounterUI;
 		_winnerUI   = UI.winnerUI;
+		_msgPromt   = UI.msgPromt;
 
 		_musicManager = MusicManager.instance;
 
@@ -58,7 +60,6 @@ public class Match : Photon.MonoBehaviour
 
 		// tell the ui how many players we are
 		_scoreUI.Setup(numPlayer);
-
 
 		if (PhotonNetwork.isMasterClient)
 			photonView.RPC("NetworkStartGame", PhotonTargets.AllViaServer, PhotonNetwork.time);
@@ -104,6 +105,12 @@ public class Match : Photon.MonoBehaviour
 	// callback from character when someone disconnects, called locally on all clients
 	public void OnPlayerLeft(int id)
 	{
+		if (PhotonNetwork.playerList.Length == 1)
+		{
+			ShowLastPlayerMessage();
+			return;
+		}
+
 		_currentGameMode.OnPlayerLeft(id);
 		_scoreUI.DisableUIOfDisconnectedPlayer(id);
 	}
@@ -163,5 +170,19 @@ public class Match : Photon.MonoBehaviour
 
 		if (!Constants.onlineGame)
 			NetworkStartNewRound(0);
+	}
+
+	void ShowLastPlayerMessage()
+	{
+		matchStarted = false;
+		_msgPromt.SetAndShow("All Players have left the room!\n Returning to menu!", () =>
+		{
+			PhotonHelpers.ClearPlayerProperties(PhotonNetwork.player);
+			PhotonNetwork.LeaveRoom();
+			MainMenuSystem.reclaimPlayerUI = false;
+			MainMenuSystem.startPage = Constants.SCREEN_START;
+			UnityEngine.SceneManagement.SceneManager.LoadScene("menu");
+		});
+
 	}
 }

@@ -37,8 +37,8 @@ public class WinnerUI : MonoBehaviour
 		MainMenuSystem.reclaimPlayerUI = true;
 		MainMenuSystem.startPage = Constants.SCREEN_ONLINE_LEVELSELECT;
 
-		// set player property ready to false before we go back to menu
-		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.PLAYER_READY, false);
+		// clear all properties
+		PhotonHelpers.ClearPlayerProperties(PhotonNetwork.player);
 
 		if (PhotonNetwork.isMasterClient)
 			PhotonNetwork.LoadLevel("Menu");

@@ -277,7 +277,7 @@ public class LevelSelectPage : MenuPage
 		_playerInfo.DisableAllPlayerUI();
 
 		// clear and leave photon room
-		PhotonNetwork.RemovePlayerCustomProperties(null);
+		PhotonHelpers.ClearPlayerProperties(PhotonNetwork.player);
 		PhotonNetwork.LeaveRoom();
 
 		// go back to main menu

@@ -181,19 +181,19 @@ public class CharacterSelectPage : MenuPage
 
 	public override void UpdatePage()
 	{
-		_rotation += Vector3.up * _rotationSpeed * Time.deltaTime;
-
-		for(int i =0; i < 4; i++)
-		{
-			if (_currentViewObject[i] != null)
-				_currentViewObject[i].transform.rotation = Quaternion.Euler(_rotation);
-		}
-
 		if (Input.GetButtonDown(Constants.BUTTON_LB + "0"))
 			OnChangeSkin(false);
 
 		if (Input.GetButtonDown(Constants.BUTTON_RB + "0"))
-			OnChangeSkin(true);		
+			OnChangeSkin(true);
+
+		_rotation += Vector3.up * _rotationSpeed * Time.deltaTime;
+
+		for (int i =0; i < 4; i++)
+		{
+			if (_currentViewObject[i] != null)
+				_currentViewObject[i].transform.rotation = Quaternion.Euler(_rotation);
+		}		
 
 		CheckAllReady();
 	}
@@ -267,7 +267,7 @@ public class CharacterSelectPage : MenuPage
 		_currentPressedIndex = 0;
 
 		// reset custom properties and leave room
-		PhotonNetwork.RemovePlayerCustomProperties(null);
+		PhotonHelpers.ClearPlayerProperties(PhotonNetwork.player);
 		PhotonNetwork.LeaveRoom();
 
 		// set back to main page
