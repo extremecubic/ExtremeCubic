@@ -6,7 +6,10 @@ using UnityEngine.EventSystems;
 
 public class RandomMatchMakingPage : MenuPage
 {
+
+	[Header("Misc References")]
 	[SerializeField] MenuPlayerInfoUI _playerInfo;
+	[SerializeField] Dropdown		  _preferedPlayersDropdown;
 
 	[Header("WAITING FOR PLAYERS TEXT")]
 	[SerializeField] GameObject _statusTextParent;
@@ -24,7 +27,7 @@ public class RandomMatchMakingPage : MenuPage
 	{
 		// move all player UI boxes to the prefered positions of this page
 		_playerInfo.SetPlayerUIByScreen(MenuScreen.Connect);
-
+		
 		EventSystem.current.SetSelectedGameObject(_firstSelectable);
 	}
 
@@ -62,10 +65,14 @@ public class RandomMatchMakingPage : MenuPage
 		}	
 	}
 
-	public void JoinMatch(int preferedPlayers)
+	public void JoinMatch()
 	{
 		// saved the prefered num players we want to play with
-		_preferedPlayers = (byte)preferedPlayers;
+		_preferedPlayers = (byte)(_preferedPlayersDropdown.value + 2);
+
+		// no perfered players to play with is stored first in list
+		if(_preferedPlayersDropdown.value == 0)
+			_preferedPlayers = 0;
 
 		// if we are in room already we need to disconnect 
 		// and wait for "OnConnectedToMaster" callback before we can join new
@@ -79,7 +86,7 @@ public class RandomMatchMakingPage : MenuPage
 			return;
 		}		
 
-		PhotonNetwork.JoinRandomRoom(null, (byte)preferedPlayers);
+		PhotonNetwork.JoinRandomRoom(null, _preferedPlayers);
 	}
 
 	void OnJoinedRoom()
