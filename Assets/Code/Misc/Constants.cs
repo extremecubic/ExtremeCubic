@@ -23,6 +23,7 @@ public static class Constants
 	public static readonly string BUTTON_LB		  = "LB";
 	public static readonly string BUTTON_RB		  = "RB";
 
+	// NOTE : IF NEW KEYES ARE ADDED MAKE SURE TO ADD IT TO CLEAR LIST IN PhotonHelpers.cs METHOD ClearPlayerProperties()
 	// PhotonPlayer properties keys
 	public static readonly string CHARACTER_NAME                   = "0";
 	public static readonly string LEVEL_SCENE_NAME                 = "1";
@@ -31,8 +32,9 @@ public static class Constants
 	public static readonly string PLAYER_READY                     = "4";
 	public static readonly string NOMINATED_LEVEL                  = "5";
 	public static readonly string NOMINATED_LEVEL_TILEMAP          = "6";
-	public static readonly string NOMINATED_LEVEL_MAP_INDEX        = "7";
+	public static readonly string LEVEL_MAP_NAME                   = "7";
 	public static readonly string NOMINATED_LEVEL_GAME_MODE_INDEX  = "8";
+	public static readonly string MATCH_GAME_MODE                  = "9";
 
 	// menu pages names
 	public static readonly string SCREEN_START                     = "StartScreen";

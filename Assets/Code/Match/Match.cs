@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using MEC;
 
+public enum GameMode
+{
+	KingOfTheHill,
+	TurfWar,
+}
+
 public class Match : Photon.MonoBehaviour
 {
 	public static Match instance       { get; private set; }
@@ -19,14 +25,13 @@ public class Match : Photon.MonoBehaviour
 
 	MusicManager _musicManager;
 
+	GameMode  _currentGameModeType;
 	IGameMode _currentGameMode;
 	
 	void Awake()
 	{
 		instance = this;
 
-		// only have one gamemode for now
-		_currentGameMode = GetComponent<GameModeLastMan>();
 		gameCamera = FindObjectOfType<CameraController>();
 	}
 
@@ -56,6 +61,13 @@ public class Match : Photon.MonoBehaviour
 	{		
 		int numPlayer = PhotonNetwork.room.PlayerCount;
 
+		_currentGameModeType = (GameMode)PhotonNetwork.player.CustomProperties[Constants.MATCH_GAME_MODE];
+	
+		print(_currentGameModeType);
+
+		// only have one gamemode for now
+		_currentGameMode = GetComponent<GameModeLastMan>();
+
 		_currentGameMode.OnSetup(numPlayer);
 
 		// tell the ui how many players we are
@@ -72,6 +84,9 @@ public class Match : Photon.MonoBehaviour
 	void SetupMatchLocal()
 	{		
 		int numPlayer = 4;
+
+		// only have one gamemode for now
+		_currentGameMode = GetComponent<GameModeLastMan>();
 
 		_currentGameMode.OnSetup(numPlayer);
 

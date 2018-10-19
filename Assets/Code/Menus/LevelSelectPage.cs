@@ -151,18 +151,21 @@ public class LevelSelectPage : MenuPage
 		for (int i =0; i < numLevels; i++)
 		{
 			// destroy all map dots from last gamemode
-			for (int y = 0; y < _levels[_currentGameModeIndex][i].dotsParent.transform.childCount; y++)
+			int numCurrentDots = _levels[_currentGameModeIndex][i].dotsParent.transform.childCount;
+			for (int y = 0; y < numCurrentDots; y++)
 				Destroy(_levels[_currentGameModeIndex][i].dotsParent.transform.GetChild(y).gameObject);
 
 			// spawn new map dots depending on how many different maps the level have
-			float xPosition = 0;
-			for (int y = 0; y < _levels[_currentGameModeIndex][i].sprites.Length; y++)
+			float     xPosition  = 0;
+			int       numNewDots = _levels[_currentGameModeIndex][i].sprites.Length;
+			Transform dotParent  = _levels[_currentGameModeIndex][i].dotsParent.transform;
+			for (int y = 0; y < numNewDots; y++)
 			{
 				xPosition = y * 40;
-				Image dot = Instantiate(_dotPrefab, _levels[_currentGameModeIndex][i].dotsParent.transform);
+				Image dot = Instantiate(_dotPrefab, dotParent);
 				dot.GetComponent<RectTransform>().localPosition = new Vector3(xPosition, 0, 0);
-				if (y == 0)
-					dot.GetComponent<Image>().color = Color.green;
+				if (y == _levels[_currentGameModeIndex][i].currentMap)
+					dot.color = Color.green;
 			}
 		}		
 	}
@@ -268,9 +271,9 @@ public class LevelSelectPage : MenuPage
 			int[] nominatedLevelMaps      = { 0, 0, 0, 0 };
 			int[] nominatedLevelGameModes = { 0, 0, 0, 0 };
 
-			string winnerLevel     = "";
-			string winnerLevelName = "";
-			int    winnerLevelMap  = 0;
+			string winnerLevelSceneName = "";
+			string winnerLevelMapName   = "";
+			int    winnerGameModeID     = 0;
 
 			for (int i =0; i < numPlayers; i++)
 			{				
@@ -282,14 +285,14 @@ public class LevelSelectPage : MenuPage
 				// if this player is the one that got randomized as winner, get the scene and level name of his nomination
 				if (i == winner)
 				{
-					winnerLevel     = _levels[_currentGameModeIndex][nominatedLevels[i]].sceneName;
-					winnerLevelName = _levels[_currentGameModeIndex][nominatedLevels[i]].names[nominatedLevelMaps[i]];
-					winnerLevelMap  = nominatedLevelMaps[i];
+					winnerLevelSceneName = _levels[nominatedLevelGameModes[i]][nominatedLevels[i]].sceneName;
+					winnerLevelMapName   = _levels[nominatedLevelGameModes[i]][nominatedLevels[i]].names[nominatedLevelMaps[i]];
+					winnerGameModeID     = nominatedLevelGameModes[i];
 				}
 			}
 
 			// tell everyone to play nomination animation and set witch level and map to load
-			photonView.RPC("LevelToPlay", PhotonTargets.All, winnerLevel, winnerLevelName, winnerLevelMap, winner, 
+			photonView.RPC("LevelToPlay", PhotonTargets.All, winnerLevelSceneName, winnerLevelMapName, winnerGameModeID, winner, 
 				nominatedLevels[0],         nominatedLevels[1],         nominatedLevels[2],         nominatedLevels[3], 
 				nominatedLevelMaps[0],      nominatedLevelMaps[1],      nominatedLevelMaps[2],      nominatedLevelMaps[3],
 				nominatedLevelGameModes[0], nominatedLevelGameModes[1], nominatedLevelGameModes[2], nominatedLevelGameModes[3]);
@@ -297,7 +300,7 @@ public class LevelSelectPage : MenuPage
 	}
 
 	[PunRPC]
-	void LevelToPlay(string level, string levelName, int levelMap, int winnerIndex, 
+	void LevelToPlay(string levelSceneName, string levelMapName, int gameMode, int winnerIndex, 
 		int Lone, int Ltwo, int Lthree, int Lfour, 
 		int Mone, int Mtwo, int Mthree, int Mfour, 
 		int Gone, int Gtwo, int Gthree, int Gfour)
@@ -306,12 +309,13 @@ public class LevelSelectPage : MenuPage
 		_counter.CancelCount();		
 
 		// set witch level we will load later and reset ready for next screen
-		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.LEVEL_SCENE_NAME, level);
-		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.NOMINATED_LEVEL_MAP_INDEX, levelMap);
+		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.LEVEL_SCENE_NAME, levelSceneName);
+		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.LEVEL_MAP_NAME, levelMapName);
 		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.PLAYER_READY, false);
+		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.MATCH_GAME_MODE, gameMode);
 
 		// start the animation
-		_handle = Timing.RunCoroutine(_PickRandomLevel(winnerIndex, levelName, new int[]{Lone, Ltwo, Lthree, Lfour}, new int[] { Mone, Mtwo, Mthree, Mfour }, new int[] { Gone, Gtwo, Gthree, Gfour }));
+		_handle = Timing.RunCoroutine(_PickRandomLevel(winnerIndex, levelMapName, new int[]{Lone, Ltwo, Lthree, Lfour}, new int[] { Mone, Mtwo, Mthree, Mfour }, new int[] { Gone, Gtwo, Gthree, Gfour }));
 	}
 
 	[PunRPC]

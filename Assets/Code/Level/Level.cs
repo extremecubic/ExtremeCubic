@@ -6,10 +6,9 @@ public class Level : Photon.MonoBehaviour
 {
 	public TileMap tileMap { get; private set; }
 
-	[SerializeField] string _mapToLoad;
-	[SerializeField] int _mapID;
-	[SerializeField] Transform _tilesFolder;
-	[SerializeField] Transform _powerUpFolder;
+	[SerializeField] string     _mapToLoad;
+	[SerializeField] Transform  _tilesFolder;
+	[SerializeField] Transform  _powerUpFolder;
 	[SerializeField] GameObject _characterPrefab;
 
 	[Header("LEVEL SPECIFIC DEATH FEEDBACK ON EDGES AND EMPTY TILES")]
@@ -38,9 +37,9 @@ public class Level : Photon.MonoBehaviour
 		string characterName = PhotonNetwork.player.CustomProperties[Constants.CHARACTER_NAME].ToString();
 		int skinID           = (int)PhotonNetwork.player.CustomProperties[Constants.SKIN_ID];
 		int spawnID          = (int)PhotonNetwork.player.CustomProperties[Constants.SPAWN_ID];
-		int mapID            = (int)PhotonNetwork.player.CustomProperties[Constants.NOMINATED_LEVEL_MAP_INDEX];
+		_mapToLoad           = (string)PhotonNetwork.player.CustomProperties[Constants.LEVEL_MAP_NAME];
 
-		tileMap = new TileMap(_mapToLoad + mapID.ToString(), _tilesFolder, _powerUpFolder);
+		tileMap = new TileMap(_mapToLoad, _tilesFolder, _powerUpFolder);
 
 		_characters.Add(PhotonNetwork.Instantiate("Character", Vector3.zero, Quaternion.identity, 0).GetComponent<Character>());
 		_characters[0].Initialize(characterName, PhotonNetwork.player.ID, PhotonNetwork.player.NickName, skinID, spawnID);
@@ -51,7 +50,7 @@ public class Level : Photon.MonoBehaviour
 	{
 		// just spawn 4 duplo right now
 		// this will change once menus for starting local play is done
-		tileMap = new TileMap(_mapToLoad + _mapID.ToString(), _tilesFolder, _powerUpFolder);
+		tileMap = new TileMap(_mapToLoad, _tilesFolder, _powerUpFolder);
 
 		for(int i =0; i< 4; i++)
 		{

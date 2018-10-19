@@ -25995,29 +25995,29 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 458b06e50625e2a469d8ea42d7ff96c8, type: 3}
     - {fileID: 21300000, guid: 32b2fdc97ad13e341aa8ab35b45fd90d, type: 3}
     names:
-    - Outer Space 1
-    - Outer Space 2
+    - Empty Space 1
+    - Empty Space 2
     dotsParent: {fileID: 1923312893}
     buttonImage: {fileID: 1833727847}
     levelText: {fileID: 1697944155}
   _turfWarLevels:
-  - sceneName: TurfWarTest
+  - sceneName: MineLevel
     sprites:
     - {fileID: 21300000, guid: 7148ca62db7ecfe42ab505069a30a931, type: 3}
     - {fileID: 21300000, guid: 9cb8699152435c541985451f6d87cc8a, type: 3}
     names:
-    - 'ett '
-    - "tv\xE5"
+    - Turf War
+    - Turf War
     dotsParent: {fileID: 1621687941}
     buttonImage: {fileID: 429309932}
     levelText: {fileID: 1706153035}
-  - sceneName: TurfWarTest
+  - sceneName: MineLevel
     sprites:
     - {fileID: 21300000, guid: 7148ca62db7ecfe42ab505069a30a931, type: 3}
     - {fileID: 21300000, guid: 9cb8699152435c541985451f6d87cc8a, type: 3}
     names:
-    - 'ett '
-    - "tv\xE5"
+    - Turf War
+    - Turf War
     dotsParent: {fileID: 1218101272}
     buttonImage: {fileID: 1578395365}
     levelText: {fileID: 377967781}
