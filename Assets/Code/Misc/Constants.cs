@@ -24,14 +24,15 @@ public static class Constants
 	public static readonly string BUTTON_RB		  = "RB";
 
 	// PhotonPlayer properties keys
-	public static readonly string CHARACTER_NAME          = "0";
-	public static readonly string LEVEL_SCENE_NAME        = "1";
-	public static readonly string SPAWN_ID                = "2";
-	public static readonly string SKIN_ID                 = "3";
-	public static readonly string PLAYER_READY            = "4";
-	public static readonly string NOMINATED_LEVEL         = "5";
-	public static readonly string NOMINATED_LEVEL_TILEMAP = "6";
-	public static readonly string LEVEL_MAP_INDEX         = "7";
+	public static readonly string CHARACTER_NAME                   = "0";
+	public static readonly string LEVEL_SCENE_NAME                 = "1";
+	public static readonly string SPAWN_ID                         = "2";
+	public static readonly string SKIN_ID                          = "3";
+	public static readonly string PLAYER_READY                     = "4";
+	public static readonly string NOMINATED_LEVEL                  = "5";
+	public static readonly string NOMINATED_LEVEL_TILEMAP          = "6";
+	public static readonly string NOMINATED_LEVEL_MAP_INDEX        = "7";
+	public static readonly string NOMINATED_LEVEL_GAME_MODE_INDEX  = "8";
 
 	// menu pages names
 	public static readonly string SCREEN_START                     = "StartScreen";

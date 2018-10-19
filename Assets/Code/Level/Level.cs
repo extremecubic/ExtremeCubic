@@ -38,7 +38,7 @@ public class Level : Photon.MonoBehaviour
 		string characterName = PhotonNetwork.player.CustomProperties[Constants.CHARACTER_NAME].ToString();
 		int skinID           = (int)PhotonNetwork.player.CustomProperties[Constants.SKIN_ID];
 		int spawnID          = (int)PhotonNetwork.player.CustomProperties[Constants.SPAWN_ID];
-		int mapID            = (int)PhotonNetwork.player.CustomProperties[Constants.LEVEL_MAP_INDEX];
+		int mapID            = (int)PhotonNetwork.player.CustomProperties[Constants.NOMINATED_LEVEL_MAP_INDEX];
 
 		tileMap = new TileMap(_mapToLoad + mapID.ToString(), _tilesFolder, _powerUpFolder);
 

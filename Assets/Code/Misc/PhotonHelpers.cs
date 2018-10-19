@@ -31,7 +31,7 @@ public static class PhotonHelpers
 			 if (p.ContainsKey(Constants.PLAYER_READY           )) p[Constants.PLAYER_READY           ] = null;
 			 if (p.ContainsKey(Constants.NOMINATED_LEVEL        )) p[Constants.NOMINATED_LEVEL        ] = null;
 			 if (p.ContainsKey(Constants.NOMINATED_LEVEL_TILEMAP)) p[Constants.NOMINATED_LEVEL_TILEMAP] = null;
-			 if (p.ContainsKey(Constants.LEVEL_MAP_INDEX        )) p[Constants.LEVEL_MAP_INDEX        ] = null;
+			 if (p.ContainsKey(Constants.NOMINATED_LEVEL_MAP_INDEX        )) p[Constants.NOMINATED_LEVEL_MAP_INDEX        ] = null;
 
 			player.SetCustomProperties(p);
 		}

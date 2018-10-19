@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 
 public class RandomMatchMakingPage : MenuPage
 {
-
 	[Header("Misc References")]
 	[SerializeField] MenuPlayerInfoUI _playerInfo;
 	[SerializeField] Dropdown		  _preferedPlayersDropdown;
@@ -68,7 +67,7 @@ public class RandomMatchMakingPage : MenuPage
 	public void JoinMatch()
 	{
 		// saved the prefered num players we want to play with
-		_preferedPlayers = (byte)(_preferedPlayersDropdown.value + 2);
+		_preferedPlayers = (byte)(_preferedPlayersDropdown.value + 1);
 
 		// no perfered players to play with is stored first in list
 		if(_preferedPlayersDropdown.value == 0)
