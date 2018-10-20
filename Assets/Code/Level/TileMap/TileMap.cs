@@ -104,6 +104,8 @@ public class TileMap
 		BinaryLoad();
 	}
 
+	// tries to find a random tile within a certain amount of tries
+	// deadly tiles is also considered empty
 	public Tile GetRandomFreeTile(int numTries)
 	{
 		for(int i =0; i < numTries; i++)
@@ -114,6 +116,26 @@ public class TileMap
 		}
 
 		return null;
+	}
+
+	// this generates quite abit of garbage
+	// but is run quite rarely so should be OK?
+	public Tile GetRandomFreeSpawnTile()
+	{
+		List<Tile> allFreeTiles = new List<Tile>();
+
+		foreach (var tilePair in _tiles)
+		{
+			Tile tile = tilePair.Value;
+
+			if (!tile.IsOccupied() && !tile.model.data.deadly)
+				allFreeTiles.Add(tile);
+		}
+
+		if (allFreeTiles.Count == 0)
+			return null;
+
+		return allFreeTiles.TakeRandom();
 	}
 
 	public Vector2DInt GetRandomTileCoordsFromType(string tileType, Tile myTile)

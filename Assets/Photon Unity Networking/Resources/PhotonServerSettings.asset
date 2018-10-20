@@ -68,4 +68,5 @@ MonoBehaviour:
   - Update3DModel
   - UpdatePlayerUI
   - NetworkOnhittingObstacle
+  - ReSpawn
   DisableAutoOpenWizard: 1

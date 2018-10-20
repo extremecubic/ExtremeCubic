@@ -164,13 +164,13 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 	{
 		if (Constants.onlineGame && PhotonNetwork.isMasterClient && currentTile.model.data.deadly)
 		{
-			photonView.RPC("Die", PhotonTargets.All, currentTile.position.x, currentTile.position.y);
+			photonView.RPC("Die", PhotonTargets.All, currentTile.position.x, currentTile.position.y, PhotonNetwork.time);
 			return true;
 		}
 
 		if (!Constants.onlineGame && currentTile.model.data.deadly)
 		{
-			Die(currentTile.position.x, currentTile.position.y);
+			Die(currentTile.position.x, currentTile.position.y, 0.0f);
 			return true;
 		}
 		return false;
@@ -185,13 +185,13 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 			if (Constants.onlineGame)
 			{
 				if (PhotonNetwork.isMasterClient)
-					photonView.RPC("Die", PhotonTargets.All, currentTile.position.x, currentTile.position.y);
+					photonView.RPC("Die", PhotonTargets.All, currentTile.position.x, currentTile.position.y, PhotonNetwork.time);
 				else
 					_stateComponent.SetState(CharacterState.Frozen);
 			}
 
 			if (!Constants.onlineGame)
-				Die(currentTile.position.x, currentTile.position.y);
+				Die(currentTile.position.x, currentTile.position.y, 0.0f);
 
 			return true;
 		}

@@ -14,16 +14,18 @@ public enum DeathType
 // EVERYTHING HERE IS CALLED LOCALLY ON ALL CLIENTS
 // RPC HAVE ALREADY BEEN SENT FROM MASTERCLIENT BEFORE WE END UP HERE
 // SO DONT CALL ANY RPC´S FROM HERE TO AVOID DUPLICATE CALLS
-public class CharacterDeathComponent : MonoBehaviour
+// OR ONLY CALL RPC IF IS MASTER CLIENT
+public class CharacterDeathComponent : Photon.MonoBehaviour
 {
-	Character _character;
+	Character       _character;
+	CoroutineHandle _respawnHandle;
 
 	void Awake()
 	{
 		_character = GetComponent<Character>();	
 	}
 
-	public void KillPlayer(Tile deathTile)
+	public void KillPlayer(Tile deathTile, double delta)
 	{
 		DeathType type = deathTile.model.data.deathType;
 
@@ -57,6 +59,11 @@ public class CharacterDeathComponent : MonoBehaviour
 			TileMap TM = Level.instance.tileMap;
 			TM.SetTile(deathTile.position, new Tile(deathTile.position, deathTile.model.data.replacementTile, 0, 1, TM.tilesFolder), 0.0f);
 		}
+
+		// start respawn countdown on all clients in case of server migration
+		// only the master client will then send the rpc that does the actual respawn
+		if (Match.instance.currentGameModeType == GameMode.TurfWar)
+			_respawnHandle = Timing.RunCoroutine(_RespawnCounter(delta));
 	}
 
 	public IEnumerator<float> _sink()
@@ -135,6 +142,46 @@ public class CharacterDeathComponent : MonoBehaviour
 			accelearation += _character.model.flyAcceleration * Time.deltaTime;
 			transform.position += direction * _character.model.flySpeed * accelearation * Time.deltaTime;
 			yield return Timing.WaitForOneFrame;
+		}
+	}
+
+	IEnumerator<float> _RespawnCounter(double delta)
+	{
+		double respawnTime = 5.0f;
+		double timer = respawnTime;
+
+		if (Constants.onlineGame)
+			timer = respawnTime - (PhotonNetwork.time - delta);
+
+		while (timer > 0.0f)
+		{
+			// abort if our state is not dead anymore
+			// this will probably mean that the round ended
+			// during this respawn
+			if (_character.stateComponent.currentState != CharacterState.Dead)
+				yield break;
+
+			timer -= Time.deltaTime;
+			yield return Timing.WaitForOneFrame;
+		}
+
+		RespawnCharacter();
+	}
+
+	void RespawnCharacter()
+	{
+		// only find respawn tile on master client and send the tile to respawn on 
+		// to all other clients
+		if (Constants.onlineGame && PhotonNetwork.isMasterClient)
+		{
+			Tile spawnTile = Match.instance.level.tileMap.GetRandomFreeSpawnTile();
+			_character.photonView.RPC("ReSpawn", PhotonTargets.All, spawnTile.position.x, spawnTile.position.y);
+		}
+
+		if (!Constants.onlineGame)
+		{
+			Tile spawnTile = Match.instance.level.tileMap.GetRandomFreeSpawnTile();
+			_character.ReSpawn(spawnTile.position.x, spawnTile.position.y);
 		}
 	}
 

@@ -63,7 +63,7 @@ public class Character : Photon.MonoBehaviour
 		view = Instantiate(viewData.prefabs[skinID]);
 		view.transform.SetParent(transform, false);
 
-		// gat components
+		// get components
 		movementComponent  = GetComponent<CharacterMovementComponent>();
 		flagComponent      = GetComponent<CharacterFlagComponent>();
 		stateComponent     = GetComponent<CharacterStateComponent>();
@@ -96,6 +96,7 @@ public class Character : Photon.MonoBehaviour
 #endif
 	}
 
+	// called when all players respawn on thier start tiles when a round is over
 	[PunRPC]
 	void NetworkSpawn()
 	{
@@ -107,6 +108,15 @@ public class Character : Photon.MonoBehaviour
 		soundComponent.StopAll();
 		transform.position = new Vector3(spawnTile.x, 1, spawnTile.y);
 		movementComponent.SetSpawnTile(spawnTile);
+	}
+
+	// called when respawning in middle of a game on an empty tile
+	[PunRPC]
+	public void ReSpawn(int tileX, int tileY)
+	{
+		movementComponent.ResetAll();
+		transform.position = new Vector3(tileX, 1, tileY);
+		movementComponent.SetSpawnTile(new Vector2DInt(tileX, tileY));
 	}
 
 	void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)

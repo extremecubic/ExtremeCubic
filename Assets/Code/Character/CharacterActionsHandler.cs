@@ -122,7 +122,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 	}
 
 	[PunRPC]
-	public void Die(int tileX, int tileY)
+	public void Die(int tileX, int tileY, double delta)
 	{
 		// remove reference and set state
 		currentTile.RemovePlayer();
@@ -141,7 +141,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		transform.position = new Vector3(deathTile.position.x, 1, deathTile.position.y);
 
 		// play death feedback depending on tileType
-		_character.deathComponent.KillPlayer(deathTile);
+		_character.deathComponent.KillPlayer(deathTile, delta);
 
 		if (Constants.onlineGame && PhotonNetwork.isMasterClient)
 			Match.instance.OnPlayerDie(_character.playerID);

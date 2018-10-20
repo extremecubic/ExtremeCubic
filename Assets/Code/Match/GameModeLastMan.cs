@@ -6,14 +6,14 @@ public class GameModeLastMan : Photon.MonoBehaviour, IGameMode
 {
 	const int _numRoundsToWin = 3;
 
-	public class PlayerTracker
+	public class LastManPlayerTracker
 	{
 		public int score;
 		public bool dead;
 		public bool disconnected;
 	}
 
-	Dictionary<int, PlayerTracker> _players;
+	Dictionary<int, LastManPlayerTracker> _players;
 
 	int   _numPlayers;
 	bool  _winnerSet;
@@ -26,7 +26,7 @@ public class GameModeLastMan : Photon.MonoBehaviour, IGameMode
 
 	public void OnSetup(int numPlayers)
 	{
-		_players = new Dictionary<int, PlayerTracker>();
+		_players = new Dictionary<int, LastManPlayerTracker>();
 	}
 
 	public void OnPlayerLeft(int ID)
@@ -40,7 +40,7 @@ public class GameModeLastMan : Photon.MonoBehaviour, IGameMode
 
 	public void OnPlayerRegistred(int ID)
 	{
-		_players.Add(ID, new PlayerTracker());
+		_players.Add(ID, new LastManPlayerTracker());
 	}
 
 	public void OnPlayerDie(int playerId)
@@ -83,7 +83,7 @@ public class GameModeLastMan : Photon.MonoBehaviour, IGameMode
 		if (!Constants.onlineGame)
 			NetworkRoundOver(winnerId);
 
-		//check if the match is over or if we should start next round		
+		// check if the match is over or if we should start next round		
 		if (_players[winnerId].score == _numRoundsToWin)
 		{
 			if (Constants.onlineGame)

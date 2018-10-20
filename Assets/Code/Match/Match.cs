@@ -25,7 +25,7 @@ public class Match : Photon.MonoBehaviour
 
 	MusicManager _musicManager;
 
-	GameMode  _currentGameModeType;
+	public GameMode currentGameModeType { get; private set; }
 	IGameMode _currentGameMode;
 	
 	void Awake()
@@ -61,9 +61,7 @@ public class Match : Photon.MonoBehaviour
 	{		
 		int numPlayer = PhotonNetwork.room.PlayerCount;
 
-		_currentGameModeType = (GameMode)PhotonNetwork.player.CustomProperties[Constants.MATCH_GAME_MODE];
-	
-		print(_currentGameModeType);
+		currentGameModeType = (GameMode)PhotonNetwork.player.CustomProperties[Constants.MATCH_GAME_MODE];
 
 		// only have one gamemode for now
 		_currentGameMode = GetComponent<GameModeLastMan>();
@@ -159,7 +157,7 @@ public class Match : Photon.MonoBehaviour
 		// reset level(character resapwn is here aswell for now)
 		_level.ResetRound();
 
-		// update score ui and restart timer
+		// restart start timer
 		_counterUI.StartCount(delta, 3, () => matchStarted = true);
 	}
 
