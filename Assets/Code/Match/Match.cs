@@ -63,14 +63,19 @@ public class Match : Photon.MonoBehaviour
 
 		currentGameModeType = (GameMode)PhotonNetwork.player.CustomProperties[Constants.MATCH_GAME_MODE];
 
-		// only have one gamemode for now
-		_currentGameMode = GetComponent<GameModeLastMan>();
+		if (currentGameModeType == GameMode.KingOfTheHill)
+			_currentGameMode = GetComponent<GameModeLastMan>();
+		else if (currentGameModeType == GameMode.TurfWar)
+			_currentGameMode = GetComponent<GameModeTurfWar>();
 
 		_currentGameMode.OnSetup(numPlayer);
 
 		// tell the ui how many players we are
 		_scoreUI.Setup(numPlayer);
 
+		// tell all clients to start the game
+		// this is sent via server and the RPC wont be sent 
+		// untill all players are loaded in to the scene
 		if (PhotonNetwork.isMasterClient)
 			photonView.RPC("NetworkStartGame", PhotonTargets.AllViaServer, PhotonNetwork.time);
 
@@ -96,6 +101,30 @@ public class Match : Photon.MonoBehaviour
 		_counterUI.StartCount(0, 3, () => matchStarted = true);
 	}
 
+	// will be called on all clients when all players are loaded
+	// in to the scene
+	[PunRPC]
+	void NetworkStartGame(double delta)
+	{
+		// init master class that have last say in all collisions(will only be called on the server)
+		FindObjectOfType<CollisionTracker>().ManualStart();
+
+		// create level (player creation is here for now aswell)
+		_level.StartGameOnline();
+
+		// start countdown
+		_counterUI.StartCount(delta, 3, () => { matchStarted = true; _currentGameMode.OnRoundStart(); });
+	}
+
+	// called from character when it is created
+	[PunRPC]
+	public void RegisterPlayer(int id, string nickName, string viewName)
+	{
+		// register a player by id for scorekepping and ui
+		_currentGameMode.OnPlayerRegistred(id);
+		_scoreUI.RegisterPlayer(id, nickName, viewName);
+	}
+
 	// called from character(only on server in online play) 
 	public void OnPlayerDie(int playerId)
 	{
@@ -103,12 +132,16 @@ public class Match : Photon.MonoBehaviour
 	}
 	
 	// called from gamemode (called on all clients)
+	// just used for setting UI and setting feedback
 	public void OnRoundOver(int winnerId, int score)
 	{
 		_musicManager.StopSharedPowerUpLoop(0.5f);
 		_scoreUI.UpdateScore(winnerId, score);
 	}
 	
+	// only call from master client
+	// this coRoutine will then send rpc to tell 
+	// all clients to start counter for next round
 	public void SetCoundownToRoundRestart(float delay)
 	{				
 		// do small delay before we reset to new round
@@ -128,25 +161,14 @@ public class Match : Photon.MonoBehaviour
 		_scoreUI.DisableUIOfDisconnectedPlayer(id);
 	}
 
+	// called from gamemode to all clients
 	[PunRPC]
 	public void NetworkMatchOver(int id)
 	{
 		_winnerUI.ShowWinner(_scoreUI.GetUserNameFromID(id));
 	}
-
-	[PunRPC]
-	void NetworkStartGame(double delta)
-	{
-		// init master class that have last say in all collisions(will only be called on the server)
-		FindObjectOfType<CollisionTracker>().ManualStart();
-
-		// create level (player creation is here for now aswell)
-		_level.StartGameOnline();
-
-		// start countdown
-		_counterUI.StartCount(delta, 3, () => matchStarted = true);
-	}
 	
+	// called from the coroutine that handle delay before next round should start
 	[PunRPC]
 	void NetworkStartNewRound(double delta)
 	{		
@@ -158,16 +180,8 @@ public class Match : Photon.MonoBehaviour
 		_level.ResetRound();
 
 		// restart start timer
-		_counterUI.StartCount(delta, 3, () => matchStarted = true);
-	}
-
-	[PunRPC]
-	public void RegisterPlayer(int id, string nickName, string viewName)
-	{
-		// register a player by id for scorekepping and ui
-		_currentGameMode.OnPlayerRegistred(id);
-		_scoreUI.RegisterPlayer(id, nickName, viewName);
-	}
+		_counterUI.StartCount(delta, 3, () => { matchStarted = true; _currentGameMode.OnRoundStart(); });
+	}	
 
 	IEnumerator<float> _resetDelay(float delay)
 	{

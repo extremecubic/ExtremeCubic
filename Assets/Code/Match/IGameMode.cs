@@ -8,5 +8,6 @@ public interface IGameMode
 	void OnSetup(int numPlayers);
 	void OnRoundRestarted();
 	void OnPlayerLeft(int ID);
-	void OnPlayerRegistred(int ID);	
+	void OnPlayerRegistred(int ID);
+	void OnRoundStart();
 }

@@ -69,4 +69,6 @@ MonoBehaviour:
   - UpdatePlayerUI
   - NetworkOnhittingObstacle
   - ReSpawn
+  - LastManNetworkRoundOver
+  - TurfWarNetworkRoundOver
   DisableAutoOpenWizard: 1

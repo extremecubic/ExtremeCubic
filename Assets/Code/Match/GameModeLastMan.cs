@@ -78,10 +78,10 @@ public class GameModeLastMan : Photon.MonoBehaviour, IGameMode
 		_winnerSet = true;
 
 		if (Constants.onlineGame)
-	        photonView.RPC("NetworkRoundOver", PhotonTargets.All, winnerId);
+	        photonView.RPC("LastManNetworkRoundOver", PhotonTargets.All, winnerId);
 
 		if (!Constants.onlineGame)
-			NetworkRoundOver(winnerId);
+			LastManNetworkRoundOver(winnerId);
 
 		// check if the match is over or if we should start next round		
 		if (_players[winnerId].score == _numRoundsToWin)
@@ -96,6 +96,10 @@ public class GameModeLastMan : Photon.MonoBehaviour, IGameMode
 			_match.SetCoundownToRoundRestart(2.0f);
 	}
 
+	public void OnRoundStart()
+	{
+	}
+
 	public void OnRoundRestarted()
 	{
 		_winnerSet = false;
@@ -106,7 +110,7 @@ public class GameModeLastMan : Photon.MonoBehaviour, IGameMode
 	}
 	
 	[PunRPC]
-	void NetworkRoundOver(int winnerID)
+	void LastManNetworkRoundOver(int winnerID)
 	{
 		// make clients keep track of score aswell in case of server migration
 		_players[winnerID].score++;

@@ -529,6 +529,7 @@ MonoBehaviour:
     type: 2}
   _emptyDeathSound: {fileID: 8300000, guid: 922f4ce002cdf8f41a8d15e71d197c62, type: 3}
   _deathType: 0
+  _flyToTargetTransform: {fileID: 0}
 --- !u!4 &161668955 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000010054384334, guid: 6cd61f54b2399284f973282aed842b8c,
@@ -4907,6 +4908,7 @@ GameObject:
   - component: {fileID: 1454707898}
   - component: {fileID: 1454707897}
   - component: {fileID: 1454707896}
+  - component: {fileID: 1454707901}
   m_Layer: 0
   m_Name: Match
   m_TagString: Untagged
@@ -5004,6 +5006,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1454707901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1454707895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3688c2b349619ba458caef7caa320c4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1461911460
 Prefab:
   m_ObjectHideFlags: 0
