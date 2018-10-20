@@ -2195,6 +2195,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 1691678103623542, guid: 6a85c131e3a0d0242b5cfa23dc37780e, type: 2}
+      propertyPath: m_Name
+      value: SoundManager
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a85c131e3a0d0242b5cfa23dc37780e, type: 2}
   m_IsPrefabAsset: 0
@@ -8970,6 +8974,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _level: {fileID: 140270603}
+  _gameModeModel: {fileID: 11400000, guid: 4fe97f5b4cd61164e8a6fc649d2bfbbc, type: 2}
 --- !u!4 &1454707900
 Transform:
   m_ObjectHideFlags: 0

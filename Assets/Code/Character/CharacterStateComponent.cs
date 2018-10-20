@@ -7,8 +7,7 @@ public class CharacterStateComponent : MonoBehaviour
     public CharacterState currentState { get; private set; } = CharacterState.Idle;
 
     public void ManualAwake()
-    {
-		
+    {		
     }
 
     public void SetState(CharacterState state) => currentState = state;

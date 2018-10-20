@@ -4991,6 +4991,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _level: {fileID: 140270603}
+  _gameModeModel: {fileID: 11400000, guid: 4fe97f5b4cd61164e8a6fc649d2bfbbc, type: 2}
 --- !u!4 &1454707900
 Transform:
   m_ObjectHideFlags: 0

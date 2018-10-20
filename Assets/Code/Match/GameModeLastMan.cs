@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class GameModeLastMan : Photon.MonoBehaviour, IGameMode
 {
-	const int _numRoundsToWin = 3;
-
 	public class LastManPlayerTracker
 	{
 		public int score;
@@ -18,10 +16,12 @@ public class GameModeLastMan : Photon.MonoBehaviour, IGameMode
 	int   _numPlayers;
 	bool  _winnerSet;
 	Match _match;
+	GameModesModel _modeModel;
 
 	void Awake()
 	{
 		_match = GetComponent<Match>();
+		_modeModel = _match.gameModeModel;
 	}
 
 	public void OnSetup(int numPlayers)
@@ -84,7 +84,7 @@ public class GameModeLastMan : Photon.MonoBehaviour, IGameMode
 			LastManNetworkRoundOver(winnerId);
 
 		// check if the match is over or if we should start next round		
-		if (_players[winnerId].score == _numRoundsToWin)
+		if (_players[winnerId].score == _modeModel.kingNumRoundsToWin)
 		{
 			if (Constants.onlineGame)
 				_match.photonView.RPC("NetworkMatchOver", PhotonTargets.All, winnerId);
@@ -93,7 +93,13 @@ public class GameModeLastMan : Photon.MonoBehaviour, IGameMode
 				_match.NetworkMatchOver(winnerId);
 		}
 		else
-			_match.SetCoundownToRoundRestart(2.0f);
+		{
+			if (Constants.onlineGame)
+				_match.photonView.RPC("NetworkSetEndRoundDelay", PhotonTargets.All, 2.0, PhotonNetwork.time);
+
+			if (!Constants.onlineGame)
+				_match.NetworkSetEndRoundDelay(2.0, 0.0);
+		}
 	}
 
 	public void OnRoundStart()

@@ -32,7 +32,7 @@ public class CharacterSoundComponent : MonoBehaviour
 	
 	void CreateSounds(CharacterDatabase.ViewData data, Transform parent)
 	{
-		MusicManager MM = MusicManager.instance;
+		SoundManager MM = SoundManager.instance;
 
 		MM.CreateSound(_sounds[(int)CharacterSound.Walk],         "WalkSound",        data.walkSound,    false, parent);
 		MM.CreateSound(_sounds[(int)CharacterSound.Dash],         "DashSound",        data.dashSound,    false, parent);
@@ -45,13 +45,13 @@ public class CharacterSoundComponent : MonoBehaviour
 
 	public void PlaySound(CharacterSound type, float duration = 0)
 	{
-		MusicManager MM = MusicManager.instance;
+		SoundManager MM = SoundManager.instance;
 		MM.PlaySound(_sounds[(int)type], duration);
 	}
 
 	public void StopSound(CharacterSound type, float fadeInSeconds = 0.5f)
 	{
-		MusicManager MM = MusicManager.instance;
+		SoundManager MM = SoundManager.instance;
 		MM.StopSound(_sounds[(int)type], fadeInSeconds);
 	}
 
@@ -62,7 +62,7 @@ public class CharacterSoundComponent : MonoBehaviour
 
 	public void StopAll()
 	{
-		MusicManager MM = MusicManager.instance;
+		SoundManager MM = SoundManager.instance;
 
 		for (int i =0; i< _sounds.Length; i++)
 			MM.StopSound(_sounds[i], 0.25f);

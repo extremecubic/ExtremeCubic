@@ -155,7 +155,7 @@ public class Tile
 		_powerUp = power.type;
 		_powerView = Object.Instantiate(power.prefab, new Vector3(position.x, 1, position.y), power.prefab.transform.rotation, powerUpFolder);
 
-		MusicManager.instance.SpawnAndPlaySound(power.spawnSound, 5);
+		SoundManager.instance.SpawnAndPlaySound(power.spawnSound, 5);
 
 		if (power.spawnParticle != null)
 		{
@@ -173,7 +173,7 @@ public class Tile
 		for (int i = 0; i < _sounds.Length; i++)
 			_sounds[i] = new SoundData();
 
-		MusicManager MM = MusicManager.instance;
+		SoundManager MM = SoundManager.instance;
 
 		MM.CreateSound(_sounds[(int)TileSounds.Land],          "LandSound",        model.data.landSound             , false, view.transform);
 		MM.CreateSound(_sounds[(int)TileSounds.Break],         "BreakSound",       model.data.breakSound            , false, view.transform);
@@ -188,7 +188,7 @@ public class Tile
 		if (view == null)
 			return;
 
-		MusicManager MM = MusicManager.instance;
+		SoundManager MM = SoundManager.instance;
 		MM.PlaySound(_sounds[(int)type]);
 	}
 

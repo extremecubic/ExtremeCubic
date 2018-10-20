@@ -8,6 +8,7 @@ public class InGameUI : MonoBehaviour
 	[SerializeField] StartCounterUI _startCounterUI; public StartCounterUI startCounterUI { get { return _startCounterUI; } }
 	[SerializeField] WinnerUI       _winnerUI;       public WinnerUI winnerUI             { get { return _winnerUI; } }
 	[SerializeField] MessagePromt   _msgPromt;       public MessagePromt msgPromt         { get { return _msgPromt; } }
+	[SerializeField] StartCounterUI _roundCounter;   public StartCounterUI roundCounter   { get { return _roundCounter; } }
 
 	public static InGameUI instance { get; private set; }
 

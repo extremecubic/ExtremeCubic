@@ -71,4 +71,6 @@ MonoBehaviour:
   - ReSpawn
   - LastManNetworkRoundOver
   - TurfWarNetworkRoundOver
+  - TurfWarNetworkPlayerDied
+  - NetworkSetEndRoundDelay
   DisableAutoOpenWizard: 1

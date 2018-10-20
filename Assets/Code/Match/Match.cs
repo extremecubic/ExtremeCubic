@@ -16,14 +16,16 @@ public class Match : Photon.MonoBehaviour
 	public CameraController gameCamera { get; private set; }
 
 	[Header("GAME REFERENCES")]
-	[SerializeField] Level _level; public Level level { get { return _level; } }
-	
-	ScoreUI        _scoreUI;
-	StartCounterUI _counterUI;
-	WinnerUI       _winnerUI;
-	MessagePromt   _msgPromt;
+	[SerializeField] Level          _level;         public Level level { get { return _level; } }
+	[SerializeField] GameModesModel _gameModeModel; public GameModesModel gameModeModel { get { return _gameModeModel; } }
 
-	MusicManager _musicManager;
+	public ScoreUI        scoreUI        { get; private set; }
+	public StartCounterUI counterUI      { get; private set; }
+	public WinnerUI       winnerUI       { get; private set; }
+	public MessagePromt   msgPromt       { get; private set; }
+	public StartCounterUI roundCounterUI { get; private set; }
+
+	SoundManager _musicManager;
 
 	public GameMode currentGameModeType { get; private set; }
 	IGameMode _currentGameMode;
@@ -37,13 +39,14 @@ public class Match : Photon.MonoBehaviour
 
 	void Start()
 	{
-		InGameUI UI = InGameUI.instance;
-		_scoreUI    = UI.scoreUI;
-		_counterUI  = UI.startCounterUI;
-		_winnerUI   = UI.winnerUI;
-		_msgPromt   = UI.msgPromt;
+		InGameUI UI    = InGameUI.instance;
+		scoreUI        = UI.scoreUI;
+		counterUI      = UI.startCounterUI;
+		winnerUI       = UI.winnerUI;
+		msgPromt       = UI.msgPromt;
+		roundCounterUI = UI.roundCounter;
 
-		_musicManager = MusicManager.instance;
+		_musicManager = SoundManager.instance;
 
 		if (Constants.onlineGame)		
 			SetupMatchOnline();
@@ -71,7 +74,7 @@ public class Match : Photon.MonoBehaviour
 		_currentGameMode.OnSetup(numPlayer);
 
 		// tell the ui how many players we are
-		_scoreUI.Setup(numPlayer);
+		scoreUI.Setup(numPlayer, currentGameModeType);
 
 		// tell all clients to start the game
 		// this is sent via server and the RPC wont be sent 
@@ -94,11 +97,11 @@ public class Match : Photon.MonoBehaviour
 		_currentGameMode.OnSetup(numPlayer);
 
 		// tell the ui how many players we are
-		_scoreUI.Setup(numPlayer);
+		scoreUI.Setup(numPlayer, currentGameModeType);
 
 		_level.StartGameLocal();
 
-		_counterUI.StartCount(0, 3, () => matchStarted = true);
+		counterUI.StartCount(0, 3, () => matchStarted = true);
 	}
 
 	// will be called on all clients when all players are loaded
@@ -113,7 +116,7 @@ public class Match : Photon.MonoBehaviour
 		_level.StartGameOnline();
 
 		// start countdown
-		_counterUI.StartCount(delta, 3, () => { matchStarted = true; _currentGameMode.OnRoundStart(); });
+		counterUI.StartCount(delta, 3, () => { matchStarted = true; _currentGameMode.OnRoundStart(); });
 	}
 
 	// called from character when it is created
@@ -122,7 +125,7 @@ public class Match : Photon.MonoBehaviour
 	{
 		// register a player by id for scorekepping and ui
 		_currentGameMode.OnPlayerRegistred(id);
-		_scoreUI.RegisterPlayer(id, nickName, viewName);
+		scoreUI.RegisterPlayer(id, nickName, viewName, currentGameModeType);
 	}
 
 	// called from character(only on server in online play) 
@@ -136,16 +139,16 @@ public class Match : Photon.MonoBehaviour
 	public void OnRoundOver(int winnerId, int score)
 	{
 		_musicManager.StopSharedPowerUpLoop(0.5f);
-		_scoreUI.UpdateScore(winnerId, score);
+		scoreUI.UpdateRoundScore(winnerId, score, currentGameModeType);
+		matchStarted = false;
 	}
 	
-	// only call from master client
-	// this coRoutine will then send rpc to tell 
-	// all clients to start counter for next round
-	public void SetCoundownToRoundRestart(float delay)
+	//called on all clients and then everyone will start next round count
+	[PunRPC]
+	public void NetworkSetEndRoundDelay(double delay, double delta)
 	{				
 		// do small delay before we reset to new round
-		Timing.RunCoroutine(_resetDelay(delay));		
+		Timing.RunCoroutine(_resetDelay(delay, delta));		
 	}
 
 	// callback from character when someone disconnects, called locally on all clients
@@ -158,19 +161,18 @@ public class Match : Photon.MonoBehaviour
 		}
 
 		_currentGameMode.OnPlayerLeft(id);
-		_scoreUI.DisableUIOfDisconnectedPlayer(id);
+		scoreUI.DisableUIOfDisconnectedPlayer(id, currentGameModeType);
 	}
 
 	// called from gamemode to all clients
 	[PunRPC]
 	public void NetworkMatchOver(int id)
 	{
-		_winnerUI.ShowWinner(_scoreUI.GetUserNameFromID(id));
+		winnerUI.ShowWinner(scoreUI.GetUserNameFromID(id, currentGameModeType));
 	}
 	
 	// called from the coroutine that handle delay before next round should start
-	[PunRPC]
-	void NetworkStartNewRound(double delta)
+	void StartNextRound(double delta)
 	{		
 		matchStarted = false;
 
@@ -179,30 +181,36 @@ public class Match : Photon.MonoBehaviour
 		// reset level(character resapwn is here aswell for now)
 		_level.ResetRound();
 
+		scoreUI.ClearRoundUI(currentGameModeType);
+
 		// restart start timer
-		_counterUI.StartCount(delta, 3, () => { matchStarted = true; _currentGameMode.OnRoundStart(); });
+		counterUI.StartCount(delta, 3, () => { matchStarted = true; _currentGameMode.OnRoundStart(); });
 	}	
 
-	IEnumerator<float> _resetDelay(float delay)
+	// this runs locally on all clients with the net delta
+	// all clients then start the next round counter locally
+	IEnumerator<float> _resetDelay(double delay, double delta)
 	{
-		float timer = 0;
-		while (timer < delay)
+		if (Constants.onlineGame)
+			delay -= (PhotonNetwork.time - delta);
+
+		while (delay > 0)
 		{
-			timer += Time.deltaTime;
+			delay -= Time.deltaTime;
 			yield return Timing.WaitForOneFrame;
 		}
 
 		if (Constants.onlineGame)
-		    photonView.RPC("NetworkStartNewRound", PhotonTargets.All, PhotonNetwork.time);
+			StartNextRound(PhotonNetwork.time);
 
 		if (!Constants.onlineGame)
-			NetworkStartNewRound(0);
+			StartNextRound(0);
 	}
 
 	void ShowLastPlayerMessage()
 	{
 		matchStarted = false;
-		_msgPromt.SetAndShow("All Players have left the room!\n Returning to menu!", () =>
+		msgPromt.SetAndShow("All Players have left the room!\n Returning to menu!", () =>
 		{
 			PhotonHelpers.ClearPlayerProperties(PhotonNetwork.player);
 			PhotonNetwork.LeaveRoom();

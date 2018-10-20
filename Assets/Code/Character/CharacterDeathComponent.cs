@@ -41,7 +41,7 @@ public class CharacterDeathComponent : Photon.MonoBehaviour
 			}
 
 			if (lvl.emptyDeathsound != null)
-				MusicManager.instance.SpawnAndPlaySound(lvl.emptyDeathsound, 5);
+				SoundManager.instance.SpawnAndPlaySound(lvl.emptyDeathsound, 5);
 		}
 
 		if (type == DeathType.Sink)
@@ -104,7 +104,7 @@ public class CharacterDeathComponent : Photon.MonoBehaviour
 
 	public IEnumerator<float> _Explode(Tile deathTile)
 	{
-		MusicManager.instance.SpawnAndPlaySound(deathTile.model.data.killSound, 5);
+		SoundManager.instance.SpawnAndPlaySound(deathTile.model.data.killSound, 5);
 		Match.instance.gameCamera.DoShake(_character.model.collideCameraShakeDuration, _character.model.collideCameraShakeSpeed, _character.model.collideCameraShakeIntensity, _character.model.collideCameraShakeIntensityDamping);
 		
 		if (deathTile.model.data.killParticle)
@@ -147,13 +147,17 @@ public class CharacterDeathComponent : Photon.MonoBehaviour
 
 	IEnumerator<float> _RespawnCounter(double delta)
 	{
-		double respawnTime = 5.0f;
-		double timer = respawnTime;
+		Match match = Match.instance;
+
+		double timer = 0;
+
+		// get the respawn time based on the active gamemode
+		if (match.currentGameModeType == GameMode.TurfWar) timer = Match.instance.gameModeModel.turfRespawnTime;
 
 		if (Constants.onlineGame)
-			timer = respawnTime - (PhotonNetwork.time - delta);
+			timer -= (PhotonNetwork.time - delta);
 
-		while (timer > 0.0f)
+		while (timer > 0.0)
 		{
 			// abort if our state is not dead anymore
 			// this will probably mean that the round ended
