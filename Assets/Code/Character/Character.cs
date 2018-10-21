@@ -13,14 +13,16 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterSpecialTileHandler))]
 public class Character : Photon.MonoBehaviour
 {		
+	// read only properties
 	public CharacterModel model                {get; private set;}
 	public GameObject view                     {get; private set;}
 	public bool isMasterClient                 {get; private set;}
-	public int playerPhotonID                  {get; private set;}
+	public int playerPhotonID                  {get; private set;} // in local play this will be set to the same as "playerIndexID"
 	public string playerNickname               {get; private set;}
 	public CharacterDatabase.ViewData viewData {get; private set;}
 	public int playerIndexID                   {get; private set;}
 
+	// all character components
 	public CharacterMovementComponent  movementComponent  {get; private set;}
     public CharacterFlagComponent      flagComponent      {get; private set;}
     public CharacterStateComponent     stateComponent     {get; private set;}
@@ -30,13 +32,13 @@ public class Character : Photon.MonoBehaviour
 	public CharacterPowerUpComponent   powerUpComponent   {get; private set;}
 	public CharacterSpecialTileHandler specialTileHandler {get; private set;}
 
-	public void Initialize(string viewName, int playerID, string nickname, int skinID, int spawnPoint)
+	public void Initialize(string viewName, int playerID, string nickname, int skinID, int indexID)
     {
 		if (Constants.onlineGame)
-		    photonView.RPC("NetworkInitialize", PhotonTargets.All, viewName, playerID, nickname, skinID, spawnPoint); 
+		    photonView.RPC("NetworkInitialize", PhotonTargets.All, viewName, playerID, nickname, skinID, indexID); 
 
 		if (!Constants.onlineGame)
-			NetworkInitialize(viewName, playerID, nickname, skinID, spawnPoint);
+			NetworkInitialize(viewName, playerID, nickname, skinID, indexID);
 	}
 
 	public void Spawn()
@@ -58,7 +60,8 @@ public class Character : Photon.MonoBehaviour
 		model    = CharacterDatabase.instance.standardModel;
 		viewData = CharacterDatabase.instance.GetViewFromName(viewname);
 
-		// Setup the correct view, probably in a view component	
+		// Setup the correct view based on the name of model
+		// and the index ID of the skin
 		view = Instantiate(viewData.prefabs[skinID]);
 		view.transform.SetParent(transform, false);
 
@@ -99,7 +102,7 @@ public class Character : Photon.MonoBehaviour
 	[PunRPC]
 	void NetworkSpawn()
 	{
-		Vector2DInt spawnTile = Level.instance.tileMap.GetSpawnPointFromPlayerIndexID(playerIndexID);
+		Vector2DInt spawnTile = Match.instance.level.tileMap.GetSpawnPointFromPlayerIndexID(playerIndexID);
 
 		movementComponent.ResetAll();
 		ParticleComponent.StopAll();

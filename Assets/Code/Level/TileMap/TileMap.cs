@@ -21,16 +21,28 @@ public class TileMap
         BinaryLoad();
     }
 
-	public Tile GetTile(Vector2DInt position) => _tiles[position];
+	// return the tile at given tilecoordinates
+	public Tile GetTile(Vector2DInt position)
+	{
+		return _tiles[position];
+	} 
+
+	// set a new tile at given coordinates and remove the old one
     public void SetTile(Vector2DInt position, Tile tile, float destroyDelay)
     {
         _tiles[position].Delete(destroyDelay);
         _tiles[position] = tile;
     }
 
-	public Vector2DInt GetRandomTileCoords() =>	
-		new Vector2DInt(Random.Range(0, _gridSize.x), Random.Range(0, _gridSize.y));
+	// will return a random tile coord inside the map
+	// this can be to an empty or occupied tile aswell
+	public Vector2DInt GetRandomTileCoords()
+	{
+		return new Vector2DInt(Random.Range(0, _gridSize.x), Random.Range(0, _gridSize.y));
+	}
 	  
+	// load in the tile data from the level file
+	// and create all tiles with the saved properties
     public void BinaryLoad()
     {
 		if (File.Exists(Path.Combine(Constants.TILEMAP_SAVE_FOLDER, mapName)))
@@ -61,10 +73,10 @@ public class TileMap
 
 				AddEdgeTiles(gridSizeX, gridSizeY);
 			}
-		}
-		
+		}		
     }
 
+	// create a boarder of empty deadly edge tiles
 	public void AddEdgeTiles(int sizeX, int sizeY)
 	{
 		// left edges
@@ -84,18 +96,21 @@ public class TileMap
 			_tiles.Add(new Vector2DInt(i, -1), new Tile(new Vector2DInt(i, -1), Constants.EDGE_TYPE, 0, 0, null));
 	}
 
+	// remove all visual representation of tiles
 	void ClearTileViews()
 	{
 		for (int i = 0; i < tilesFolder.childCount; i++)
 			Object.Destroy(tilesFolder.GetChild(i).gameObject);
 	}
 
+	// remove all visual representation of powerups
 	void ClearPowerUpViews()
 	{
 		for (int i = 0; i < powerUpsFolder.childCount; i++)
 			Object.Destroy(powerUpsFolder.GetChild(i).gameObject);
 	}
 
+	// clear everything and reload map
 	public void ResetMap()
 	{
 		ClearTileViews();
@@ -119,7 +134,7 @@ public class TileMap
 	}
 
 	// this generates quite abit of garbage
-	// but is run quite rarely so should be OK?
+	// but is run quite rarely so it should be OK?
 	public Tile GetRandomFreeSpawnTile()
 	{
 		List<Tile> allFreeTiles = new List<Tile>();
@@ -156,6 +171,10 @@ public class TileMap
 		return Constants.NOT_FOUND_SPECIALTILE;
 	}
 
+	// get a spawnpoint based on the index this player got set
+	// in the character select screen by looping over the
+	// list of photon players on the master client and giving
+	// them the index of thier order in list
 	public Vector2DInt GetSpawnPointFromPlayerIndexID(int id)
 	{
 		Vector2DInt point;

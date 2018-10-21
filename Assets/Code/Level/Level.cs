@@ -17,19 +17,9 @@ public class Level : Photon.MonoBehaviour
 	[SerializeField] DeathType      _deathType;            public DeathType deathType               { get { return _deathType; } }
 	[SerializeField] Transform      _flyToTargetTransform; public Transform flyToTargetTransform    { get { return _flyToTargetTransform; } }
 
+	// always keep players in a list to be able
+	// to keep it consisten between local and online play
     List<Character> _characters = new List<Character>();
-
-	public static Level instance { get; private set; }
-
-	void Awake()
-	{
-		instance = this;	
-	}
-
-	void OnDestroy()
-	{
-		instance = null;
-	}
 
 	public void StartGameOnline()
 	{
@@ -41,6 +31,8 @@ public class Level : Photon.MonoBehaviour
 
 		tileMap = new TileMap(_mapToLoad, _tilesFolder, _powerUpFolder);
 
+		// in online play we only have one character
+		// located at index 0
 		_characters.Add(PhotonNetwork.Instantiate("Character", Vector3.zero, Quaternion.identity, 0).GetComponent<Character>());
 		_characters[0].Initialize(characterName, PhotonNetwork.player.ID, PhotonNetwork.player.NickName, skinID, spawnID);
 		_characters[0].Spawn();
@@ -69,6 +61,7 @@ public class Level : Photon.MonoBehaviour
 			NetworkResetRound();
 	}
 
+	// break a tile, this is only handled by the master client
 	public void BreakTile(int x, int y)
 	{
 		if (Constants.onlineGame && PhotonNetwork.isMasterClient)
@@ -78,14 +71,15 @@ public class Level : Photon.MonoBehaviour
 			NetworkBreakTile(x, y);
 	}
 
+	// change the color of a tile, this is only handled by the master client
 	public void ChangeColorTile(int x, int y)
 	{
 		Tile tile = tileMap.GetTile(new Vector2DInt(x, y));
 
 		// get the current occupying player on tile and get the
 		// photon id for score setting and the indexId for setting the color
-		int currentPlayerPhotonID = tile.GetOccupyingPlayer().playerPhotonID;
-		int currentPlayerIndexID  = tile.GetOccupyingPlayer().playerIndexID;
+		int currentPlayerPhotonID = tile.currentCharacter.playerPhotonID;
+		int currentPlayerIndexID  = tile.currentCharacter.playerIndexID;
 
 		// start lastPlayerPhoton id to invalid if we are the
 		// first player that enters this tile
@@ -93,8 +87,8 @@ public class Level : Photon.MonoBehaviour
 
 		// if not null get the photon id of the last player so
 		// we can decrease this players score
-		if (tile.GetLastOccupyingPlayer() != null)
-			lastPlayerPhotonID = tile.GetLastOccupyingPlayer().playerPhotonID;
+		if (tile.lastCharacter != null)
+			lastPlayerPhotonID = tile.lastCharacter.playerPhotonID;
 
 		if (Constants.onlineGame && PhotonNetwork.isMasterClient)
 			photonView.RPC("NetworkChangeColorTile", PhotonTargets.All, x, y, lastPlayerPhotonID, currentPlayerPhotonID, currentPlayerIndexID);
@@ -103,6 +97,7 @@ public class Level : Photon.MonoBehaviour
 			NetworkChangeColorTile(x, y, lastPlayerPhotonID, currentPlayerPhotonID, lastPlayerPhotonID);
 	}
 
+	// spawn all characters on thier spawnpoints
 	[PunRPC]
 	void NetworkResetRound()
 	{

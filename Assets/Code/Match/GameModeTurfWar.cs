@@ -8,7 +8,7 @@ public class GameModeTurfWar : Photon.MonoBehaviour, IGameMode
 	public class TurfWarPlayerTracker
 	{
 		public int roundScore;
-		public int tileScore;
+		public int turfScore;
 		public bool disconnected;
 	}
 
@@ -27,16 +27,18 @@ public class GameModeTurfWar : Photon.MonoBehaviour, IGameMode
 		_players = new Dictionary<int, TurfWarPlayerTracker>();
 	}
 
+	// remove a point from the player that had this turf before
 	public void RemoveTileScoreFrom(int playerPhotonID)
 	{
-		_players[playerPhotonID].tileScore--;
-		_match.scoreUI.UpdateTurfScore(playerPhotonID, _players[playerPhotonID].tileScore);
+		_players[playerPhotonID].turfScore--;
+		_match.scoreUI.UpdateTurfScore(playerPhotonID, _players[playerPhotonID].turfScore);
 	}
 
+	// add a point to the player that took over this turf
 	public void AddTileScoreTo(int playerPhotonID)
 	{
-		_players[playerPhotonID].tileScore++;
-		_match.scoreUI.UpdateTurfScore(playerPhotonID, _players[playerPhotonID].tileScore);
+		_players[playerPhotonID].turfScore++;
+		_match.scoreUI.UpdateTurfScore(playerPhotonID, _players[playerPhotonID].turfScore);
 	}
 
 	// send rpc to all clients to update the UI with the 
@@ -82,7 +84,7 @@ public class GameModeTurfWar : Photon.MonoBehaviour, IGameMode
 	{
 		// reset tile score
 		foreach (var p in _players)
-			p.Value.tileScore = 0;
+			p.Value.turfScore = 0;
 	}
 
 	IEnumerator<float> _RoundDuration()
@@ -101,13 +103,20 @@ public class GameModeTurfWar : Photon.MonoBehaviour, IGameMode
 	void SetWinner()
 	{
 		int winnerID = 0;
+		int highestTurfScore = 0;
 
-		// get the ID of the player that had the most colored tiles of this round
-		// TODO: DO THE SCOREKEPPING HERE
+		// get the ID of the player that had the most turf tiles of this round
+		// TODO: this is not handeling draws for the moment
 		foreach (var p in _players)
 		{
-			winnerID = p.Key;			
-			break;
+			if (!p.Value.disconnected)
+			{
+				if (p.Value.turfScore > highestTurfScore)
+				{
+					winnerID = p.Key;
+					highestTurfScore = p.Value.turfScore;
+				}
+			}
 		}
 
 		// call rpc so all clients can incrase the score of the winning player
@@ -128,6 +137,8 @@ public class GameModeTurfWar : Photon.MonoBehaviour, IGameMode
 		}
 		else
 		{
+			// start delay before the next round countdown will start 
+			// the net delta is sent to sync the start of next round on all clients
 			if (Constants.onlineGame)
 				_match.photonView.RPC("NetworkSetEndRoundDelay", PhotonTargets.All, 2.0, PhotonNetwork.time);
 

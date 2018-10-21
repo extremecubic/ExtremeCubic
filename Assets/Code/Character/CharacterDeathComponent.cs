@@ -32,7 +32,7 @@ public class CharacterDeathComponent : Photon.MonoBehaviour
 		// spawn level specific feedback from edge and empty tiles
 		if (deathTile.model.typeName == "empty" || deathTile.model.typeName == Constants.EDGE_TYPE)
 		{
-			Level lvl = Level.instance;
+			Level lvl = Match.instance.level;
 			type = lvl.deathType;
 			if (lvl.emptyDeathParticle != null)
 			{
@@ -56,7 +56,7 @@ public class CharacterDeathComponent : Photon.MonoBehaviour
 		// replace old tile with a new one if flaged from editor
 		if (deathTile.model.data.replaceTileOnDeath)
 		{
-			TileMap TM = Level.instance.tileMap;
+			TileMap TM = Match.instance.level.tileMap;
 			TM.SetTile(deathTile.position, new Tile(deathTile.position, deathTile.model.data.replacementTile, 0, 1, TM.tilesFolder), 0.0f);
 		}
 

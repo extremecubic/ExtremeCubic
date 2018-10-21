@@ -11,7 +11,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 			if (targetTile.IsOccupied())
 			{
 				// get occupying player and tell it to send an rpc that it got dashed
-				Character playerToDash = targetTile.GetOccupyingPlayer();
+				Character playerToDash = targetTile.currentCharacter;
 
 				// save the collision on server so the clients can check that they did not stop their dash locally incorrectly 
 				_collisionTracker.AddCollision(playerToDash.photonView.viewID, targetTile.position.x, targetTile.position.y);
@@ -37,7 +37,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 			_character.ParticleComponent.EmitTrail(false, Vector3.zero);
 
 			_collisionTracker.photonView.RPC("CheckServerCollision", PhotonTargets.MasterClient,
-											targetTile.GetOccupyingPlayer().photonView.viewID,
+											targetTile.currentCharacter.photonView.viewID,
 											photonView.viewID, currentTile.position.x, currentTile.position.y,
 											targetTile.position.x, targetTile.position.y,
 											direction.x, direction.y, dashStrength - dashIndex);
@@ -57,7 +57,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		if (targetTile.IsOccupied())
 		{
 			// get occupying player and tell it to send an rpc that it got dashed
-			Character playerToDash = targetTile.GetOccupyingPlayer();
+			Character playerToDash = targetTile.currentCharacter;
 
 			playerToDash.movementComponent.OnGettingDashed(targetTile.position, direction, dashStrength - dashIndex);
 			OnDashingOther(currentTile.position, previousLastTargetRotation, targetTile.position);

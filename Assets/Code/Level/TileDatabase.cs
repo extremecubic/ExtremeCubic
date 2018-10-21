@@ -15,6 +15,8 @@ public class TileDatabase : MonoBehaviour
     {
         instance = this;
 
+		// fill the dictionary with all tiletypes 
+		// using the name as key
         foreach (TileModel tileModelToSerialize in tilesToSerialize)
         {
             _tileTypes.Add(tileModelToSerialize.typeName.ToLower());

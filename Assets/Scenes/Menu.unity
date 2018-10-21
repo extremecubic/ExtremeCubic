@@ -26001,26 +26001,36 @@ MonoBehaviour:
     buttonImage: {fileID: 1833727847}
     levelText: {fileID: 1697944155}
   _turfWarLevels:
-  - sceneName: MineLevel
+  - sceneName: TurfA
     sprites:
-    - {fileID: 21300000, guid: 7148ca62db7ecfe42ab505069a30a931, type: 3}
-    - {fileID: 21300000, guid: 9cb8699152435c541985451f6d87cc8a, type: 3}
+    - {fileID: 21300000, guid: 14e80ea7bd5ec5b479c893712218c6b0, type: 3}
+    - {fileID: 21300000, guid: 1a90175d0b379774c8246576b6109237, type: 3}
     names:
-    - Turf War
-    - Turf War
+    - Turf A1
+    - Turf A2
     dotsParent: {fileID: 1621687941}
     buttonImage: {fileID: 429309932}
     levelText: {fileID: 1706153035}
-  - sceneName: MineLevel
+  - sceneName: TurfB
     sprites:
-    - {fileID: 21300000, guid: 7148ca62db7ecfe42ab505069a30a931, type: 3}
-    - {fileID: 21300000, guid: 9cb8699152435c541985451f6d87cc8a, type: 3}
+    - {fileID: 21300000, guid: 93d8dbb73b98b3748a28eb758d826079, type: 3}
+    - {fileID: 21300000, guid: 64b58a6048930844884a63c10066a4c4, type: 3}
     names:
-    - Turf War
-    - Turf War
+    - Turf B1
+    - Turf B2
     dotsParent: {fileID: 1218101272}
     buttonImage: {fileID: 1578395365}
     levelText: {fileID: 377967781}
+  - sceneName: TurfC
+    sprites:
+    - {fileID: 21300000, guid: ff06c70027fb62e48bff98fe1a555cfa, type: 3}
+    - {fileID: 21300000, guid: 72675d518ec9b5b47bbfeee321dc0318, type: 3}
+    names:
+    - Turf C1
+    - Turf C2
+    dotsParent: {fileID: 538187654}
+    buttonImage: {fileID: 2003344980}
+    levelText: {fileID: 1903161398}
   _nominatedLevelUI:
   - content: {fileID: 2002413142}
     image: {fileID: 1147774119}

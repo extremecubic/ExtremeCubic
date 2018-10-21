@@ -14,7 +14,7 @@ MonoBehaviour:
   kingNumRoundsToWin: 3
   turfNumRoundsToWin: 3
   turfRespawnTime: 5
-  turfRoundTime: 120
+  turfRoundTime: 40
   turfColors:
   - {r: 0, g: 1, b: 0.04085064, a: 1}
   - {r: 1, g: 0, b: 0.82608795, a: 1}

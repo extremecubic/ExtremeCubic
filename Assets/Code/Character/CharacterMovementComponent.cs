@@ -27,7 +27,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 
 	public void ManualAwake()
 	{
-		_tileMap = Level.instance.tileMap;
+		_tileMap = Match.instance.level.tileMap;
 
 		_character = GetComponent<Character>();
 		_model = _character.model;
@@ -228,7 +228,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		// set the current player as the last occupying player. We will then be 
 		// last and current player at the same time witch is not correct
 		Tile targetTile = _tileMap.GetTile(tile);
-		if (targetTile.GetOccupyingPlayer() != null && targetTile.GetOccupyingPlayer() == _character)
+		if (targetTile.currentCharacter != null && targetTile.currentCharacter == _character)
 			return;
 
 		// remove old reference and set to new
@@ -265,8 +265,12 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 
 		float chargeAmount = _model.dashMinCharge;
 
+		// check if we are under the invert controlls powerup
 		bool invert = _character.powerUpComponent.invertControlls;
 
+		// in online play the controller id is always 0
+		// if in local play get the id of this player so we know
+		// from witch controller we will accept input
 		int controllerID = 0;
 		if (!Constants.onlineGame)
 			controllerID = _character.playerPhotonID;
@@ -277,6 +281,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 			chargeAmount = Mathf.Clamp(chargeAmount, _model.dashMinCharge, _model.dashMaxCharge);
 
 			// while charging direction can be changed
+			// check if the direction should be inverted or not
 			if (Input.GetAxisRaw(Constants.AXIS_VERTICAL + controllerID.ToString()) > 0)
 				_lastMoveDirection = invert == false ? Vector2DInt.Up : Vector2DInt.Down;
 			if (Input.GetAxisRaw(Constants.AXIS_VERTICAL + controllerID.ToString()) < 0)
