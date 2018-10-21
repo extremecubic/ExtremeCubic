@@ -78,6 +78,31 @@ public class Level : Photon.MonoBehaviour
 			NetworkBreakTile(x, y);
 	}
 
+	public void ChangeColorTile(int x, int y)
+	{
+		Tile tile = tileMap.GetTile(new Vector2DInt(x, y));
+
+		// get the current occupying player on tile and get the
+		// photon id for score setting and the indexId for setting the color
+		int currentPlayerPhotonID = tile.GetOccupyingPlayer().playerPhotonID;
+		int currentPlayerIndexID  = tile.GetOccupyingPlayer().playerIndexID;
+
+		// start lastPlayerPhoton id to invalid if we are the
+		// first player that enters this tile
+		int lastPlayerPhotonID = Constants.INVALID_ID;
+
+		// if not null get the photon id of the last player so
+		// we can decrease this players score
+		if (tile.GetLastOccupyingPlayer() != null)
+			lastPlayerPhotonID = tile.GetLastOccupyingPlayer().playerPhotonID;
+
+		if (Constants.onlineGame && PhotonNetwork.isMasterClient)
+			photonView.RPC("NetworkChangeColorTile", PhotonTargets.All, x, y, lastPlayerPhotonID, currentPlayerPhotonID, currentPlayerIndexID);
+
+		if (!Constants.onlineGame)
+			NetworkChangeColorTile(x, y, lastPlayerPhotonID, currentPlayerPhotonID, lastPlayerPhotonID);
+	}
+
 	[PunRPC]
 	void NetworkResetRound()
 	{
@@ -90,5 +115,16 @@ public class Level : Photon.MonoBehaviour
 	void NetworkBreakTile(int x, int y)
 	{
 		tileMap.GetTile(new Vector2DInt(x, y)).DamageTile();
+	}
+
+	[PunRPC]
+	void NetworkChangeColorTile(int x, int y, int lastPlayerPhotonID, int currentPlayerPhotonID, int currentPlayerIndexID)
+	{
+		GameModesModel modeModel = Match.instance.gameModeModel;
+
+		Tile tile = tileMap.GetTile(new Vector2DInt(x, y));
+
+		tile.ChangeColorTile(modeModel.GetColorFromPlayerIndexID(currentPlayerIndexID));
+		Match.instance.OnTileChangingColor(lastPlayerPhotonID, currentPlayerPhotonID);
 	}
 }

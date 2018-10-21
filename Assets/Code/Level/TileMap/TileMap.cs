@@ -156,7 +156,7 @@ public class TileMap
 		return Constants.NOT_FOUND_SPECIALTILE;
 	}
 
-	public Vector2DInt GetSpawnPointFromSpawnID(int id)
+	public Vector2DInt GetSpawnPointFromPlayerIndexID(int id)
 	{
 		Vector2DInt point;
 

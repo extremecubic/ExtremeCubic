@@ -16,11 +16,12 @@ public class Character : Photon.MonoBehaviour
 	public CharacterModel model                {get; private set;}
 	public GameObject view                     {get; private set;}
 	public bool isMasterClient                 {get; private set;}
-	public int playerID                        {get; private set;}
+	public int playerPhotonID                  {get; private set;}
 	public string playerNickname               {get; private set;}
 	public CharacterDatabase.ViewData viewData {get; private set;}
+	public int playerIndexID                   {get; private set;}
 
-    public CharacterMovementComponent  movementComponent  {get; private set;}
+	public CharacterMovementComponent  movementComponent  {get; private set;}
     public CharacterFlagComponent      flagComponent      {get; private set;}
     public CharacterStateComponent     stateComponent     {get; private set;}
 	public CharacterSoundComponent     soundComponent     {get; private set;}
@@ -28,8 +29,6 @@ public class Character : Photon.MonoBehaviour
 	public CharacterDeathComponent	   deathComponent     {get; private set;}
 	public CharacterPowerUpComponent   powerUpComponent   {get; private set;}
 	public CharacterSpecialTileHandler specialTileHandler {get; private set;}
-
-	int _spawnPoint;
 
 	public void Initialize(string viewName, int playerID, string nickname, int skinID, int spawnPoint)
     {
@@ -50,11 +49,11 @@ public class Character : Photon.MonoBehaviour
 	}
 
 	[PunRPC]
-	void NetworkInitialize(string viewname, int playerID, string nickname, int skinID, int spawnPoint)
+	void NetworkInitialize(string viewname, int playerID, string nickname, int skinID, int indexID)
 	{
-		this.playerID  = playerID;
-		playerNickname = nickname;
-		_spawnPoint    = spawnPoint;
+		this.playerPhotonID  = playerID;
+		playerNickname       = nickname;
+		playerIndexID        = indexID;
 
 		model    = CharacterDatabase.instance.standardModel;
 		viewData = CharacterDatabase.instance.GetViewFromName(viewname);
@@ -82,10 +81,10 @@ public class Character : Photon.MonoBehaviour
 		specialTileHandler.ManualAwake(this);
 
 		if (Constants.onlineGame && photonView.isMine)				
-			Match.instance.photonView.RPC("RegisterPlayer", PhotonTargets.AllViaServer, this.playerID, playerNickname, viewname);
+			Match.instance.photonView.RPC("RegisterPlayer", PhotonTargets.AllViaServer, this.playerPhotonID, playerIndexID, playerNickname, viewname);
 
 		if (!Constants.onlineGame)
-			Match.instance.RegisterPlayer(this.playerID, playerNickname, viewname);
+			Match.instance.RegisterPlayer(this.playerPhotonID, playerIndexID, playerNickname, viewname);
 
 #if DEBUG_TOOLS
 		if (Constants.onlineGame && photonView.isMine)
@@ -100,7 +99,7 @@ public class Character : Photon.MonoBehaviour
 	[PunRPC]
 	void NetworkSpawn()
 	{
-		Vector2DInt spawnTile = Level.instance.tileMap.GetSpawnPointFromSpawnID(_spawnPoint);
+		Vector2DInt spawnTile = Level.instance.tileMap.GetSpawnPointFromPlayerIndexID(playerIndexID);
 
 		movementComponent.ResetAll();
 		ParticleComponent.StopAll();
@@ -169,16 +168,16 @@ public class Character : Photon.MonoBehaviour
 
 		bool invert = powerUpComponent.invertControlls;
 
-		if (Input.GetButton(Constants.BUTTON_CHARGE + playerID.ToString()))
+		if (Input.GetButton(Constants.BUTTON_CHARGE + playerPhotonID.ToString()))
 			movementComponent.OnTryCharge();
 
-		if (Input.GetAxisRaw(Constants.AXIS_VERTICAL + playerID.ToString()) > 0)
+		if (Input.GetAxisRaw(Constants.AXIS_VERTICAL + playerPhotonID.ToString()) > 0)
 			movementComponent.OnTryWalk(invert == false ? Vector2DInt.Up : Vector2DInt.Down);
-		if (Input.GetAxisRaw(Constants.AXIS_VERTICAL + playerID.ToString()) < 0)
+		if (Input.GetAxisRaw(Constants.AXIS_VERTICAL + playerPhotonID.ToString()) < 0)
 			movementComponent.OnTryWalk(invert == false ? Vector2DInt.Down : Vector2DInt.Up);
-		if (Input.GetAxisRaw(Constants.AXIS_HORIZONTAL + playerID.ToString()) < 0)
+		if (Input.GetAxisRaw(Constants.AXIS_HORIZONTAL + playerPhotonID.ToString()) < 0)
 			movementComponent.OnTryWalk(invert == false ? Vector2DInt.Left : Vector2DInt.Right);
-		if (Input.GetAxisRaw(Constants.AXIS_HORIZONTAL + playerID.ToString()) > 0)
+		if (Input.GetAxisRaw(Constants.AXIS_HORIZONTAL + playerPhotonID.ToString()) > 0)
 			movementComponent.OnTryWalk(invert == false ? Vector2DInt.Right : Vector2DInt.Left);
 	}
 }

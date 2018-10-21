@@ -12,5 +12,11 @@ public class GameModesModel : ScriptableObject
 	public int turfNumRoundsToWin = 3;
 	public double turfRespawnTime = 5.0;
 	public double turfRoundTime = 120.0;
+	public Color[] turfColors;
 	
+
+	public Color GetColorFromPlayerIndexID(int playerIndexID)
+	{
+		return turfColors[playerIndexID];
+	}
 }

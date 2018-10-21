@@ -27,6 +27,18 @@ public class GameModeTurfWar : Photon.MonoBehaviour, IGameMode
 		_players = new Dictionary<int, TurfWarPlayerTracker>();
 	}
 
+	public void RemoveTileScoreFrom(int playerPhotonID)
+	{
+		_players[playerPhotonID].tileScore--;
+		_match.scoreUI.UpdateTurfScore(playerPhotonID, _players[playerPhotonID].tileScore);
+	}
+
+	public void AddTileScoreTo(int playerPhotonID)
+	{
+		_players[playerPhotonID].tileScore++;
+		_match.scoreUI.UpdateTurfScore(playerPhotonID, _players[playerPhotonID].tileScore);
+	}
+
 	// send rpc to all clients to update the UI with the 
 	// time untill player will respawn
 	public void OnPlayerDie(int ID)
@@ -91,6 +103,7 @@ public class GameModeTurfWar : Photon.MonoBehaviour, IGameMode
 		int winnerID = 0;
 
 		// get the ID of the player that had the most colored tiles of this round
+		// TODO: DO THE SCOREKEPPING HERE
 		foreach (var p in _players)
 		{
 			winnerID = p.Key;			

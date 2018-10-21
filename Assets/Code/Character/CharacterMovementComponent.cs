@@ -223,6 +223,14 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 
 	void SetNewTileReferences(Vector2DInt tile)
 	{
+		// dont set new refernces if we are alredy set as the current occupying player in the target tile
+		// the reason that we dont want to reset the same player is that RemovePlayer() will
+		// set the current player as the last occupying player. We will then be 
+		// last and current player at the same time witch is not correct
+		Tile targetTile = _tileMap.GetTile(tile);
+		if (targetTile.GetOccupyingPlayer() != null && targetTile.GetOccupyingPlayer() == _character)
+			return;
+
 		// remove old reference and set to new
 		currentTile.RemovePlayer();
 		currentTile = _tileMap.GetTile(tile);
@@ -261,7 +269,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 
 		int controllerID = 0;
 		if (!Constants.onlineGame)
-			controllerID = _character.playerID;
+			controllerID = _character.playerPhotonID;
 
 		while (Input.GetButton(Constants.BUTTON_CHARGE + controllerID.ToString()))
 		{
@@ -294,9 +302,13 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 
 		_character.soundComponent.PlaySound(CharacterSound.Walk);
 
-		// only handle tilebreaks on server
+		// will only break the tile from server and then
+		// send rpc to all clients to do the same
 		if (!currentTile.model.data.unbreakable)
 			Match.instance.level.BreakTile(currentTile.position.x, currentTile.position.y);
+
+		if (currentTile.model.data.changeColorTile)
+			Match.instance.level.ChangeColorTile(currentTile.position.x, currentTile.position.y);
 
 		// get references to tiles
 		Tile fromTile   = _tileMap.GetTile(fromTilePos);
@@ -424,6 +436,10 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 			// hurt tile if it is destructible(will only detect break on master client)
 			if (!currentTile.model.data.unbreakable)
 				Match.instance.level.BreakTile(currentTile.position.x, currentTile.position.y);
+
+			// change color of tile if it is colorable(will only detect this on master client)
+			if (currentTile.model.data.changeColorTile)
+				Match.instance.level.ChangeColorTile(currentTile.position.x, currentTile.position.y);
 
 			// Update tile player references 
 			SetNewTileReferences(targetTile.position);

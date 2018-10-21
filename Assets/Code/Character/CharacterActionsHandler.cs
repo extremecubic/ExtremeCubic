@@ -144,10 +144,10 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		_character.deathComponent.KillPlayer(deathTile, delta);
 
 		if (Constants.onlineGame && PhotonNetwork.isMasterClient)
-			Match.instance.OnPlayerDie(_character.playerID);
+			Match.instance.OnPlayerDie(_character.playerPhotonID);
 
 		if (!Constants.onlineGame)
-			Match.instance.OnPlayerDie(_character.playerID);
+			Match.instance.OnPlayerDie(_character.playerPhotonID);
 	}
 
 	[PunRPC]

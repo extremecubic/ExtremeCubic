@@ -8889,9 +8889,9 @@ GameObject:
   - component: {fileID: 1454707900}
   - component: {fileID: 1454707899}
   - component: {fileID: 1454707898}
+  - component: {fileID: 1454707901}
   - component: {fileID: 1454707897}
   - component: {fileID: 1454707896}
-  - component: {fileID: 1454707901}
   m_Layer: 0
   m_Name: Match
   m_TagString: Untagged

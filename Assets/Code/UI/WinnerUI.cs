@@ -40,6 +40,10 @@ public class WinnerUI : MonoBehaviour
 		// clear all properties
 		PhotonHelpers.ClearPlayerProperties(PhotonNetwork.player);
 
+		// kill all running coroutines before we load out of this scene
+		// MEC can keep trying to call a coroutine that was running in a destroyed object
+		Timing.KillCoroutines();
+
 		if (PhotonNetwork.isMasterClient)
 			PhotonNetwork.LoadLevel("Menu");
 	}

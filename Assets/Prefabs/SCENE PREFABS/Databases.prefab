@@ -120,6 +120,7 @@ MonoBehaviour:
       deathType: 0
       replaceTileOnDeath: 0
       replacementTile: 
+      changeColorTile: 0
       isSpecialTile: 0
       specialType: 0
       needTargetTileSameType: 0
@@ -145,6 +146,7 @@ MonoBehaviour:
       deathType: 0
       replaceTileOnDeath: 0
       replacementTile: 
+      changeColorTile: 0
       isSpecialTile: 0
       specialType: 0
       needTargetTileSameType: 0
@@ -172,6 +174,7 @@ MonoBehaviour:
       deathType: 1
       replaceTileOnDeath: 0
       replacementTile: 
+      changeColorTile: 0
       isSpecialTile: 0
       specialType: 0
       needTargetTileSameType: 0
@@ -198,6 +201,7 @@ MonoBehaviour:
       deathType: 2
       replaceTileOnDeath: 1
       replacementTile: empty
+      changeColorTile: 0
       isSpecialTile: 0
       specialType: 0
       needTargetTileSameType: 0
@@ -225,6 +229,7 @@ MonoBehaviour:
       deathType: 0
       replaceTileOnDeath: 0
       replacementTile: empty
+      changeColorTile: 0
       isSpecialTile: 0
       specialType: 0
       needTargetTileSameType: 0
@@ -252,6 +257,7 @@ MonoBehaviour:
       deathType: 0
       replaceTileOnDeath: 0
       replacementTile: empty
+      changeColorTile: 0
       isSpecialTile: 0
       specialType: 0
       needTargetTileSameType: 0
@@ -278,6 +284,7 @@ MonoBehaviour:
       deathType: 0
       replaceTileOnDeath: 0
       replacementTile: empty
+      changeColorTile: 0
       isSpecialTile: 0
       specialType: 0
       needTargetTileSameType: 0
@@ -304,6 +311,7 @@ MonoBehaviour:
       deathType: 0
       replaceTileOnDeath: 0
       replacementTile: empty
+      changeColorTile: 0
       isSpecialTile: 0
       specialType: 0
       needTargetTileSameType: 0
@@ -330,6 +338,7 @@ MonoBehaviour:
       deathType: 0
       replaceTileOnDeath: 0
       replacementTile: empty
+      changeColorTile: 0
       isSpecialTile: 0
       specialType: 0
       needTargetTileSameType: 0
@@ -356,6 +365,7 @@ MonoBehaviour:
       deathType: 2
       replaceTileOnDeath: 0
       replacementTile: empty
+      changeColorTile: 0
       isSpecialTile: 1
       specialType: 0
       needTargetTileSameType: 0
@@ -383,6 +393,7 @@ MonoBehaviour:
       deathType: 2
       replaceTileOnDeath: 0
       replacementTile: empty
+      changeColorTile: 0
       isSpecialTile: 1
       specialType: 0
       needTargetTileSameType: 0
@@ -410,6 +421,7 @@ MonoBehaviour:
       deathType: 2
       replaceTileOnDeath: 0
       replacementTile: empty
+      changeColorTile: 0
       isSpecialTile: 1
       specialType: 0
       needTargetTileSameType: 0
@@ -437,6 +449,7 @@ MonoBehaviour:
       deathType: 2
       replaceTileOnDeath: 0
       replacementTile: empty
+      changeColorTile: 0
       isSpecialTile: 1
       specialType: 0
       needTargetTileSameType: 0
@@ -464,6 +477,7 @@ MonoBehaviour:
       deathType: 0
       replaceTileOnDeath: 0
       replacementTile: 
+      changeColorTile: 0
       isSpecialTile: 0
       specialType: 0
       needTargetTileSameType: 0
@@ -489,6 +503,7 @@ MonoBehaviour:
       deathType: 0
       replaceTileOnDeath: 0
       replacementTile: 
+      changeColorTile: 0
       isSpecialTile: 1
       specialType: 1
       needTargetTileSameType: 1
@@ -519,6 +534,7 @@ MonoBehaviour:
       deathType: 0
       replaceTileOnDeath: 0
       replacementTile: 
+      changeColorTile: 0
       isSpecialTile: 1
       specialType: 1
       needTargetTileSameType: 1
@@ -549,6 +565,7 @@ MonoBehaviour:
       deathType: 0
       replaceTileOnDeath: 0
       replacementTile: 
+      changeColorTile: 0
       isSpecialTile: 0
       specialType: 0
       needTargetTileSameType: 0
@@ -575,6 +592,7 @@ MonoBehaviour:
       deathType: 0
       replaceTileOnDeath: 0
       replacementTile: 
+      changeColorTile: 0
       isSpecialTile: 0
       specialType: 0
       needTargetTileSameType: 0
@@ -601,6 +619,7 @@ MonoBehaviour:
       deathType: 0
       replaceTileOnDeath: 0
       replacementTile: 
+      changeColorTile: 0
       isSpecialTile: 0
       specialType: 0
       needTargetTileSameType: 0
@@ -627,6 +646,7 @@ MonoBehaviour:
       deathType: 0
       replaceTileOnDeath: 0
       replacementTile: 
+      changeColorTile: 0
       isSpecialTile: 0
       specialType: 0
       needTargetTileSameType: 0
@@ -653,6 +673,7 @@ MonoBehaviour:
       deathType: 0
       replaceTileOnDeath: 0
       replacementTile: 
+      changeColorTile: 0
       isSpecialTile: 1
       specialType: 0
       needTargetTileSameType: 0
@@ -679,6 +700,7 @@ MonoBehaviour:
       deathType: 2
       replaceTileOnDeath: 1
       replacementTile: empty
+      changeColorTile: 0
       isSpecialTile: 0
       specialType: 0
       needTargetTileSameType: 0
@@ -696,6 +718,33 @@ MonoBehaviour:
       targetSpecialParticle: {fileID: 0}
       enterSpecialFailedParticle: {fileID: 0}
       prefab: {fileID: 1351201423226018, guid: 31ceadb1ee25d404fad0ce57417f79c4, type: 2}
+  - _typeName: colortile
+    _data:
+      walkable: 1
+      health: 0
+      deadly: 0
+      unbreakable: 1
+      deathType: 2
+      replaceTileOnDeath: 0
+      replacementTile: empty
+      changeColorTile: 1
+      isSpecialTile: 0
+      specialType: 0
+      needTargetTileSameType: 0
+      intValue: 0
+      landSound: {fileID: 8300000, guid: 5aeba2356d28bc046b8e1411066ea6c6, type: 3}
+      breakSound: {fileID: 0}
+      killSound: {fileID: 0}
+      specialTileSound: {fileID: 0}
+      failedSpecialTileSound: {fileID: 0}
+      landParticle: {fileID: 1895057872444966, guid: 84bf0b0e1c89cba4eba76ec273baa2d3,
+        type: 2}
+      breakParticle: {fileID: 0}
+      killParticle: {fileID: 0}
+      enterSpecialParticle: {fileID: 0}
+      targetSpecialParticle: {fileID: 0}
+      enterSpecialFailedParticle: {fileID: 0}
+      prefab: {fileID: 1884813161394452, guid: 40c7b0106b433b34e8877548d9232625, type: 2}
 --- !u!114 &114660886813412552
 MonoBehaviour:
   m_ObjectHideFlags: 1

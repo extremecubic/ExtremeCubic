@@ -61,25 +61,25 @@ public class ScoreUI : MonoBehaviour
 		}
 	}
 
-	public string GetUserNameFromID(int playerID, GameMode mode)
+	public string GetUserNameFromPhotonID(int playerPhotonID, GameMode mode)
 	{
 		if (mode == GameMode.KingOfTheHill)
 		{
 			for (int i = 0; i < _numPlayers; i++)
-				if (_playersKingOfHill[i].ownerID == playerID)
+				if (_playersKingOfHill[i].ownerID == playerPhotonID)
 					return _playersKingOfHill[i].userName.text;
 		}
 		else if (mode == GameMode.TurfWar)
 		{
 			for (int i = 0; i < _numPlayers; i++)
-				if (_playersTurfWar[i].ownerID == playerID)
+				if (_playersTurfWar[i].ownerID == playerPhotonID)
 					return _playersTurfWar[i].userName.text;
 		}
 
 		return "";
 	}
 
-	public void RegisterPlayer(int playerID, string nickName, string viewName, GameMode mode)
+	public void RegisterPlayer(int playerPhotonID, int playerIndexID, string nickName, string viewName, GameMode mode)
 	{
 		if (mode == GameMode.KingOfTheHill)
 		{
@@ -87,7 +87,7 @@ public class ScoreUI : MonoBehaviour
 			{
 				if (!_playersKingOfHill[i].taken)
 				{
-					_playersKingOfHill[i].ownerID = playerID;
+					_playersKingOfHill[i].ownerID = playerPhotonID;
 					_playersKingOfHill[i].taken = true;
 					_playersKingOfHill[i].userName.text = nickName;
 					_playersKingOfHill[i].icon.sprite = CharacterDatabase.instance.GetViewFromName(viewName).iconUI;
@@ -102,26 +102,27 @@ public class ScoreUI : MonoBehaviour
 			{
 				if (!_playersTurfWar[i].taken)
 				{
-					_playersTurfWar[i].ownerID = playerID;
+					_playersTurfWar[i].ownerID = playerPhotonID;
 					_playersTurfWar[i].taken = true;
 					_playersTurfWar[i].userName.text = nickName;
 					_playersTurfWar[i].icon.sprite = CharacterDatabase.instance.GetViewFromName(viewName).iconUI;
 					_playersTurfWar[i].scoreText.text = "0";
 					_playersTurfWar[i].tilesText.text = "0";
 					_playersTurfWar[i].respawnParent.SetActive(false);
+					_playersTurfWar[i].colorImage.color = Match.instance.gameModeModel.GetColorFromPlayerIndexID(playerIndexID);
 					return;
 				}
 			}
 		}
 	}
 
-	public void UpdateRoundScore(int playerID, int score, GameMode mode)
+	public void UpdateRoundScore(int playerPhotonID, int score, GameMode mode)
 	{
 		if (mode == GameMode.KingOfTheHill)
 		{
 			for (int i = 0; i < _numPlayers; i++)
 			{
-				if (_playersKingOfHill[i].ownerID == playerID)
+				if (_playersKingOfHill[i].ownerID == playerPhotonID)
 				{
 					_playersKingOfHill[i].scoreText.text = score.ToString();
 					return;
@@ -132,7 +133,7 @@ public class ScoreUI : MonoBehaviour
 		{
 			for (int i = 0; i < _numPlayers; i++)
 			{
-				if (_playersTurfWar[i].ownerID == playerID)
+				if (_playersTurfWar[i].ownerID == playerPhotonID)
 				{
 					_playersTurfWar[i].scoreText.text = score.ToString();
 					return;
@@ -141,13 +142,25 @@ public class ScoreUI : MonoBehaviour
 		}		
 	}
 
-	public void DisableUIOfDisconnectedPlayer(int playerID, GameMode mode)
+	public void UpdateTurfScore(int playerPhotonID, int newScore)
+	{
+		for (int i = 0; i < _numPlayers; i++)
+		{
+			if (_playersTurfWar[i].ownerID == playerPhotonID)
+			{
+				_playersTurfWar[i].tilesText.text = newScore.ToString();
+				return;
+			}
+		}
+	}
+
+	public void DisableUIOfDisconnectedPlayer(int playerPhotonID, GameMode mode)
 	{
 		if (mode == GameMode.KingOfTheHill)
 		{
 			for (int i = 0; i < _numPlayers; i++)
 			{
-				if (_playersKingOfHill[i].ownerID == playerID)
+				if (_playersKingOfHill[i].ownerID == playerPhotonID)
 				{
 					_playersKingOfHill[i].content.SetActive(false);
 					return;
@@ -158,7 +171,7 @@ public class ScoreUI : MonoBehaviour
 		{
 			for (int i = 0; i < _numPlayers; i++)
 			{
-				if (_playersTurfWar[i].ownerID == playerID)
+				if (_playersTurfWar[i].ownerID == playerPhotonID)
 				{
 					_playersTurfWar[i].content.SetActive(false);
 					return;
@@ -180,15 +193,15 @@ public class ScoreUI : MonoBehaviour
 		}
 	}
 
-	public void SetRespawnUI(int playerID, double delta, GameMode mode)
+	public void SetRespawnUI(int playerPhotonID, double delta, GameMode mode)
 	{
 		if (mode == GameMode.TurfWar)
 		{
 			for (int i = 0; i < _numPlayers; i++)
 			{
-				if (_playersTurfWar[i].ownerID == playerID)
+				if (_playersTurfWar[i].ownerID == playerPhotonID)
 				{
-					_playersTurfWar[i].respawnHandle = Timing.RunCoroutine(_HandleRespawnUI(playerID, i, delta, mode));
+					_playersTurfWar[i].respawnHandle = Timing.RunCoroutine(_HandleRespawnUI(playerPhotonID, i, delta, mode));
 					return;
 				}
 			}

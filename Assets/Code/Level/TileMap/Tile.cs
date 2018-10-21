@@ -38,6 +38,7 @@ public class TileModel
 		public DeathType deathType; // what death scenario will play
 		public bool replaceTileOnDeath;
 		public string replacementTile;
+		public bool changeColorTile;
 
 		[Header("SPECIAL TILE SETTINGS")]
 		public bool        isSpecialTile;
@@ -91,22 +92,29 @@ public class Tile
 	SoundData[] _sounds;
 
     public GameObject view { get; private set; }
-	Character  _character;
+	Character _currentCharacter;
+	Character _lastCharacter;
 
 	PowerUpType _powerUp = PowerUpType.None;
 	GameObject  _powerView;
 
-	public void SetCharacter(Character character) =>
-		_character = character;
-
-	public void RemovePlayer() =>
-		_character = null;
+	public void SetCharacter(Character character) =>			
+		_currentCharacter = character;
+	
+	public void RemovePlayer()
+	{
+		_lastCharacter = _currentCharacter;
+		_currentCharacter = null;
+	}
 
 	public bool IsOccupied() =>
-		_character != null;
+		_currentCharacter != null;
 
 	public Character GetOccupyingPlayer() =>
-		 _character;
+		 _currentCharacter;
+
+	public Character GetLastOccupyingPlayer() =>
+		_lastCharacter;
 
 	public Tile GetRelativeTile(Vector2DInt offset) =>
 		Level.instance.tileMap.GetTile(position + offset);
@@ -217,6 +225,22 @@ public class Tile
 			renderer = tile.transform.GetChild(i).GetComponent<Renderer>();
 			if (renderer != null)
 				renderer.material.color = Color.white * strength;
+		}
+	}
+
+	public void ChangeColorTile(Color color)
+	{
+		// get renderer of main object and tint
+		Renderer renderer = view.GetComponent<Renderer>();
+		if (renderer != null)
+			renderer.material.color = color;
+
+		// loop over all child renderers and tint
+		for (int i = 0; i < view.transform.childCount; i++)
+		{
+			renderer = view.transform.GetChild(i).GetComponent<Renderer>();
+			if (renderer != null)
+				renderer.material.color = color;
 		}
 	}
 

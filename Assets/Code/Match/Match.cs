@@ -104,6 +104,15 @@ public class Match : Photon.MonoBehaviour
 		counterUI.StartCount(0, 3, () => matchStarted = true);
 	}
 
+	// called from character when it is created
+	[PunRPC]
+	public void RegisterPlayer(int playerPhotonID, int playerIndexID, string nickName, string viewName)
+	{
+		// register a player by id for scorekepping and ui
+		_currentGameMode.OnPlayerRegistred(playerPhotonID);
+		scoreUI.RegisterPlayer(playerPhotonID, playerIndexID, nickName, viewName, currentGameModeType);
+	}
+
 	// will be called on all clients when all players are loaded
 	// in to the scene
 	[PunRPC]
@@ -119,19 +128,30 @@ public class Match : Photon.MonoBehaviour
 		counterUI.StartCount(delta, 3, () => { matchStarted = true; _currentGameMode.OnRoundStart(); });
 	}
 
-	// called from character when it is created
-	[PunRPC]
-	public void RegisterPlayer(int id, string nickName, string viewName)
-	{
-		// register a player by id for scorekepping and ui
-		_currentGameMode.OnPlayerRegistred(id);
-		scoreUI.RegisterPlayer(id, nickName, viewName, currentGameModeType);
-	}
-
 	// called from character(only on server in online play) 
 	public void OnPlayerDie(int playerId)
 	{
 		_currentGameMode.OnPlayerDie(playerId);
+	}
+
+	// called on all clients from master client
+	// when a player is changing the color of a tile
+	public void OnTileChangingColor(int oldPlayerPhotonID, int newPlayerPhotonID)
+	{
+		// only change score etc if the current mode is turf war
+		// we can technicly have changing tile colors even if we
+		// are playing another gamemode, if that would be the case
+		// only this part is ignored
+		if (currentGameModeType == GameMode.TurfWar)
+		{
+			GameModeTurfWar turfWar = (GameModeTurfWar)_currentGameMode;
+
+			// only remove score if the tile have been occupied before
+			if (oldPlayerPhotonID != Constants.INVALID_ID)			
+				turfWar.RemoveTileScoreFrom(oldPlayerPhotonID);
+
+			turfWar.AddTileScoreTo(newPlayerPhotonID);			
+		}
 	}
 	
 	// called from gamemode (called on all clients)
@@ -168,7 +188,7 @@ public class Match : Photon.MonoBehaviour
 	[PunRPC]
 	public void NetworkMatchOver(int id)
 	{
-		winnerUI.ShowWinner(scoreUI.GetUserNameFromID(id, currentGameModeType));
+		winnerUI.ShowWinner(scoreUI.GetUserNameFromPhotonID(id, currentGameModeType));
 	}
 	
 	// called from the coroutine that handle delay before next round should start
