@@ -3,12 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum MenuPageType : int
+{
+	StartScreen,
+	OnlinePlayScreen,
+	OnlinePlayWithFriendsScreen,
+	OnlineLevelSelectScreen,
+	OnlineCharacterSelectScreen,
+	OnlineRandomMatchMakingScreen,
+}
+
+// base class of a menu page
+// this functions will then always
+// be called on the page that is active
 public abstract class MenuPage : Photon.MonoBehaviour
 {
 	[SerializeField] protected GameObject _content;
 	[SerializeField] protected GameObject _firstSelectable;
-
-	public string pageName { get { return name; } }
+	[SerializeField] protected MenuPageType _pageType; public MenuPageType pageType { get { return _pageType; } }
 
 	public abstract void OnPageEnter();
 	public abstract void UpdatePage();

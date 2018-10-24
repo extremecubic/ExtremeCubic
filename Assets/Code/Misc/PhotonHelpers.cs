@@ -5,6 +5,9 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public static class PhotonHelpers
 {
+	// sets a player property
+	// if one already exist with the given key it
+	// will be overwritten else a new one will be created
 	public static void SetPlayerProperty<T>(PhotonPlayer player, string key, T value)
 	{
 		Hashtable p = player.CustomProperties;
@@ -19,6 +22,7 @@ public static class PhotonHelpers
 		player.SetCustomProperties(p);
 	}
 	
+	// clear the hashtable of player properties
 	public static void ClearPlayerProperties(PhotonPlayer player)
 	{
 		Hashtable p = player.CustomProperties;

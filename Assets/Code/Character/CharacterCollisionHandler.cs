@@ -13,8 +13,10 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 				// get occupying player and tell it to send an rpc that it got dashed
 				Character playerToDash = targetTile.currentCharacter;
 
-				// save the collision on server so the clients can check that they did not stop their dash locally incorrectly 
-				_collisionTracker.AddCollision(playerToDash.photonView.viewID, targetTile.position.x, targetTile.position.y);
+				// save the collision on server and all clients
+				// clients will then check with server if thier local collisions is correct or not,
+				// the data is kept an all clients aswell just incase of server migration
+				_collisionTracker.photonView.RPC("AddCollision", PhotonTargets.All, playerToDash.photonView.viewID, targetTile.position.x, targetTile.position.y);
 
 				// tell all clients who got hit
 				playerToDash.movementComponent.OnGettingDashed(targetTile.position, direction, dashStrength - dashIndex);

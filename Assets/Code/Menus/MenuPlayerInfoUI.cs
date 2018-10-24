@@ -36,11 +36,15 @@ public class MenuPlayerInfoUI : Photon.MonoBehaviour
 
 	void Awake()
 	{
+		// set all different transform the player info UI
+		// has depending of witch screen is open
 		_screenTransforms[0] = _connectScreen;
 		_screenTransforms[1] = _levelSelectScreen;
 		_screenTransforms[2] = _characterSelectScreen;
 	}
 
+	// a player will claim a UI spot in array
+	// and is later accesed by their photon player id
 	[PunRPC]
 	void ClaimUIBox(int ID, string nickName, string CharacterName)
 	{
@@ -56,6 +60,7 @@ public class MenuPlayerInfoUI : Photon.MonoBehaviour
 			}
 	}
 
+	// remove UI of a disconnected player
 	[PunRPC]
 	public void DisableUIOfPlayer(int ID)
 	{
@@ -71,17 +76,9 @@ public class MenuPlayerInfoUI : Photon.MonoBehaviour
 			}
 	}
 
-	[PunRPC]
-	void UpdatePlayerUI(int ID, string characterName)
-	{
-		for (int i = 0; i < 4; i++)
-			if (_players[i].ownerID == ID)
-			{
-				// will probably uppdate a 2d icon here later
-				return;
-			}
-	}
-
+	// set the checkmark that a player has selected
+	// whatever needs to be selected depending on the
+	// menu screen that is active
 	[PunRPC]
 	void SetReadyUI(int ID, bool active)
 	{
@@ -93,6 +90,7 @@ public class MenuPlayerInfoUI : Photon.MonoBehaviour
 			}
 	}
 
+	// disable the ui of all players
 	public void DisableAllPlayerUI()
 	{
 		for (int i = 0; i < 4; i++)			
@@ -105,7 +103,10 @@ public class MenuPlayerInfoUI : Photon.MonoBehaviour
 		}
 	}
 
-	public int GetModelTransformIndexFromID(int ID)
+	// get witch index in array a player
+	// with a specific photon player ID have
+	// used to change witch 3d model 
+	public int GetArrayIndexFromID(int ID)
 	{
 		for (int i = 0; i < 4; i++)
 			if (_players[i].ownerID == ID)
@@ -114,6 +115,8 @@ public class MenuPlayerInfoUI : Photon.MonoBehaviour
 		return 0;
 	}
 
+	// will change the position of the player Info
+	// UI based on the Type of menu screen that is active
 	public void SetPlayerUIByScreen(MenuScreen screen)
 	{
 		for(int i =0; i < 4; i++)

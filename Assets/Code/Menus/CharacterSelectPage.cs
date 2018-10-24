@@ -63,9 +63,6 @@ public class CharacterSelectPage : MenuPage
 
 		// tell everyone to update the 3d model
 		photonView.RPC("Update3DModel", PhotonTargets.All, PhotonNetwork.player.ID, name, _currentSkin);
-
-		// tell everyone to update this players UI Box
-		_playerInfo.photonView.RPC("UpdatePlayerUI", PhotonTargets.All, PhotonNetwork.player.ID, name);
 	}
 
 	public void OnReady()
@@ -136,7 +133,7 @@ public class CharacterSelectPage : MenuPage
 	void Update3DModel(int ID, string character, int skinID)
 	{
 		// update the 3d model of the player with this ID
-		int index = _playerInfo.GetModelTransformIndexFromID(ID);
+		int index = _playerInfo.GetArrayIndexFromID(ID);
 
 		_characterRenders[index].SetActive(true);
 
@@ -157,9 +154,6 @@ public class CharacterSelectPage : MenuPage
 		// get the view of first model in character database
 		_currentView = CharacterDatabase.instance.GetViewFromName(_characterButtons[0].button.name.ToLower());
 		photonView.RPC("Update3DModel", PhotonTargets.AllViaServer, PhotonNetwork.player.ID, _currentView.name, _currentSkin);
-
-		// tell everyone to update this players UI Box
-		_playerInfo.photonView.RPC("UpdatePlayerUI", PhotonTargets.AllViaServer, PhotonNetwork.player.ID, _currentView.name);
 
 		// get how many skins this character have and update dots
 		_numSkins = _currentView.prefabs.Length;
@@ -213,7 +207,7 @@ public class CharacterSelectPage : MenuPage
 	{
 		// if clients is lagging behind and is still left at previous page, set the page to this
 		if (MainMenuSystem.instance.currentPage != this)
-			MainMenuSystem.instance.SetToPage(Constants.SCREEN_ONLINE_CHARACTERSELECT);
+			MainMenuSystem.instance.SetToPage(MenuPageType.OnlineCharacterSelectScreen);
 
 		_counter.StartCount(delta, 100, () => OnReady());
 	}
@@ -221,7 +215,7 @@ public class CharacterSelectPage : MenuPage
 	// photon callback forwarded from "MainMenuSystem.cs"
 	public override void OnPlayerLeftRoom(PhotonPlayer player)
 	{
-		int index = _playerInfo.GetModelTransformIndexFromID(player.ID);
+		int index = _playerInfo.GetArrayIndexFromID(player.ID);
 
 		// remove the UI of left player
 		_playerInfo.DisableUIOfPlayer(player.ID);
@@ -271,7 +265,7 @@ public class CharacterSelectPage : MenuPage
 		PhotonNetwork.LeaveRoom();
 
 		// set back to main page
-		MainMenuSystem.instance.SetToPage(Constants.SCREEN_START);
+		MainMenuSystem.instance.SetToPage(MenuPageType.StartScreen);
 	}
 
 	void CheckAllReady()

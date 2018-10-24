@@ -35,7 +35,7 @@ public class WinnerUI : MonoBehaviour
 	{
 		// set witch page to set active when returning to menu scene and that all players left in room need to claim a UIPlayerBox
 		MainMenuSystem.reclaimPlayerUI = true;
-		MainMenuSystem.startPage = Constants.SCREEN_ONLINE_LEVELSELECT;
+		MainMenuSystem.startPage = MenuPageType.OnlineLevelSelectScreen;
 
 		// clear all properties
 		PhotonHelpers.ClearPlayerProperties(PhotonNetwork.player);
@@ -50,7 +50,7 @@ public class WinnerUI : MonoBehaviour
 
 	void GameLocalOver()
 	{
-		MainMenuSystem.startPage = Constants.SCREEN_START;
+		MainMenuSystem.startPage = MenuPageType.StartScreen;
 		SceneManager.LoadScene("Menu");
 	}
 }

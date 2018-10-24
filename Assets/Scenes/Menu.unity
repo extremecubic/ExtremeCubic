@@ -1255,6 +1255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _content: {fileID: 1175167236}
   _firstSelectable: {fileID: 918537568}
+  _pageType: 0
 --- !u!1 &86538056
 GameObject:
   m_ObjectHideFlags: 0
@@ -3264,7 +3265,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &290648399
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3447,10 +3448,10 @@ RectTransform:
   m_Father: {fileID: 723585295}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 460, y: -230}
+  m_SizeDelta: {x: 350, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &307701963
 GameObject:
@@ -3770,6 +3771,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _content: {fileID: 1834654184}
   _firstSelectable: {fileID: 508099963}
+  _pageType: 1
   _connectingParent: {fileID: 1590102280}
   _promt: {fileID: 1370652994}
   _buttons:
@@ -5501,10 +5503,10 @@ RectTransform:
   m_Father: {fileID: 723585295}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: 130}
+  m_SizeDelta: {x: 350, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &498823317
 GameObject:
@@ -5840,12 +5842,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 690410251}
-        m_MethodName: SetToPage
-        m_Mode: 5
+        m_MethodName: SetToPageFromPageID
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: PlayWithFriendsScreen
           m_BoolArgument: 0
@@ -8190,6 +8192,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _content: {fileID: 2037948883}
   _firstSelectable: {fileID: 0}
+  _pageType: 5
   _playerInfo: {fileID: 2138981392}
   _preferedPlayersDropdown: {fileID: 1049923222}
   _statusTextParent: {fileID: 1228665291}
@@ -8814,6 +8817,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _content: {fileID: 1948375139}
   _firstSelectable: {fileID: 1914406213}
+  _pageType: 4
   _playerInfo: {fileID: 2138981392}
   _characterButtons:
   - button: {fileID: 1914406215}
@@ -10751,12 +10755,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 690410251}
-        m_MethodName: SetToPage
-        m_Mode: 5
+        m_MethodName: SetToPageFromPageID
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: OnlinePlayScreen
           m_BoolArgument: 0
@@ -13696,10 +13700,10 @@ RectTransform:
   m_Father: {fileID: 723585295}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 460, y: 130}
+  m_SizeDelta: {x: 350, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1194579160
 GameObject:
@@ -14103,10 +14107,10 @@ RectTransform:
   m_Father: {fileID: 723585295}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -230}
+  m_SizeDelta: {x: 350, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1209370625
 GameObject:
@@ -15559,12 +15563,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 690410251}
-        m_MethodName: SetToPage
-        m_Mode: 5
+        m_MethodName: SetToPageFromPageID
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 5
           m_FloatArgument: 0
           m_StringArgument: RandomPlayScreen
           m_BoolArgument: 0
@@ -18523,10 +18527,10 @@ RectTransform:
   m_Father: {fileID: 723585295}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: -360, y: 130}
+  m_SizeDelta: {x: 350, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1634989995
 GameObject:
@@ -18557,10 +18561,10 @@ RectTransform:
   m_Father: {fileID: 723585295}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: -360, y: -230}
+  m_SizeDelta: {x: 350, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1639943220
 GameObject:
@@ -25538,7 +25542,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2037948884
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25919,6 +25923,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _content: {fileID: 290648398}
   _firstSelectable: {fileID: 429309929}
+  _pageType: 3
   _selectScreen: {fileID: 1828867780}
   _nominatedScreen: {fileID: 267236979}
   _playerInfo: {fileID: 2138981392}
@@ -26741,6 +26746,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _content: {fileID: 843617077}
   _firstSelectable: {fileID: 0}
+  _pageType: 2
   _playerInfo: {fileID: 2138981392}
   _promt: {fileID: 1370652994}
   _generalPage: {fileID: 1169186947}

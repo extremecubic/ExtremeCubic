@@ -74,4 +74,5 @@ MonoBehaviour:
   - TurfWarNetworkPlayerDied
   - NetworkSetEndRoundDelay
   - NetworkChangeColorTile
+  - AddCollision
   DisableAutoOpenWizard: 1

@@ -6,7 +6,7 @@ public class TileDatabase : MonoBehaviour
 {
     public static TileDatabase instance { get; private set; }
 
-    public List<TileModel> tilesToSerialize = new List<TileModel>();        // Collection gathering data from the inspector to insert into "_tiles" and "_tileTypes" upon program start
+    public List<TileModel> tilesToSerialize = new List<TileModel>(); // Collection gathering data from the inspector to insert into "_tiles" and "_tileTypes" upon program start
 
     Dictionary<string, TileModel> _tiles = new Dictionary<string, TileModel>();
     List<string> _tileTypes = new List<string>();

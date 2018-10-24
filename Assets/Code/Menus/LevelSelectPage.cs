@@ -330,7 +330,7 @@ public class LevelSelectPage : MenuPage
 
 	void GoToCharacter()
 	{		
-		MainMenuSystem.instance.SetToPage(Constants.SCREEN_ONLINE_CHARACTERSELECT);
+		MainMenuSystem.instance.SetToPage(MenuPageType.OnlineCharacterSelectScreen);
 	}
 
 	public void LeaveRoom()
@@ -344,7 +344,7 @@ public class LevelSelectPage : MenuPage
 		PhotonNetwork.LeaveRoom();
 
 		// go back to main menu
-		MainMenuSystem.instance.SetToPage(Constants.SCREEN_START);
+		MainMenuSystem.instance.SetToPage(MenuPageType.StartScreen);
 	}
 
 	void ChangeAllButtonsState(bool enable)

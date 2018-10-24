@@ -6,7 +6,7 @@ public class MainMenuSystem : Photon.MonoBehaviour
 {
 	public static MainMenuSystem instance { get; private set; }
 
-	public static string startPage = "StartScreen";
+	public static MenuPageType startPage = MenuPageType.StartScreen;
 	public static bool reclaimPlayerUI;
 
 	[SerializeField] MenuPlayerInfoUI _playerInfo;
@@ -27,17 +27,28 @@ public class MainMenuSystem : Photon.MonoBehaviour
 		SetToPage(startPage);
 	}
 
-	public void SetToPage(string pagename)
+	public void SetToPageFromPageID(int ID)
 	{
-		if (currentPage != null && currentPage.pageName == pagename)
+		SetToPage((MenuPageType)ID);
+	}
+
+	// will change to a new menu page
+	public void SetToPage(MenuPageType pageType)
+	{
+		// if trying to change to the same page that is active, return
+		if (currentPage != null && currentPage.pageType == pageType)
 			return;
 
+		// dont do any call to pages if this is called from the editor
+		// else call on exit on the current page before we change
 		if (currentPage != null && Application.isPlaying)
 			currentPage.OnPageExit();
 
+		// loop over pages untill we find the one
+		// we want to transition to
 		for (int i =0; i < _menuPages.Length; i++)
 		{
-			if(_menuPages[i].pageName == pagename)
+			if(_menuPages[i].pageType == pageType)
 			{				
 				currentPage = _menuPages[i];
 				currentPage.EnableDisableContent(true);

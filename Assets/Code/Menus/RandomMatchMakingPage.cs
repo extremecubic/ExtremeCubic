@@ -142,7 +142,7 @@ public class RandomMatchMakingPage : MenuPage
 		if (PhotonNetwork.isMasterClient)
 			PhotonNetwork.room.IsOpen = false;
 
-		MainMenuSystem.instance.SetToPage(Constants.SCREEN_ONLINE_LEVELSELECT);
+		MainMenuSystem.instance.SetToPage(MenuPageType.OnlineLevelSelectScreen);
 	}
 
 	public void OnLeave()
@@ -152,7 +152,7 @@ public class RandomMatchMakingPage : MenuPage
 
 		_playerInfo.DisableAllPlayerUI();
 
-		MainMenuSystem.instance.SetToPage(Constants.SCREEN_START);
+		MainMenuSystem.instance.SetToPage(MenuPageType.StartScreen);
 	}
 
 	void UpdateTimer()

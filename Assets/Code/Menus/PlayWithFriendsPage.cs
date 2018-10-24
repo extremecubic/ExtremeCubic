@@ -95,7 +95,7 @@ public class PlayWithFriendsPage : MenuPage
 	[PunRPC]
 	void ContinueToLevelselect()
 	{
-		MainMenuSystem.instance.SetToPage(Constants.SCREEN_ONLINE_LEVELSELECT);
+		MainMenuSystem.instance.SetToPage(MenuPageType.OnlineLevelSelectScreen);
 	}
 
 	public override void OnPageEnter()
@@ -137,14 +137,14 @@ public class PlayWithFriendsPage : MenuPage
 		// if yet not in room just return to main menu
 		if(PhotonNetwork.room == null)
 		{
-			MainMenuSystem.instance.SetToPage(Constants.SCREEN_START);
+			MainMenuSystem.instance.SetToPage(MenuPageType.StartScreen);
 			return;
 		}
 
 		// if connected to room, unclaim UI and leave room before we return to main menu
 		_playerInfo.DisableAllPlayerUI();
 		PhotonNetwork.LeaveRoom();
-		MainMenuSystem.instance.SetToPage(Constants.SCREEN_START);
+		MainMenuSystem.instance.SetToPage(MenuPageType.StartScreen);
 	}
 
 	void SetSubPageBasedOnGameVersion()

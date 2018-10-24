@@ -18,7 +18,8 @@ public class Level : Photon.MonoBehaviour
 	[SerializeField] Transform      _flyToTargetTransform; public Transform flyToTargetTransform    { get { return _flyToTargetTransform; } }
 
 	// always keep players in a list to be able
-	// to keep it consisten between local and online play
+	// to keep it consistent between local and online play
+	// even if we only have one pleyer in online play
     List<Character> _characters = new List<Character>();
 
 	public void StartGameOnline()

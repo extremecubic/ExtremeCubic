@@ -8,8 +8,8 @@ using System;
 public class StartCounterUI : MonoBehaviour
 {
 	[SerializeField] Text _counterText;
-	Action _onDone;
 	CoroutineHandle _handle;
+	Action _onDone;
 
 	public void StartCount(double delta, Double time, Action action)
 	{
@@ -30,6 +30,7 @@ public class StartCounterUI : MonoBehaviour
 	{
 		double timer = time;
 
+		// remove the net delta if in online game
 		if (Constants.onlineGame)
 		    timer = time - (PhotonNetwork.time - delta);
 
@@ -48,6 +49,7 @@ public class StartCounterUI : MonoBehaviour
 
 		_counterText.gameObject.SetActive(false);
 
+		// inovke the delegate if on have been bessed in
 		_onDone?.Invoke();
 
 	}

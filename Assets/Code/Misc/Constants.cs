@@ -37,15 +37,6 @@ public static class Constants
 	public static readonly string NOMINATED_LEVEL_GAME_MODE_INDEX  = "8";
 	public static readonly string MATCH_GAME_MODE                  = "9";
 
-	// menu pages names
-	public static readonly string SCREEN_START                     = "StartScreen";
-	public static readonly string SCREEN_ONLINEPLAY                = "OnlinePlayScreen";
-	public static readonly string SCREEN_ONLINE_PLAY_WITH_FRIENDS  = "PlayWithFriendsScreen";
-	public static readonly string SCREEN_ONLINE_PLAY_QUICK_MATCH   = "QuickmatchScreen";
-	public static readonly string SCREEN_ONLINE_LEVELSELECT        = "OnlineLevelSelectScreen";
-	public static readonly string SCREEN_ONLINE_CHARACTERSELECT    = "OnlineCharacterSelectScreen";
-	public static readonly string SCREEN_ONLINE_RANDOM_MATCHMAKING = "RandomPlayScreen";
-
 	// temp storage here for now
 	public static bool  onlineGame = true;
 	public static float masterEffectVolume = 0.20f;
