@@ -6,12 +6,15 @@ using MEC;
 public partial class CharacterMovementComponent : Photon.MonoBehaviour
 {
 	[PunRPC]
-	void NetworkWalk(int fromX, int fromY, int toX, int toY)
+	void NetworkWalk(int fromX, int fromY, int directionX, int directionY)
 	{
 		if (_stateComponent.currentState == CharacterState.Dead)
 			return;
 
-		Timing.RunCoroutineSingleton(_Walk(new Vector2DInt(fromX, fromY), new Vector2DInt(toX, toY)), gameObject.GetInstanceID(), SingletonBehavior.Overwrite);
+		// set new current tile if desynced
+		SetNewTileReferences(new Vector2DInt(fromX, fromY));
+
+		Timing.RunCoroutineSingleton(_Walk(new Vector2DInt(directionX, directionY)), gameObject.GetInstanceID(), SingletonBehavior.Overwrite);
 	}
 
 	[PunRPC]

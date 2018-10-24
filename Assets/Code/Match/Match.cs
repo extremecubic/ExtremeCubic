@@ -236,6 +236,7 @@ public class Match : Photon.MonoBehaviour
 			PhotonNetwork.LeaveRoom();
 			MainMenuSystem.reclaimPlayerUI = false;
 			MainMenuSystem.startPage = Constants.SCREEN_START;
+			Timing.KillCoroutines();
 			UnityEngine.SceneManagement.SceneManager.LoadScene("menu");
 		});
 

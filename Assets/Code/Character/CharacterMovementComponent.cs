@@ -62,10 +62,10 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 			return;
 
 		if (Constants.onlineGame)
-			photonView.RPC("NetworkWalk", PhotonTargets.All, currentTile.position.x, currentTile.position.y, targetTile.position.x, targetTile.position.y);
+			photonView.RPC("NetworkWalk", PhotonTargets.All, currentTile.position.x, currentTile.position.y, direction.x, direction.y);
 
 		if (!Constants.onlineGame)
-			NetworkWalk(currentTile.position.x, currentTile.position.y, targetTile.position.x, targetTile.position.y);
+			NetworkWalk(currentTile.position.x, currentTile.position.y, direction.x, direction.y);
 	}
 
 	public void OnTryCharge()
@@ -301,7 +301,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		OnDash(currentPos.x, currentPos.y, _lastMoveDirection.x, _lastMoveDirection.y, currentDashCharges);
 	}
 
-	IEnumerator<float> _Walk(Vector2DInt fromTilePos, Vector2DInt toTilePos)
+	IEnumerator<float> _Walk(Vector2DInt direction)
 	{
 		_stateComponent.SetState(CharacterState.Walking);
 
@@ -313,11 +313,10 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 			Match.instance.level.BreakTile(currentTile.position.x, currentTile.position.y);
 
 		if (currentTile.model.data.changeColorTile)
-			Match.instance.level.ChangeColorTile(currentTile.position.x, currentTile.position.y);
+			Match.instance.level.ChangeColorTile(currentTile.position.x, currentTile.position.y, direction.x, direction.y);
 
 		// get references to tiles
-		Tile fromTile   = _tileMap.GetTile(fromTilePos);
-		Tile targetTile = _tileMap.GetTile(toTilePos);		
+		Tile targetTile = currentTile.GetRelativeTile(direction);
 
 		// Calculate lerp positions
 		// lerp from current position (will catch up if laging)
@@ -327,7 +326,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		// Calculate lerp rotations
 		// get the movement direction based on vector between starttile and endtile
 		// flip x and z to get the correct rotation in worldspace
-		Vector3 movementDirection = (targetPosition - new Vector3(fromTile.position.x, 1, fromTile.position.y)).normalized;
+		Vector3 movementDirection = (targetPosition - new Vector3(currentTile.position.x, 1, currentTile.position.y)).normalized;
 		Vector3 movementDirectionRight = new Vector3(movementDirection.z, movementDirection.y, -movementDirection.x);
 
 		// do lerp from current rotation if desynced(will catch up)
@@ -342,7 +341,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		// Save last move direction if we would do dash and not give any direction during chargeup
 		_lastMoveDirection = new Vector2DInt((int)movementDirection.x, (int)movementDirection.z);
 
-		// Update tile player references NOTE: this is done right when a player starts moving to avoid players being able to move to the same tile (lerping is used when getting hit when not physiclly att target tile)
+		// Update tile player references 
 		SetNewTileReferences(targetTile.position);
 
 		// do the movement itself
@@ -444,7 +443,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 
 			// change color of tile if it is colorable(will only detect this on master client)
 			if (currentTile.model.data.changeColorTile)
-				Match.instance.level.ChangeColorTile(currentTile.position.x, currentTile.position.y);
+				Match.instance.level.ChangeColorTile(currentTile.position.x, currentTile.position.y, direction.x, direction.y);
 
 			// Update tile player references 
 			SetNewTileReferences(targetTile.position);

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MEC;
 
 // tilesounds
 public enum TileSounds
@@ -25,7 +26,7 @@ public enum SpecialTile
 public class TileModel
 {
     [SerializeField] string _typeName; public string typeName => _typeName;
-    [SerializeField] Data _data; public Data data => _data;
+    [SerializeField] Data   _data;     public Data data => _data;
 
     [System.Serializable]
     public struct Data           
@@ -83,7 +84,7 @@ public class TileModel
 
 public class Tile
 {
-	// private properties
+	// private set properties
     public TileModel   model            { get; private set; }
 	public Vector2DInt position         { get; private set; }
     public GameObject  view             { get; private set; }
@@ -92,10 +93,12 @@ public class Tile
 	public Character   currentCharacter { get; private set; }
 
 	// members
-    TileDatabase _tileDB;
-	SoundData[]  _sounds;
-	PowerUpType  _powerUp = PowerUpType.None;
-	GameObject   _powerView;
+    TileDatabase    _tileDB;
+	SoundData[]     _sounds;
+	PowerUpType     _powerUp = PowerUpType.None;
+	GameObject      _powerView;
+	Quaternion      _lastTargetRotation;
+	CoroutineHandle _flipHandle;
 
 	// set occupying charcater of this tile
 	public void SetCharacter(Character character)
@@ -159,6 +162,8 @@ public class Tile
 		view = Object.Instantiate(model.data.prefab, tilesFolder);
 		view.transform.rotation = view.transform.rotation * Quaternion.Euler(new Vector3(0, yRotation, 0));
 		view.transform.position = new Vector3(position.x, 0, position.y);
+
+		_lastTargetRotation = view.transform.rotation;
 
 		// tint the tile with the value saved from the tilemap editor
 		TintTile(view, tintStrength);
@@ -242,38 +247,6 @@ public class Tile
 		}
 	}
 
-	public void TintTile(GameObject tile, float strength)
-	{
-		// get renderer of main object and tint
-		Renderer renderer = tile.GetComponent<Renderer>();
-		if (renderer != null)
-			renderer.material.color = Color.white * strength;
-
-		// loop over all child renderers and tint
-		for (int i = 0; i < tile.transform.childCount; i++)
-		{
-			renderer = tile.transform.GetChild(i).GetComponent<Renderer>();
-			if (renderer != null)
-				renderer.material.color = Color.white * strength;
-		}
-	}
-
-	public void ChangeColorTile(Color color)
-	{
-		// get renderer of main object and color it
-		Renderer renderer = view.GetComponent<Renderer>();
-		if (renderer != null)
-			renderer.material.color = color;
-
-		// loop over all child renderers and color them aswell
-		for (int i = 0; i < view.transform.childCount; i++)
-		{
-			renderer = view.transform.GetChild(i).GetComponent<Renderer>();
-			if (renderer != null)
-				renderer.material.color = color;
-		}
-	}
-
 	public void DamageTile()
 	{
 		// ChangeColorTile health of this tile
@@ -296,6 +269,94 @@ public class Tile
 		// and the current tile will be garbage collected
 		if (currentHealth == 0)
 			Match.instance.level.tileMap.SetTile(position, new Tile(position, "empty", 0.0f, 0.0f, null), 1.0f);
+	}
+
+	// will get all renderers in a model
+	// and tint the brightnes of the texture
+	// NOTE THIS WILL NOT WORK WITH MODELS
+	// THAT ALREADY USE THE COLOR PROPERTY TO CHANGE
+	// THE COLOR OF THE TEXTURE, THIS WILL OVERIDE THAT COLOR
+	public void TintTile(GameObject tile, float strength)
+	{
+		// get renderer of main object and tint
+		Renderer renderer = tile.GetComponent<Renderer>();
+		if (renderer != null)
+			renderer.material.color = Color.white * strength;
+
+		// loop over all child renderers and tint
+		for (int i = 0; i < tile.transform.childCount; i++)
+		{
+			renderer = tile.transform.GetChild(i).GetComponent<Renderer>();
+			if (renderer != null)
+				renderer.material.color = Color.white * strength;
+		}
+	}
+
+	// will get all renderers in a model
+	// and change color of them all 
+	public void ChangeColorTile(Color color)
+	{
+		// get renderer of main object and color it
+		Renderer renderer = view.GetComponent<Renderer>();
+		if (renderer != null)
+			renderer.material.color = color;
+
+		// loop over all child renderers and color them aswell
+		for (int i = 0; i < view.transform.childCount; i++)
+		{
+			renderer = view.transform.GetChild(i).GetComponent<Renderer>();
+			if (renderer != null)
+				renderer.material.color = color;
+		}
+	}
+
+	public void FlipAndChangeColorTile(Color color, int directionX, int directionY)
+	{
+		_flipHandle = Timing.RunCoroutineSingleton(_FlipTile(color, directionX, directionY), _flipHandle, SingletonBehavior.Overwrite);
+	}
+
+	// will flip the tile 90 degress and change the color
+	IEnumerator<float> _FlipTile(Color color, int directionX, int directionY)
+	{
+		// get the relative tile that the character is moving towards
+		Vector2DInt targetTilePos = GetRelativeTile(new Vector2DInt(directionX, directionY)).position;
+
+		// get the direction from current tile to the target tile in normalized world space
+		// then get the world axis that we want to rotate around based on the direction the character is moving
+		Vector3 moveDirection = (new Vector3(targetTilePos.x, 1.0f, targetTilePos.y) - new Vector3(position.x, 1, position.y)).normalized;
+		Vector3 rotationAxis  = new Vector3(moveDirection.z, moveDirection.y, -moveDirection.x);
+
+		Quaternion fromRotation = view.transform.rotation;
+		Quaternion toRotation = Quaternion.Euler(rotationAxis * 90.0f) * _lastTargetRotation;
+
+		// save last target rotation in case another character would
+		// need to rotate this tile before it has finished
+		// the missing rotation will then be added on to the next rotation so it will catch up
+		_lastTargetRotation = toRotation;
+
+		GameModesModel model = Match.instance.gameModeModel;
+
+		bool haveChangedColor = false;
+		float fraction = 0;
+		while (fraction < 1)
+		{
+			fraction += Time.deltaTime / model.tileFlipTime;
+			fraction = Mathf.Clamp01(fraction);
+
+			// change the color when we are a certain percent into the flip
+			if (!haveChangedColor && fraction >= 1 * model.tileChangeColorIntoFlipPercent)
+			{
+				ChangeColorTile(color);
+				haveChangedColor = true;
+			}
+
+			// offset position on y axis, this will make  our y position go from 0 to desired height and then 
+			// back to 0 during the duration of the flip
+			view.transform.position = new Vector3(view.transform.position.x, 0 + (model.tileFlipHeight * Mathf.Sin(fraction * Mathf.PI)), view.transform.position.z);
+			view.transform.rotation = Quaternion.Lerp(fromRotation, toRotation, fraction);
+
+			yield return Timing.WaitForOneFrame;
+		}
 	}
 }
 

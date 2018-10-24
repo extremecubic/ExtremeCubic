@@ -72,9 +72,9 @@ public class Level : Photon.MonoBehaviour
 	}
 
 	// change the color of a tile, this is only handled by the master client
-	public void ChangeColorTile(int x, int y)
+	public void ChangeColorTile(int currentTileX, int currentTileY, int directionX, int directionY)
 	{
-		Tile tile = tileMap.GetTile(new Vector2DInt(x, y));
+		Tile tile = tileMap.GetTile(new Vector2DInt(currentTileX, currentTileY));
 
 		// get the current occupying player on tile and get the
 		// photon id for score setting and the indexId for setting the color
@@ -91,10 +91,10 @@ public class Level : Photon.MonoBehaviour
 			lastPlayerPhotonID = tile.lastCharacter.playerPhotonID;
 
 		if (Constants.onlineGame && PhotonNetwork.isMasterClient)
-			photonView.RPC("NetworkChangeColorTile", PhotonTargets.All, x, y, lastPlayerPhotonID, currentPlayerPhotonID, currentPlayerIndexID);
+			photonView.RPC("NetworkChangeColorTile", PhotonTargets.All, currentTileX, currentTileY, directionX, directionY, lastPlayerPhotonID, currentPlayerPhotonID, currentPlayerIndexID);
 
 		if (!Constants.onlineGame)
-			NetworkChangeColorTile(x, y, lastPlayerPhotonID, currentPlayerPhotonID, lastPlayerPhotonID);
+			NetworkChangeColorTile(currentTileX, currentTileY, directionX, directionY, lastPlayerPhotonID, currentPlayerPhotonID, lastPlayerPhotonID);
 	}
 
 	// spawn all characters on thier spawnpoints
@@ -113,13 +113,13 @@ public class Level : Photon.MonoBehaviour
 	}
 
 	[PunRPC]
-	void NetworkChangeColorTile(int x, int y, int lastPlayerPhotonID, int currentPlayerPhotonID, int currentPlayerIndexID)
+	void NetworkChangeColorTile(int currentTileX, int currentTileY, int directionX, int directionY, int lastPlayerPhotonID, int currentPlayerPhotonID, int currentPlayerIndexID)
 	{
 		GameModesModel modeModel = Match.instance.gameModeModel;
 
-		Tile tile = tileMap.GetTile(new Vector2DInt(x, y));
+		Tile tile = tileMap.GetTile(new Vector2DInt(currentTileX, currentTileY));
 
-		tile.ChangeColorTile(modeModel.GetColorFromPlayerIndexID(currentPlayerIndexID));
+		tile.FlipAndChangeColorTile(modeModel.GetColorFromPlayerIndexID(currentPlayerIndexID), directionX, directionY);
 		Match.instance.OnTileChangingColor(lastPlayerPhotonID, currentPlayerPhotonID);
 	}
 }
