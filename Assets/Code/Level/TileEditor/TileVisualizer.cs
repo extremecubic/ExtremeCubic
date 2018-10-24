@@ -82,51 +82,10 @@ public class TileVisualizer : MonoBehaviour
 		
 		// create gameobject and mesh
 		GameObject grid = new GameObject("grid");
-		Mesh mesh = new Mesh();
-
-		float half = 0.5f;
 
 		// add mesh filter and meshrenderer and assign them
-		grid.AddComponent<MeshFilter>().mesh = mesh;
+		grid.AddComponent<MeshFilter>().mesh = MeshGenerator.Create2DGrid(_sizeX, _sizeY, 1.0f);
 		grid.AddComponent<MeshRenderer>().material = _gridMaterial;
-
-		// create vertex and index array
-		Vector3[] vertices = new Vector3[(_sizeX * _sizeY) * 4];
-		int[] indices = new int[(_sizeX * _sizeY) * 6];
-
-		int column = 0;
-		int tileCount = 0;
-		int indexVertex = 0;
-		int indexIndice = 0;
-
-		// loop over and set all vertices and indices
-		for (int i = 0; i < _sizeY * _sizeX; i++)
-		{
-			vertices[indexVertex + 0] = new Vector3(tileCount - half, -half, column + half); // top left
-			vertices[indexVertex + 1] = new Vector3(tileCount + half, -half, column + half); // top right
-			vertices[indexVertex + 2] = new Vector3(tileCount - half, -half, column - half); // bottom left
-			vertices[indexVertex + 3] = new Vector3(tileCount + half, -half, column - half); // bottom right
-
-			indices[indexIndice + 0] = indexVertex;
-			indices[indexIndice + 1] = indexVertex + 1;
-			indices[indexIndice + 2] = indexVertex + 2;
-			indices[indexIndice + 3] = indexVertex + 2;
-			indices[indexIndice + 4] = indexVertex + 1;
-			indices[indexIndice + 5] = indexVertex + 3;
-
-			tileCount++;
-			indexVertex += 4;
-			indexIndice += 6;
-			if (tileCount == _sizeX)
-			{
-				column++;
-				tileCount = 0;
-			}
-		}
-
-		// assign vertices and indices
-		mesh.vertices = vertices;
-		mesh.triangles = indices;
 
 		grid.transform.SetParent(transform);
 	}
