@@ -2,6 +2,11 @@
 using System.IO;
 using UnityEngine.UI;
 
+// this is currently only for developers
+// but is planned to be expanded as an in game tool
+// for users to create thier own maps and either save
+// to play in local play or/and upload to somewhere to be shared online
+
 public class TileInfo
 {
 	public Vector2DInt position;

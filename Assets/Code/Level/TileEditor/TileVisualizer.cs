@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
+// will show a tile map in editor mode
+// so we can see the map while creating a
+// level backdrop
 public class TileVisualizer : MonoBehaviour
 {
 	[SerializeField, Range(5, 20)] int _sizeX = 5;
@@ -104,7 +107,6 @@ public class TileVisualizer : MonoBehaviour
 
 	void TintTile(GameObject tile, float strength)
 	{
-
 		Renderer renderer = tile.GetComponent<Renderer>();
 		if (renderer != null)
 		{			

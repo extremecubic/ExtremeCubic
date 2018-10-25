@@ -9156,6 +9156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ead05708d7cccfb4bb25ffa7236b46ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _debugCurrentGameMode: 1
   _level: {fileID: 140270603}
   _gameModeModel: {fileID: 11400000, guid: 4fe97f5b4cd61164e8a6fc649d2bfbbc, type: 2}
 --- !u!4 &1454707900

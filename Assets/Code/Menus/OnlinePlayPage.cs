@@ -12,6 +12,7 @@ public class OnlinePlayPage : MenuPage
 	[SerializeField] Button[] _buttons;
 	[SerializeField] Button _returnButton;
 
+	// connect to photon if we are not already connected
 	public override void OnPageEnter()
 	{
 		if (PhotonNetwork.connected)
@@ -20,6 +21,7 @@ public class OnlinePlayPage : MenuPage
 			return;
 		}
 
+		// buttons will be inactive untill we are connected
 		for (int i = 0; i < _buttons.Length; i++)
 			_buttons[i].interactable = false;
 
@@ -45,6 +47,7 @@ public class OnlinePlayPage : MenuPage
 	{		
 	}
 
+	// will enable all buttons if we succesfully connected to photon
 	void OnConnectedToMaster()
 	{
 		if (MainMenuSystem.instance.currentPage != this)
@@ -58,6 +61,8 @@ public class OnlinePlayPage : MenuPage
 		EventSystem.current.SetSelectedGameObject(_firstSelectable);
 	}
 
+	// show a text box with error to the user that they failed
+	// to connect to the photon server
 	void OnFailedToConnectToPhoton(DisconnectCause cause)
 	{
 		if (MainMenuSystem.instance.currentPage != this)

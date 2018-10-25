@@ -12,6 +12,8 @@ public class MessagePromt : MonoBehaviour
 	[SerializeField] Text _messagetext;
 	[SerializeField] Button _okButton;
 	
+	// will show a UI box with a message and then perform 
+	// an action when the ok button is pressed
 	public void SetAndShow(string message, OkAction action)
 	{
 		gameObject.SetActive(true);

@@ -16,12 +16,14 @@ public class CharacterParticlesComponent : MonoBehaviour
 
 	public void ManualAwake(CharacterDatabase.ViewData data, Transform parent)
 	{
+		// create all character particles that will be reused
 		_data = data;
 		CreateParticle(parent, ref _trail,   _data.trailParticle);
 		CreateParticle(parent, ref _charge,  _data.chargeupParticle);
 		CreateParticle(parent, ref _stunned, _data.stunnedParticle);
 	}
 	
+	// creates a particle and sets it to a parent
 	void CreateParticle(Transform parent, ref ParticleSystem system, ParticleSystem systemPrefab)
 	{
 		if (systemPrefab == null)
@@ -38,6 +40,8 @@ public class CharacterParticlesComponent : MonoBehaviour
 
 		if (emit)
 		{
+			// will set the rotation of the trail particle
+			// so it does not rotate along with the character
 			if (_data.trailForwardAsDashDirection)
 			{
 				_dashForward = dashForward;
@@ -68,12 +72,14 @@ public class CharacterParticlesComponent : MonoBehaviour
 			return;
 		}
 
+		// will remove the old powerup particle if one is active
 		if (_powerUpLoop)
 		{
 			_powerUpLoop.Stop(true, ParticleSystemStopBehavior.StopEmitting);
 			Destroy(_powerUpLoop.gameObject, 5);
 		}
 
+		// create the new powerup loop
 		_powerUpLoop = Instantiate(system, transform.position, system.transform.rotation, transform);			
 	}
 
@@ -84,6 +90,8 @@ public class CharacterParticlesComponent : MonoBehaviour
 
 		if (emit)
 		{
+			// make sure that the particle is located at the top of
+			// the player in world space and not local space
 			_stunned.transform.position = transform.position + Vector3.up;
 			_stunned.Play(true);
 		}
@@ -104,6 +112,8 @@ public class CharacterParticlesComponent : MonoBehaviour
 
 	void LateUpdate()
 	{
+		// if we are emitting a trail and it should not be following the local rotation
+		// we need to set the rotation to the forward of dashdirection every frame
 		if (_trail.isEmitting && _data.trailForwardAsDashDirection)
 		{
 			_trail.transform.forward = _dashForward;

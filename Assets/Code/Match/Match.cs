@@ -11,6 +11,9 @@ public enum GameMode
 
 public class Match : Photon.MonoBehaviour
 {
+	// TEMP FOR SETTING GAMEMODE FOR LOCAL PLAY
+	[SerializeField] GameMode _debugCurrentGameMode;
+
 	public static Match instance       { get; private set; }
 	public bool matchStarted           { get; private set; }
 	public CameraController gameCamera { get; private set; }
@@ -91,17 +94,21 @@ public class Match : Photon.MonoBehaviour
 	{		
 		int numPlayer = 4;
 
-		// only have one gamemode for now
-		_currentGameMode = GetComponent<GameModeLastMan>();
+		// TEMP STUFF UNTILL LOCAL PLAY MENUS HAVE BEEN CREATED
+		currentGameModeType = _debugCurrentGameMode;
+		if (_debugCurrentGameMode == GameMode.KingOfTheHill)
+			_currentGameMode = GetComponent<GameModeLastMan>();
+		else if (_debugCurrentGameMode == GameMode.TurfWar)
+			_currentGameMode = GetComponent<GameModeTurfWar>();
 
 		_currentGameMode.OnSetup(numPlayer);
 
 		// tell the ui how many players we are
-		scoreUI.Setup(numPlayer, currentGameModeType);
+		scoreUI.Setup(numPlayer, _debugCurrentGameMode);
 
 		_level.StartGameLocal();
 
-		counterUI.StartCount(0, 3, () => matchStarted = true);
+		counterUI.StartCount(0, 3, () => { matchStarted = true; _currentGameMode.OnRoundStart(); });
 	}
 
 	// called from character when it is created

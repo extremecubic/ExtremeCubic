@@ -95,7 +95,7 @@ public class Level : Photon.MonoBehaviour
 			photonView.RPC("NetworkChangeColorTile", PhotonTargets.All, currentTileX, currentTileY, directionX, directionY, lastPlayerPhotonID, currentPlayerPhotonID, currentPlayerIndexID);
 
 		if (!Constants.onlineGame)
-			NetworkChangeColorTile(currentTileX, currentTileY, directionX, directionY, lastPlayerPhotonID, currentPlayerPhotonID, lastPlayerPhotonID);
+			NetworkChangeColorTile(currentTileX, currentTileY, directionX, directionY, lastPlayerPhotonID, currentPlayerPhotonID, currentPlayerIndexID);
 	}
 
 	// spawn all characters on thier spawnpoints

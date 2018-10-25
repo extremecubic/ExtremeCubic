@@ -3,8 +3,185 @@ using System.Collections.Generic;
 using UnityEngine;
 using MEC;
 
+// this file handles receving and processeing possible character actions
+// and then forwarding them to all clients that should have them
+// it also checks if we are in a local and online game so we know
+// if the actions only should be ran locally or not
 public partial class CharacterMovementComponent : Photon.MonoBehaviour
 {
+	// called locally on "my local player" when receving input
+	// and then sends it to all other clients
+	public void OnTryWalk(Vector2DInt direction)
+	{
+		if (_stateComponent.currentState != CharacterState.Idle || _flagComponent.GetFlag(CharacterFlag.Cooldown_Walk))
+			return;
+
+		// cant walk to tile if occupied by other player or if not walkable tile
+		Tile targetTile = currentTile.GetRelativeTile(direction);
+		if (targetTile.IsOccupied() || !targetTile.model.data.walkable)
+			return;
+
+		if (Constants.onlineGame)
+			photonView.RPC("NetworkWalk", PhotonTargets.All, currentTile.position.x, currentTile.position.y, direction.x, direction.y);
+
+		if (!Constants.onlineGame)
+			NetworkWalk(currentTile.position.x, currentTile.position.y, direction.x, direction.y);
+	}
+
+	// called locally on "my local player" and
+	// only send message to all other clients to start
+	// feedback of charge
+	public void OnTryCharge()
+	{
+		if (_stateComponent.currentState != CharacterState.Idle || _flagComponent.GetFlag(CharacterFlag.Cooldown_Dash))
+			return;
+
+		// send to all other then me just for starting feedback, we start coroutine instead
+		if (Constants.onlineGame)
+			photonView.RPC("NetworkCharge", PhotonTargets.Others);
+
+		Timing.RunCoroutineSingleton(_Charge(), gameObject.GetInstanceID(), SingletonBehavior.Overwrite);
+	}
+
+	// only called on server and then forwarded to
+	// all other clients
+	void OnDash(int fromX, int fromY, int directionX, int directionY, int dashCharges)
+	{
+		if (Constants.onlineGame)
+			photonView.RPC("NetworkDash", PhotonTargets.All, fromX, fromY, directionX, directionY, dashCharges);
+
+		if (!Constants.onlineGame)
+			NetworkDash(fromX, fromY, directionX, directionY, dashCharges);
+	}
+
+	// only called on server and then forwarded to
+	// all other clients
+	public void OnGettingDashed(Vector2DInt startTile, Vector2DInt direction, int hitPower)
+	{
+		if (Constants.onlineGame)
+			photonView.RPC("NetworkOnGettingDashed", PhotonTargets.All, startTile.x, startTile.y, direction.x, direction.y, hitPower);
+
+		if (!Constants.onlineGame)
+			NetworkOnGettingDashed(startTile.x, startTile.y, direction.x, direction.y, hitPower);
+	}
+
+	// only called on server and then forwarded to
+	// all other clients
+	public void OnDashingOther(Vector2DInt lastTile, Quaternion rot, Vector2DInt targetTile)
+	{
+		if (Constants.onlineGame)
+			photonView.RPC("NetworkOnDashingOther", PhotonTargets.All, lastTile.x, lastTile.y, targetTile.x, targetTile.y, rot.x, rot.y, rot.z, rot.w);
+
+		if (!Constants.onlineGame)
+			NetworkOnDashingOther(lastTile.x, lastTile.y, targetTile.x, targetTile.y, rot.x, rot.y, rot.z, rot.w);
+	}
+
+	// called locally on all clients
+	// but only server takes action
+	void OnClaimPowerUp()
+	{
+		if (Constants.onlineGame && PhotonNetwork.isMasterClient)
+			photonView.RPC("NetworkClaimPowerUp", PhotonTargets.All, currentTile.position.x, currentTile.position.y);
+
+		if (!Constants.onlineGame)
+			NetworkClaimPowerUp(currentTile.position.x, currentTile.position.y);
+	}
+
+	// called locally on all clients
+	// but only server takes action of collide and send it to
+	// all clients, the clients only freaze locally while waiting for conformation
+	void OnHittingObstacle(Vector2DInt direction)
+	{
+		if (Constants.onlineGame)
+		{
+			if (PhotonNetwork.isMasterClient)
+				photonView.RPC("NetworkOnhittingObstacle", PhotonTargets.All, currentTile.position.x, currentTile.position.y, direction.x, direction.y);
+			else
+				_character.stateComponent.SetState(CharacterState.Frozen);
+		}
+
+		if (!Constants.onlineGame)
+			NetworkOnhittingObstacle(currentTile.position.x, currentTile.position.y, direction.x, direction.y);
+	}
+
+	// called locally on all clients
+	// but only server takes action of the special tile functionality and send it to
+	// all clients, the clients only freaze locally while waiting for conformation
+	bool OnEnterSpecialTile()
+	{
+		if (currentTile.model.data.isSpecialTile)
+		{
+			// create empty targetTileCoords if this special tile need a target to do its thing
+			// teleport is example of this, if not needing target these wont be used in specialTileHandler
+			// but is always sent to avoid having to deal with specialtiles in two different ways
+			Vector2DInt targetTile = new Vector2DInt(0, 0);
+
+			// if need target, find non ocupied tile of same type
+			// that is not the same as current
+			if (currentTile.model.data.needTargetTileSameType)
+				targetTile = _tileMap.GetRandomTileCoordsFromType(currentTile.model.typeName, currentTile);
+
+			if (Constants.onlineGame)
+			{
+				if (PhotonNetwork.isMasterClient)
+					photonView.RPC("NetworkClaimSpecialTile", PhotonTargets.All, currentTile.position.x, currentTile.position.y, targetTile.x, targetTile.y);
+				else
+					_stateComponent.SetState(CharacterState.Frozen);
+			}
+
+			if (!Constants.onlineGame)
+				NetworkClaimSpecialTile(currentTile.position.x, currentTile.position.y, targetTile.x, targetTile.y);
+
+			return true;
+		}
+		return false;
+	}
+
+	// called locally on all clients
+	// but only server takes action of killing the player and
+	// send the information to all clients 
+	bool OnDeadlyTile()
+	{
+		if (Constants.onlineGame && PhotonNetwork.isMasterClient && currentTile.model.data.deadly)
+		{
+			photonView.RPC("Die", PhotonTargets.All, currentTile.position.x, currentTile.position.y, PhotonNetwork.time);
+			return true;
+		}
+
+		if (!Constants.onlineGame && currentTile.model.data.deadly)
+		{
+			Die(currentTile.position.x, currentTile.position.y, 0.0f);
+			return true;
+		}
+		return false;
+	}
+
+	// called locally on all clients
+	// server handeling killing the player
+	// and clients freaze while waiting for the server
+	bool OnDeadlyEdge()
+	{
+		if (currentTile.model.typeName == Constants.EDGE_TYPE)
+		{
+			// stop movement and flag frozen locally and only handle death on server
+			// will be corrected by server if say a collision happened on server but not locally that would have prevented us from exiting map
+			if (Constants.onlineGame)
+			{
+				if (PhotonNetwork.isMasterClient)
+					photonView.RPC("Die", PhotonTargets.All, currentTile.position.x, currentTile.position.y, PhotonNetwork.time);
+				else
+					_stateComponent.SetState(CharacterState.Frozen);
+			}
+
+			if (!Constants.onlineGame)
+				Die(currentTile.position.x, currentTile.position.y, 0.0f);
+
+			return true;
+		}
+		return false;
+	}
+
+	// RPC:S THAT IS RUN ON ALL CLIENTS
 	[PunRPC]
 	void NetworkWalk(int fromX, int fromY, int directionX, int directionY)
 	{

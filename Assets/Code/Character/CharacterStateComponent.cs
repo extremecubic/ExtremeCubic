@@ -10,7 +10,10 @@ public class CharacterStateComponent : MonoBehaviour
     {		
     }
 
-    public void SetState(CharacterState state) => currentState = state;
+	public void SetState(CharacterState state)
+	{
+		currentState = state;
+	}
 }
 
 public enum CharacterState

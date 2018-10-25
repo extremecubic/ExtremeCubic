@@ -30,6 +30,7 @@ public class CharacterDeathComponent : Photon.MonoBehaviour
 		DeathType type = deathTile.model.data.deathType;
 
 		// spawn level specific feedback from edge and empty tiles
+		// these are set in the level object in the scene hierarchy
 		if (deathTile.model.typeName == "empty" || deathTile.model.typeName == Constants.EDGE_TYPE)
 		{
 			Level lvl = Match.instance.level;
@@ -44,6 +45,8 @@ public class CharacterDeathComponent : Photon.MonoBehaviour
 				SoundManager.instance.SpawnAndPlaySound(lvl.emptyDeathsound, 5);
 		}
 
+		// run the correct death scenario depending on
+		// the type of tile this is
 		if (type == DeathType.Sink)
 		   Timing.RunCoroutineSingleton(_sink(), gameObject.GetInstanceID(), SingletonBehavior.Overwrite);
 		else if(type == DeathType.Quicksand)
@@ -66,6 +69,8 @@ public class CharacterDeathComponent : Photon.MonoBehaviour
 			_respawnHandle = Timing.RunCoroutine(_RespawnCounter(delta));
 	}
 
+	// character just moves down on negative Y-axis
+	// with a speed and acceleration
 	public IEnumerator<float> _sink()
 	{
 		float accelearation = 1.0f;
@@ -78,6 +83,7 @@ public class CharacterDeathComponent : Photon.MonoBehaviour
 		}
 	}
 
+	// will rotate and getting pulled down into the ground
 	public IEnumerator<float> _quicksand(Tile deathTile)
 	{
 		CharacterModel model = _character.model;		
@@ -102,6 +108,7 @@ public class CharacterDeathComponent : Photon.MonoBehaviour
 		}
 	}
 
+	// explodes and fly in random direction
 	public IEnumerator<float> _Explode(Tile deathTile)
 	{
 		SoundManager.instance.SpawnAndPlaySound(deathTile.model.data.killSound, 5);
@@ -122,6 +129,7 @@ public class CharacterDeathComponent : Photon.MonoBehaviour
 		}
 	}
 
+	// get sucked into a asigned position in the world
 	IEnumerator<float> _FlyToTarget()
 	{
 		float accelearation = 1.0f;

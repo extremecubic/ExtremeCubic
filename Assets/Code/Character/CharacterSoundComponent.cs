@@ -23,6 +23,7 @@ public class CharacterSoundComponent : MonoBehaviour
 
 	public void ManualAwake(CharacterDatabase.ViewData data, Transform parent)
 	{
+		// create sound holders for all character sounds
 		_sounds = new SoundData[(int)CharacterSound.Count];
 		for (int i = 0; i < _sounds.Length; i++)
 			_sounds[i] = new SoundData();
@@ -32,27 +33,28 @@ public class CharacterSoundComponent : MonoBehaviour
 	
 	void CreateSounds(CharacterDatabase.ViewData data, Transform parent)
 	{
-		SoundManager MM = SoundManager.instance;
+		SoundManager SM = SoundManager.instance;
 
-		MM.CreateSound(_sounds[(int)CharacterSound.Walk],         "WalkSound",        data.walkSound,    false, parent);
-		MM.CreateSound(_sounds[(int)CharacterSound.Dash],         "DashSound",        data.dashSound,    false, parent);
-		MM.CreateSound(_sounds[(int)CharacterSound.Punch],        "PunchSound",       data.hitSound,     false, parent);
-		MM.CreateSound(_sounds[(int)CharacterSound.Death],        "DeathSound",       data.deathSound,   false, parent);
-		MM.CreateSound(_sounds[(int)CharacterSound.Charge],       "ChargeSound",      data.chargeSound,  true,  parent);
-		MM.CreateSound(_sounds[(int)CharacterSound.PowerupLoop],  "PowerUpLoopSound", null,              true,  parent);
-		MM.CreateSound(_sounds[(int)CharacterSound.StunnedSound], "StunnedSound",     data.stunnedSound, false, parent);
+		// create all sounds through the sound manager
+		SM.CreateSound(_sounds[(int)CharacterSound.Walk],         "WalkSound",        data.walkSound,    false, parent);
+		SM.CreateSound(_sounds[(int)CharacterSound.Dash],         "DashSound",        data.dashSound,    false, parent);
+		SM.CreateSound(_sounds[(int)CharacterSound.Punch],        "PunchSound",       data.hitSound,     false, parent);
+		SM.CreateSound(_sounds[(int)CharacterSound.Death],        "DeathSound",       data.deathSound,   false, parent);
+		SM.CreateSound(_sounds[(int)CharacterSound.Charge],       "ChargeSound",      data.chargeSound,  true,  parent);
+		SM.CreateSound(_sounds[(int)CharacterSound.PowerupLoop],  "PowerUpLoopSound", null,              true,  parent);
+		SM.CreateSound(_sounds[(int)CharacterSound.StunnedSound], "StunnedSound",     data.stunnedSound, false, parent);
 	}
 
 	public void PlaySound(CharacterSound type, float duration = 0)
 	{
-		SoundManager MM = SoundManager.instance;
-		MM.PlaySound(_sounds[(int)type], duration);
+		SoundManager SM = SoundManager.instance;
+		SM.PlaySound(_sounds[(int)type], duration);
 	}
 
 	public void StopSound(CharacterSound type, float fadeInSeconds = 0.5f)
 	{
-		SoundManager MM = SoundManager.instance;
-		MM.StopSound(_sounds[(int)type], fadeInSeconds);
+		SoundManager SM = SoundManager.instance;
+		SM.StopSound(_sounds[(int)type], fadeInSeconds);
 	}
 
 	public void SetClipToSound(CharacterSound type, AudioClip clip)
@@ -62,9 +64,9 @@ public class CharacterSoundComponent : MonoBehaviour
 
 	public void StopAll()
 	{
-		SoundManager MM = SoundManager.instance;
+		SoundManager SM = SoundManager.instance;
 
 		for (int i =0; i< _sounds.Length; i++)
-			MM.StopSound(_sounds[i], 0.25f);
+			SM.StopSound(_sounds[i], 0.25f);
 	}
 }

@@ -16,10 +16,12 @@ public class CharacterSpecialTileHandler : MonoBehaviour
 
 	public void OnEnterSpecialTile(Tile tile, Vector2DInt targetTileCoords)
 	{
+		// check the type of specialtile this is 
 		if      (tile.model.data.specialType == SpecialTile.PowerDash) { ForceDash(tile); }
 		else if (tile.model.data.specialType == SpecialTile.Teleport)  { Teleport(tile, targetTileCoords); }
 	}
 
+	// will create a dash along the right axis of the tile
 	void ForceDash(Tile tile)
 	{
 		tile.PlaySound(TileSounds.Special);
@@ -31,6 +33,7 @@ public class CharacterSpecialTileHandler : MonoBehaviour
 
 	void Teleport(Tile tile, Vector2DInt targetTileCoords)
 	{
+		// if no tile was free to teleport to we let the player know by feedback
 		if (targetTileCoords == Constants.NOT_FOUND_SPECIALTILE)
 		{
 			// do fail feedback here that teleport could not be done

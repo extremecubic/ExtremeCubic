@@ -147,6 +147,11 @@ public class PlayWithFriendsPage : MenuPage
 		MainMenuSystem.instance.SetToPage(MenuPageType.StartScreen);
 	}
 
+	// will set witch UI That we will use
+	// depending if we are running the steam version
+	// and will be creating games and inviting friend through steam
+	// or if we will do the invite outside of steam by just generating a code that 
+	// the host manually have to send to his friends
 	void SetSubPageBasedOnGameVersion()
 	{
 #if STEAM_VERSION

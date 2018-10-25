@@ -40,11 +40,14 @@ public class CameraController : MonoBehaviour
 
 	void UpdateTransformFreeFlight()
 	{
+		// update rotation from mouse input
 		_eulerRotation.x -= Input.GetAxisRaw("Mouse Y") * _freeFlightRotationSpeed * Time.deltaTime;
 		_eulerRotation.y += Input.GetAxisRaw("Mouse X") * _freeFlightRotationSpeed * Time.deltaTime;
 
+		// transform from euler to quaternion
 		transform.rotation = Quaternion.Euler(_eulerRotation);
 
+		// change position based on input and our local forward and raight axises
 		_position += (transform.right * Input.GetAxisRaw("Horizontal") + transform.forward * Input.GetAxisRaw("Vertical")) * _freeFlightMovementSpeed * Time.deltaTime;
 	}
 
