@@ -3691,56 +3691,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e12e44f32cb330749b750af3978dfc0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playersKingOfHill:
-  - content: {fileID: 1563232144561386}
-    scoreText: {fileID: 114284705997791174}
-    userName: {fileID: 114094476911865118}
-    icon: {fileID: 114213442584103130}
-  - content: {fileID: 1281043475657644}
-    scoreText: {fileID: 114206527137353352}
-    userName: {fileID: 114579712514472498}
-    icon: {fileID: 114582011802155288}
-  - content: {fileID: 1484929475827976}
-    scoreText: {fileID: 114685374274772704}
-    userName: {fileID: 114333899566532754}
-    icon: {fileID: 114312490078465452}
-  - content: {fileID: 1766916626262904}
-    scoreText: {fileID: 114010402412960418}
-    userName: {fileID: 114460377397487826}
-    icon: {fileID: 114924443999075082}
-  _playersTurfWar:
-  - content: {fileID: 1069400586305540}
-    scoreText: {fileID: 114085451237357228}
-    userName: {fileID: 114037492295297140}
-    icon: {fileID: 114325487776262096}
-    respawnParent: {fileID: 1800233162169896}
-    respawnTimeText: {fileID: 114020516267887790}
-    tilesText: {fileID: 114102840306185616}
-    colorImage: {fileID: 114097367555945364}
-  - content: {fileID: 1470948961567686}
-    scoreText: {fileID: 114356334647669042}
-    userName: {fileID: 114599138877878508}
-    icon: {fileID: 114655686659091102}
-    respawnParent: {fileID: 1967639902194190}
-    respawnTimeText: {fileID: 114868845619005626}
-    tilesText: {fileID: 114185237136015062}
-    colorImage: {fileID: 114689615922430436}
-  - content: {fileID: 1375542366658884}
-    scoreText: {fileID: 114435877292620300}
-    userName: {fileID: 114714722614497744}
-    icon: {fileID: 114116906469412136}
-    respawnParent: {fileID: 1631856671423248}
-    respawnTimeText: {fileID: 114578017680461592}
-    tilesText: {fileID: 114993158196533200}
-    colorImage: {fileID: 114887004021465662}
-  - content: {fileID: 1249088478695432}
-    scoreText: {fileID: 114698623818486566}
-    userName: {fileID: 114622349318282290}
-    icon: {fileID: 114805576735148026}
-    respawnParent: {fileID: 1889961189106746}
-    respawnTimeText: {fileID: 114989097596933414}
-    tilesText: {fileID: 114388280570116240}
-    colorImage: {fileID: 114358443286613854}
+  _kingOfTheHillUI:
+  - _content: {fileID: 1563232144561386}
+    _scoreText: {fileID: 114284705997791174}
+    _userNameText: {fileID: 114094476911865118}
+    _icon: {fileID: 114213442584103130}
+    _respawnParent: {fileID: 0}
+    _respawnTimeText: {fileID: 0}
+  - _content: {fileID: 1281043475657644}
+    _scoreText: {fileID: 114206527137353352}
+    _userNameText: {fileID: 114579712514472498}
+    _icon: {fileID: 114582011802155288}
+    _respawnParent: {fileID: 0}
+    _respawnTimeText: {fileID: 0}
+  - _content: {fileID: 1484929475827976}
+    _scoreText: {fileID: 114685374274772704}
+    _userNameText: {fileID: 114333899566532754}
+    _icon: {fileID: 114312490078465452}
+    _respawnParent: {fileID: 0}
+    _respawnTimeText: {fileID: 0}
+  - _content: {fileID: 1766916626262904}
+    _scoreText: {fileID: 114010402412960418}
+    _userNameText: {fileID: 114460377397487826}
+    _icon: {fileID: 114924443999075082}
+    _respawnParent: {fileID: 0}
+    _respawnTimeText: {fileID: 0}
+  _turfWarUI:
+  - _content: {fileID: 1069400586305540}
+    _scoreText: {fileID: 114085451237357228}
+    _userNameText: {fileID: 114037492295297140}
+    _icon: {fileID: 114325487776262096}
+    _respawnParent: {fileID: 1800233162169896}
+    _respawnTimeText: {fileID: 114020516267887790}
+    _turfText: {fileID: 114102840306185616}
+    _colorImage: {fileID: 114097367555945364}
+  - _content: {fileID: 1470948961567686}
+    _scoreText: {fileID: 114356334647669042}
+    _userNameText: {fileID: 114599138877878508}
+    _icon: {fileID: 114655686659091102}
+    _respawnParent: {fileID: 1967639902194190}
+    _respawnTimeText: {fileID: 114868845619005626}
+    _turfText: {fileID: 114185237136015062}
+    _colorImage: {fileID: 114689615922430436}
+  - _content: {fileID: 1375542366658884}
+    _scoreText: {fileID: 114435877292620300}
+    _userNameText: {fileID: 114714722614497744}
+    _icon: {fileID: 114116906469412136}
+    _respawnParent: {fileID: 1631856671423248}
+    _respawnTimeText: {fileID: 114578017680461592}
+    _turfText: {fileID: 114993158196533200}
+    _colorImage: {fileID: 114887004021465662}
+  - _content: {fileID: 1249088478695432}
+    _scoreText: {fileID: 114698623818486566}
+    _userNameText: {fileID: 114622349318282290}
+    _icon: {fileID: 114805576735148026}
+    _respawnParent: {fileID: 1889961189106746}
+    _respawnTimeText: {fileID: 114989097596933414}
+    _turfText: {fileID: 114388280570116240}
+    _colorImage: {fileID: 114358443286613854}
 --- !u!114 &114672042244998180
 MonoBehaviour:
   m_ObjectHideFlags: 1

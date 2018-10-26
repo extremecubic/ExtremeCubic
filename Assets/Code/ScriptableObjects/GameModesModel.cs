@@ -22,4 +22,12 @@ public class GameModesModel : ScriptableObject
 	{
 		return turfColors[playerIndexID];
 	}
+
+	public double GetRespawnTimeFromGameMode(GameMode mode)
+	{
+		if (mode == GameMode.TurfWar) return turfRespawnTime;
+
+		Debug.Assert(true == false, "Tried to get a respawn time on a gamemode that does not have one declared");
+		return 0.0;
+	}
 }

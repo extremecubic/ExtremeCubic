@@ -117,7 +117,7 @@ public class Match : Photon.MonoBehaviour
 	{
 		// register a player by id for scorekepping and ui
 		_currentGameMode.OnPlayerRegistred(playerPhotonID);
-		scoreUI.RegisterPlayer(playerPhotonID, playerIndexID, nickName, viewName, currentGameModeType);
+		scoreUI.RegisterPlayer(playerPhotonID, playerIndexID, nickName, viewName);
 	}
 
 	// will be called on all clients when all players are loaded
@@ -166,7 +166,7 @@ public class Match : Photon.MonoBehaviour
 	public void OnRoundOver(int winnerId, int score)
 	{
 		_musicManager.StopSharedPowerUpLoop(0.5f);
-		scoreUI.UpdateRoundScore(winnerId, score, currentGameModeType);
+		scoreUI.UpdateRoundScore(winnerId, score);
 		matchStarted = false;
 	}
 	
@@ -188,14 +188,14 @@ public class Match : Photon.MonoBehaviour
 		}
 
 		_currentGameMode.OnPlayerLeft(id);
-		scoreUI.DisableUIOfDisconnectedPlayer(id, currentGameModeType);
+		scoreUI.DisableUIOfDisconnectedPlayer(id);
 	}
 
 	// called from gamemode to all clients
 	[PunRPC]
 	public void NetworkMatchOver(int id)
 	{
-		winnerUI.ShowWinner(scoreUI.GetUserNameFromPhotonID(id, currentGameModeType));
+		winnerUI.ShowWinner(scoreUI.GetUserNameFromPhotonID(id));
 	}
 	
 	// called from the coroutine that handle delay before next round should start
@@ -208,7 +208,7 @@ public class Match : Photon.MonoBehaviour
 		// reset level(character resapwn is here aswell for now)
 		_level.ResetRound();
 
-		scoreUI.ClearRoundUI(currentGameModeType);
+		scoreUI.ClearRoundUI();
 
 		// restart start timer
 		counterUI.StartCount(delta, 3, () => { matchStarted = true; _currentGameMode.OnRoundStart(); });

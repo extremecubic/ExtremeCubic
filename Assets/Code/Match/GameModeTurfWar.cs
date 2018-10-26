@@ -160,6 +160,6 @@ public class GameModeTurfWar : Photon.MonoBehaviour, IGameMode
 	[PunRPC]
 	void TurfWarNetworkPlayerDied(int playerID, double delta)
 	{
-		_match.scoreUI.SetRespawnUI(playerID, delta, GameMode.TurfWar);
+		_match.scoreUI.SetRespawnUI(playerID, delta);
 	}
 }

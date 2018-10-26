@@ -16,31 +16,31 @@ public class CharacterSelectPage : MenuPage
 	}
 
 	[Header("UI REFERENCES"), Space(2)]
-	[SerializeField] MenuPlayerInfoUI _playerInfo;
+	[SerializeField] MenuPlayerInfoUI  _playerInfo;
 	[SerializeField] CharacterButton[] _characterButtons;
 	[Space(5)]
-	[SerializeField] Button _readyButton;
-	[SerializeField] Button _leaveButton;
-	[SerializeField] RectTransform _dotsParent;
-	[SerializeField] Image _dotPrefab;
-	[SerializeField] MessagePromt _promt;
-	[SerializeField] Button _leftarrow;
-	[SerializeField] Button _rightArrow;
-	[SerializeField] StartCounterUI _counter;
+	[SerializeField] Button            _readyButton;
+	[SerializeField] Button            _leaveButton;
+	[SerializeField] RectTransform     _dotsParent;
+	[SerializeField] Image             _dotPrefab;
+	[SerializeField] MessagePromt      _promt;
+	[SerializeField] Button            _leftarrow;
+	[SerializeField] Button            _rightArrow;
+	[SerializeField] StartCounterUI    _counter;
 
 	[Header("3D MODEL SETTINGS"),Space(2)]
-	[SerializeField] Transform[] _modelTransforms;
-	[SerializeField] float _rotationSpeed = 1.0f;
+	[SerializeField] Transform[]  _modelTransforms;
+	[SerializeField] float        _rotationSpeed = 1.0f;
 	[SerializeField] GameObject[] _characterRenders;
 
 	CharacterDatabase.ViewData _currentView;
 	GameObject[] _currentViewObject = new GameObject[4];
 	
 	Vector3 _rotation;
-	int _numSkins;
-	int _currentSkin;
-	bool _imReady;
-	int _currentPressedIndex = 0;
+	int     _numSkins;
+	int     _currentSkin;
+	bool    _imReady;
+	int     _currentPressedIndex = 0;
 
 	public void OnCharacterSelcted(int buttonIndex)
 	{
