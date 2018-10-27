@@ -46,6 +46,7 @@ public class LevelSelectPage : MenuPage
 	[Header("DATA STRUCTURES FOR LEVELS")]
 	[SerializeField] LevelData[]     _kingOfTheHillLevels;
 	[SerializeField] LevelData[]     _turfWarLevels;
+	[SerializeField] LevelData[]     _ultimateKillerLevels;
 	[SerializeField] NominatedData[] _nominatedLevelUI;
 
 	[Header("WINNER LEVEL SCREEN SETTINGS")]
@@ -94,10 +95,11 @@ public class LevelSelectPage : MenuPage
 		// if this is the first time opening page
 		if (_levels == null)
 		{
-			_levels = new LevelData[2][];
+			_levels = new LevelData[3][];
 
 			_levels[0] = _kingOfTheHillLevels;
-			_levels[1] = _turfWarLevels; 
+			_levels[1] = _turfWarLevels;
+			_levels[2] = _ultimateKillerLevels;
 		}
 
 		// move all player UI boxes to the prefered positions of this page

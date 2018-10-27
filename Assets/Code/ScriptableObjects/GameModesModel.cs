@@ -17,7 +17,13 @@ public class GameModesModel : ScriptableObject
 	[Range(0,1)]
 	public float tileChangeColorIntoFlipPercent = 0.0f;
 	public Color[] turfColors;
-	
+
+	[Header("ULTIMATE KILLER SETTINGS")]
+	public int    killerNumRoundsToWin = 3;
+	public double killerRespawnTime = 5.0;
+	public double killerRoundTime = 120.0;
+
+
 	public Color GetColorFromPlayerIndexID(int playerIndexID)
 	{
 		return turfColors[playerIndexID];
@@ -25,7 +31,8 @@ public class GameModesModel : ScriptableObject
 
 	public double GetRespawnTimeFromGameMode(GameMode mode)
 	{
-		if (mode == GameMode.TurfWar) return turfRespawnTime;
+		if      (mode == GameMode.TurfWar)        return turfRespawnTime;
+		else if (mode == GameMode.UltimateKiller) return killerRespawnTime;
 
 		Debug.Assert(true == false, "Tried to get a respawn time on a gamemode that does not have one declared");
 		return 0.0;

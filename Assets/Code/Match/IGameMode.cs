@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IGameMode 
 {
-	void OnPlayerDie(int ID);
+	void OnPlayerDie(int killedPlayerID, int killerID);
 	void OnSetup(int numPlayers);
 	void OnRoundRestarted();
 	void OnPlayerLeft(int ID);

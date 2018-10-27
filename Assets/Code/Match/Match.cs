@@ -7,6 +7,7 @@ public enum GameMode
 {
 	KingOfTheHill,
 	TurfWar,
+	UltimateKiller,
 }
 
 public class Match : Photon.MonoBehaviour
@@ -69,10 +70,9 @@ public class Match : Photon.MonoBehaviour
 
 		currentGameModeType = (GameMode)PhotonNetwork.player.CustomProperties[Constants.MATCH_GAME_MODE];
 
-		if (currentGameModeType == GameMode.KingOfTheHill)
-			_currentGameMode = GetComponent<GameModeLastMan>();
-		else if (currentGameModeType == GameMode.TurfWar)
-			_currentGameMode = GetComponent<GameModeTurfWar>();
+		if      (currentGameModeType == GameMode.KingOfTheHill)  _currentGameMode = GetComponent<GameModeLastMan>();
+		else if (currentGameModeType == GameMode.TurfWar)        _currentGameMode = GetComponent<GameModeTurfWar>();
+		else if (currentGameModeType == GameMode.UltimateKiller) _currentGameMode = GetComponent<GameModeUltimateKiller>();
 
 		_currentGameMode.OnSetup(numPlayer);
 
@@ -96,10 +96,10 @@ public class Match : Photon.MonoBehaviour
 
 		// TEMP STUFF UNTILL LOCAL PLAY MENUS HAVE BEEN CREATED
 		currentGameModeType = _debugCurrentGameMode;
-		if (_debugCurrentGameMode == GameMode.KingOfTheHill)
-			_currentGameMode = GetComponent<GameModeLastMan>();
-		else if (_debugCurrentGameMode == GameMode.TurfWar)
-			_currentGameMode = GetComponent<GameModeTurfWar>();
+
+		if      (currentGameModeType == GameMode.KingOfTheHill)  _currentGameMode = GetComponent<GameModeLastMan>();
+		else if (currentGameModeType == GameMode.TurfWar)        _currentGameMode = GetComponent<GameModeTurfWar>();
+		else if (currentGameModeType == GameMode.UltimateKiller) _currentGameMode = GetComponent<GameModeUltimateKiller>();
 
 		_currentGameMode.OnSetup(numPlayer);
 
@@ -136,9 +136,9 @@ public class Match : Photon.MonoBehaviour
 	}
 
 	// called from character(only on server in online play) 
-	public void OnPlayerDie(int playerId)
+	public void OnPlayerDie(int killedPlayerID, int killerPLayerID)
 	{
-		_currentGameMode.OnPlayerDie(playerId);
+		_currentGameMode.OnPlayerDie(killedPlayerID, killerPLayerID);
 	}
 
 	// called on all clients from master client

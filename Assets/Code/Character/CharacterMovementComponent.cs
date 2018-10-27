@@ -197,6 +197,9 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		// Update tile player references 
 		SetNewTileReferences(targetTile.position);
 
+		// if we take a step on our own it means that if we die it was not becuase of another player
+		_character.dashingPlayerID = Constants.INVALID_ID;
+
 		// do the movement itself
 		float movementProgress = 0;
 		while (movementProgress < 1)
@@ -237,6 +240,9 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		// only play dash sound if this was a volentary dash
 		if (!fromCollision)
 		{
+			// if it was a volentary dash it means that if we die it was not becuase of another player
+			_character.dashingPlayerID = Constants.INVALID_ID;
+
 			Vector2DInt currentPos = currentTile.position;
 			Vector2DInt targetPos  = currentTile.GetRelativeTile(direction).position;
 

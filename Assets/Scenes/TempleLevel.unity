@@ -520,7 +520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c5dd859341e34448690ed3e5af4b7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mapToLoad: TempleLevel
+  _mapToLoad: Temple Ruins 1
   _tilesFolder: {fileID: 715085061}
   _powerUpFolder: {fileID: 1079690195}
   _characterPrefab: {fileID: 1300687396863330, guid: c968007a7fbe1f942a234aa54bc2f7e9,
@@ -4907,6 +4907,7 @@ GameObject:
   - component: {fileID: 1454707899}
   - component: {fileID: 1454707898}
   - component: {fileID: 1454707901}
+  - component: {fileID: 1454707902}
   - component: {fileID: 1454707897}
   - component: {fileID: 1454707896}
   m_Layer: 0
@@ -4990,6 +4991,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ead05708d7cccfb4bb25ffa7236b46ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _debugCurrentGameMode: 2
   _level: {fileID: 140270603}
   _gameModeModel: {fileID: 11400000, guid: 4fe97f5b4cd61164e8a6fc649d2bfbbc, type: 2}
 --- !u!4 &1454707900
@@ -5016,6 +5018,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ec29d015bc2552498e757c7d1e11bc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1454707902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1454707895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4093b9d1f5b90674e96d5c432975b6db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1461911460

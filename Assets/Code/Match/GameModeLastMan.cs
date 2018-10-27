@@ -35,7 +35,7 @@ public class GameModeLastMan : Photon.MonoBehaviour, IGameMode
 
 		// need to check if we automaticly got a winner when a player left the room
 		if (PhotonNetwork.isMasterClient)
-			OnPlayerDie(ID);
+			OnPlayerDie(ID, Constants.INVALID_ID);
 	}
 
 	public void OnPlayerRegistred(int ID)
@@ -43,12 +43,12 @@ public class GameModeLastMan : Photon.MonoBehaviour, IGameMode
 		_players.Add(ID, new LastManPlayerTracker());
 	}
 
-	public void OnPlayerDie(int playerId)
+	public void OnPlayerDie(int killedPlayerID, int killerID)
 	{
 		if (_winnerSet) // if last player dies after winning we dont want to do nothing
 			return;
 
-		_players[playerId].dead = true;
+		_players[killedPlayerID].dead = true;
 
 		int numAlive = 0;
 		int idLastAlive = 0;
@@ -70,7 +70,7 @@ public class GameModeLastMan : Photon.MonoBehaviour, IGameMode
 
 		// send who died to others in case of server migration
 		if (Constants.onlineGame)
-			photonView.RPC("NetworkPlayerDied", PhotonTargets.Others, playerId);
+			photonView.RPC("NetworkPlayerDied", PhotonTargets.Others, killedPlayerID);
 	}
 
 	void RoundOver(int winnerId)

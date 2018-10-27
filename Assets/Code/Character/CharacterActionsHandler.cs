@@ -56,13 +56,13 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 
 	// only called on server and then forwarded to
 	// all other clients
-	public void OnGettingDashed(Vector2DInt startTile, Vector2DInt direction, int hitPower)
+	public void OnGettingDashed(Vector2DInt startTile, Vector2DInt direction, int hitPower, int dashingPlayerID)
 	{
 		if (Constants.onlineGame)
-			photonView.RPC("NetworkOnGettingDashed", PhotonTargets.All, startTile.x, startTile.y, direction.x, direction.y, hitPower);
+			photonView.RPC("NetworkOnGettingDashed", PhotonTargets.All, startTile.x, startTile.y, direction.x, direction.y, hitPower, dashingPlayerID);
 
 		if (!Constants.onlineGame)
-			NetworkOnGettingDashed(startTile.x, startTile.y, direction.x, direction.y, hitPower);
+			NetworkOnGettingDashed(startTile.x, startTile.y, direction.x, direction.y, hitPower, dashingPlayerID);
 	}
 
 	// only called on server and then forwarded to
@@ -226,7 +226,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 	}
 
 	[PunRPC]
-	public void NetworkOnGettingDashed(int fromX, int fromY, int directionX, int directionY, int numDashtiles)
+	public void NetworkOnGettingDashed(int fromX, int fromY, int directionX, int directionY, int numDashtiles, int dashingPlayerID)
 	{
 		if (_stateComponent.currentState == CharacterState.Dead)
 			return;
@@ -234,6 +234,13 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		// stop all potencial ongoing feedback
 		_character.ParticleComponent.StopAll();
 		_character.soundComponent.StopSound(CharacterSound.StunnedSound, 0.2f);
+
+		// set the id of the player that dashed into us
+		// if it has a valid ID, invalid ID will be sent in from ex
+		// the special speedtile that forces us to dash in
+		// the same way as a regular dash collision work
+		if (dashingPlayerID != Constants.INVALID_ID)
+		   _character.dashingPlayerID = dashingPlayerID;
 
 		// kill all coroutines on this layer
 		Timing.KillCoroutines(gameObject.GetInstanceID());
@@ -324,10 +331,10 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		_character.deathComponent.KillPlayer(deathTile, delta);
 
 		if (Constants.onlineGame && PhotonNetwork.isMasterClient)
-			Match.instance.OnPlayerDie(_character.playerPhotonID);
+			Match.instance.OnPlayerDie(_character.playerPhotonID, _character.dashingPlayerID);
 
 		if (!Constants.onlineGame)
-			Match.instance.OnPlayerDie(_character.playerPhotonID);
+			Match.instance.OnPlayerDie(_character.playerPhotonID, _character.dashingPlayerID);
 	}
 
 	[PunRPC]

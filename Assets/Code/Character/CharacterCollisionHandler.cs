@@ -19,7 +19,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 				_collisionTracker.photonView.RPC("AddCollision", PhotonTargets.All, playerToDash.photonView.viewID, targetTile.position.x, targetTile.position.y);
 
 				// tell all clients who got hit
-				playerToDash.movementComponent.OnGettingDashed(targetTile.position, direction, dashStrength - dashIndex);
+				playerToDash.movementComponent.OnGettingDashed(targetTile.position, direction, dashStrength - dashIndex, _character.playerPhotonID);
 
 				// send rpc that we hit other player and cancel all our current movement
 				OnDashingOther(currentTile.position, previousLastTargetRotation, targetTile.position);
@@ -61,7 +61,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 			// get occupying player and tell it to send an rpc that it got dashed
 			Character playerToDash = targetTile.currentCharacter;
 
-			playerToDash.movementComponent.OnGettingDashed(targetTile.position, direction, dashStrength - dashIndex);
+			playerToDash.movementComponent.OnGettingDashed(targetTile.position, direction, dashStrength - dashIndex, _character.playerIndexID);
 			OnDashingOther(currentTile.position, previousLastTargetRotation, targetTile.position);
 			
 			_lastTargetRotation = previousLastTargetRotation;

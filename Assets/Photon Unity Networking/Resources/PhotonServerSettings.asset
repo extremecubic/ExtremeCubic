@@ -75,4 +75,6 @@ MonoBehaviour:
   - NetworkSetEndRoundDelay
   - NetworkChangeColorTile
   - AddCollision
+  - UltimateKillerNetworkPlayerDied
+  - UltimateKillerNetworkRoundOver
   DisableAutoOpenWizard: 1

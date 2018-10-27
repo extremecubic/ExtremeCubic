@@ -32,6 +32,8 @@ public class Character : Photon.MonoBehaviour
 	public CharacterPowerUpComponent   powerUpComponent   {get; private set;}
 	public CharacterSpecialTileHandler specialTileHandler {get; private set;}
 
+	public int dashingPlayerID { get; set; }
+
 	public void Initialize(string viewName, int playerID, string nickname, int skinID, int indexID)
     {
 		if (Constants.onlineGame)

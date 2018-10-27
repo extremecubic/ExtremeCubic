@@ -2,9 +2,10 @@
 
 public class ScoreUI : MonoBehaviour
 {
-	[SerializeField] PlayerKingOfTheHillUI[] _kingOfTheHillUI;
-	[SerializeField] PlayerTurfWarUI[]       _turfWarUI;
-	
+	[SerializeField] PlayerKingOfTheHillUI[]  _kingOfTheHillUI;
+	[SerializeField] PlayerTurfWarUI[]        _turfWarUI;
+	[SerializeField] PlayerUltimateKillerUI[] _ultimateKillerUI;
+
 	int              _numPlayers;	
 	PlayerUIItem[][] _playerUI;
 
@@ -19,10 +20,11 @@ public class ScoreUI : MonoBehaviour
 		_gameMode   = mode;
 		_modeIndex  = (int)mode;
 
-		_playerUI = new PlayerUIItem[2][];
+		_playerUI = new PlayerUIItem[3][];
 
 		_playerUI[0] = _kingOfTheHillUI;
 		_playerUI[1] = _turfWarUI;
+		_playerUI[2] = _ultimateKillerUI;
 
 		for (int i = 0; i < _numPlayers; i++)
 			_playerUI[_modeIndex][i].EnableUI(true);		
@@ -70,6 +72,17 @@ public class ScoreUI : MonoBehaviour
 			{
 				PlayerTurfWarUI player = (PlayerTurfWarUI)_playerUI[_modeIndex][i];
 				player.UpdateTurfScore(newScore);
+				return;
+			}
+	}
+
+	public void UpdateKillsScore(int playerPhotonID, int newScore)
+	{
+		for (int i = 0; i < _numPlayers; i++)
+			if (_playerUI[_modeIndex][i].ownerID == playerPhotonID)
+			{
+				PlayerUltimateKillerUI player = (PlayerUltimateKillerUI)_playerUI[_modeIndex][i];
+				player.UpdateKillUI(newScore);
 				return;
 			}
 	}

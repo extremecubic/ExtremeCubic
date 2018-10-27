@@ -43,13 +43,13 @@ public class GameModeTurfWar : Photon.MonoBehaviour, IGameMode
 
 	// send rpc to all clients to update the UI with the 
 	// time untill player will respawn
-	public void OnPlayerDie(int ID)
+	public void OnPlayerDie(int killedPlayerID, int killerID)
 	{
 		if (Constants.onlineGame)
-			photonView.RPC("TurfWarNetworkPlayerDied", PhotonTargets.All, ID, PhotonNetwork.time);
+			photonView.RPC("TurfWarNetworkPlayerDied", PhotonTargets.All, killedPlayerID, PhotonNetwork.time);
 
 		if (!Constants.onlineGame)
-			TurfWarNetworkPlayerDied(ID, 0.0);
+			TurfWarNetworkPlayerDied(killedPlayerID, 0.0);
 	}
 
 	// set player to disconected so we wont take this
@@ -103,7 +103,7 @@ public class GameModeTurfWar : Photon.MonoBehaviour, IGameMode
 	void SetWinner()
 	{
 		int winnerID = 0;
-		int highestTurfScore = 0;
+		int highestTurfScore = -1;
 
 		// get the ID of the player that had the most turf tiles of this round
 		// TODO: this is not handeling draws for the moment

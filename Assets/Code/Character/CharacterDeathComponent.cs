@@ -65,7 +65,7 @@ public class CharacterDeathComponent : Photon.MonoBehaviour
 
 		// start respawn countdown on all clients in case of server migration
 		// only the master client will then send the rpc that does the actual respawn
-		if (Match.instance.currentGameModeType == GameMode.TurfWar)
+		if (Match.instance.currentGameModeType == GameMode.TurfWar || Match.instance.currentGameModeType == GameMode.UltimateKiller)
 			_respawnHandle = Timing.RunCoroutine(_RespawnCounter(delta));
 	}
 
@@ -157,10 +157,7 @@ public class CharacterDeathComponent : Photon.MonoBehaviour
 	{
 		Match match = Match.instance;
 
-		double timer = 0;
-
-		// get the respawn time based on the active gamemode
-		if (match.currentGameModeType == GameMode.TurfWar) timer = Match.instance.gameModeModel.turfRespawnTime;
+		double timer = Match.instance.gameModeModel.GetRespawnTimeFromGameMode(match.currentGameModeType);
 
 		if (Constants.onlineGame)
 			timer -= (PhotonNetwork.time - delta);
