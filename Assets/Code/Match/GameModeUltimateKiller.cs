@@ -13,9 +13,15 @@ public class GameModeUltimateKiller : Photon.MonoBehaviour, IGameMode
 	}
 
 	Dictionary<int, UltimateKillerPlayerTracker> _players;
+	Dictionary<Vector2DInt, string>              _destroyedTiles;	
+	List<Tile>                                   _respawnedTiles;
 
-	Match          _match;
-	GameModesModel _modeModel;
+	Match           _match;
+	GameModesModel  _modeModel;
+	CoroutineHandle _tileRespawnHandle;
+
+	int _numBreakableTiles;
+	int _numDestroyedTilesForRespawn;
 
 	void Awake()
 	{
@@ -25,7 +31,24 @@ public class GameModeUltimateKiller : Photon.MonoBehaviour, IGameMode
 
 	public void OnSetup(int numPlayers)
 	{
-		_players = new Dictionary<int, UltimateKillerPlayerTracker>();
+		_players            = new Dictionary<int, UltimateKillerPlayerTracker>();
+		_destroyedTiles     = new Dictionary<Vector2DInt, string>();
+		_respawnedTiles = new List<Tile>();
+	}
+
+	public void OnLevelCreated()
+	{
+		TileMap TM = _match.level.tileMap;
+
+		// get how many tiles is breakable in the current tilemap and
+		// calculate after how many we want to respawn the tiles
+		_numBreakableTiles           = TM.GetNumBreakableTiles();
+		_numDestroyedTilesForRespawn = (int)(_numBreakableTiles * _modeModel.tilePercentDestroyedForRespawn);
+
+		// this will notify us each time a tile
+		// have been destroyed and will give us the 
+		// net delta when it got destroyed on server
+		TM.OnTileDestroyed += AddDestroyedTile;
 	}
 
 	// only called on server
@@ -36,6 +59,27 @@ public class GameModeUltimateKiller : Photon.MonoBehaviour, IGameMode
 
 		if (!Constants.onlineGame)
 			UltimateKillerNetworkPlayerDied(killedPlayerID, killerID, 0.0);
+	}
+
+	// add the coords and tiletype of the destroyed tile
+	public void AddDestroyedTile (string tileType, Vector2DInt coords, double netDelta)
+	{
+		if (!_destroyedTiles.ContainsKey(coords))
+		{
+			_destroyedTiles.Add(coords, tileType);
+
+			// if enough tiles have been destroyed 
+			// we need to respawn them
+			if (_destroyedTiles.Count >= _numDestroyedTilesForRespawn)
+				RespawnDestroyedTiles(netDelta);
+
+			return;
+		}
+
+		// a tile can be destroyed and replaced by another tile in 
+		// some instances, if the replacing tile have been destroyed
+		// aswell we just replace the type
+		_destroyedTiles[coords] = tileType;
 	}
 
 	public void OnPlayerLeft(int ID)
@@ -53,6 +97,12 @@ public class GameModeUltimateKiller : Photon.MonoBehaviour, IGameMode
 		// reset tile score
 		foreach (var p in _players)
 			p.Value.killScore = 0;
+
+		_tileRespawnHandle.IsRunning = false;
+
+		_destroyedTiles.Clear();
+		_respawnedTiles.Clear();
+		_respawnedTiles.Clear();
 	}
 
 	public void OnRoundStart()
@@ -155,6 +205,64 @@ public class GameModeUltimateKiller : Photon.MonoBehaviour, IGameMode
 	{
 		_players[winnerID].roundScore++;
 		_match.OnRoundOver(winnerID, _players[winnerID].roundScore);
+	}
+
+	void RespawnDestroyedTiles(double netDelta)
+	{
+		_tileRespawnHandle = Timing.RunCoroutineSingleton(_RespawnTiles(netDelta), _tileRespawnHandle, SingletonBehavior.Abort);
+	}
+
+	IEnumerator<float> _RespawnTiles(double netDelta)
+	{
+		TileMap TM = _match.level.tileMap;
+
+		// create all the tiles that have been destroyed
+		// dont add them to the tile map yet becuase we want to
+		// move the view odf the tile into position first
+		foreach (var destroyedTile in _destroyedTiles)		
+			_respawnedTiles.Add(new Tile(destroyedTile.Key, destroyedTile.Value, 0.0f, 1.0f, TM.tilesFolder));
+
+		// get movement settings for respawn tiles
+		double moveUpForSeconds = _modeModel.tilesRespawnMoveDuration; 
+		float  startDepth       = _modeModel.tilesRespawnStartDepth;
+
+		// remove the net delta from duration if online game
+		if (Constants.onlineGame)
+			moveUpForSeconds -= (PhotonNetwork.time - netDelta);
+
+		// initialize variables that we need
+		float   fraction          = 0.0f;
+		float   currentDepth      = 0.0f;
+		Vector3 position          = Vector3.zero;
+
+		while (moveUpForSeconds > 0)
+		{
+			moveUpForSeconds -= Time.deltaTime;
+
+			// get the current depth position of tile based
+			// on the fraction of timer and the start depth
+			fraction     = Mathf.InverseLerp(5.0f, 0.0f, (float)moveUpForSeconds);
+			currentDepth = Mathf.Lerp(startDepth, 0, fraction);
+
+			// set the position of each tile
+			foreach (Tile tile in _respawnedTiles)
+			{
+				position = tile.view.transform.position;
+				position.y = currentDepth;
+				tile.view.transform.position = position;
+			}
+
+			yield return Timing.WaitForOneFrame;
+		}
+
+		// will set the tiles in the tilemap 
+		// so they are walkable again
+		foreach (Tile tile in _respawnedTiles)
+			TM.SetTile(tile.position, tile, 1.0f, 0.0, false);
+
+		_destroyedTiles.Clear();
+		_respawnedTiles.Clear();
+		_respawnedTiles.Clear();
 	}
 
 }

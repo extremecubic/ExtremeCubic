@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameModeLastMan : Photon.MonoBehaviour, IGameMode
+public class GameModeKingOfTheHill : Photon.MonoBehaviour, IGameMode
 {
 	public class LastManPlayerTracker
 	{
@@ -28,6 +28,8 @@ public class GameModeLastMan : Photon.MonoBehaviour, IGameMode
 	{
 		_players = new Dictionary<int, LastManPlayerTracker>();
 	}
+
+	public void OnLevelCreated(){}
 
 	public void OnPlayerLeft(int ID)
 	{

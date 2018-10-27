@@ -70,7 +70,7 @@ public class Match : Photon.MonoBehaviour
 
 		currentGameModeType = (GameMode)PhotonNetwork.player.CustomProperties[Constants.MATCH_GAME_MODE];
 
-		if      (currentGameModeType == GameMode.KingOfTheHill)  _currentGameMode = GetComponent<GameModeLastMan>();
+		if      (currentGameModeType == GameMode.KingOfTheHill)  _currentGameMode = GetComponent<GameModeKingOfTheHill>();
 		else if (currentGameModeType == GameMode.TurfWar)        _currentGameMode = GetComponent<GameModeTurfWar>();
 		else if (currentGameModeType == GameMode.UltimateKiller) _currentGameMode = GetComponent<GameModeUltimateKiller>();
 
@@ -97,7 +97,7 @@ public class Match : Photon.MonoBehaviour
 		// TEMP STUFF UNTILL LOCAL PLAY MENUS HAVE BEEN CREATED
 		currentGameModeType = _debugCurrentGameMode;
 
-		if      (currentGameModeType == GameMode.KingOfTheHill)  _currentGameMode = GetComponent<GameModeLastMan>();
+		if      (currentGameModeType == GameMode.KingOfTheHill)  _currentGameMode = GetComponent<GameModeKingOfTheHill>();
 		else if (currentGameModeType == GameMode.TurfWar)        _currentGameMode = GetComponent<GameModeTurfWar>();
 		else if (currentGameModeType == GameMode.UltimateKiller) _currentGameMode = GetComponent<GameModeUltimateKiller>();
 
@@ -107,6 +107,8 @@ public class Match : Photon.MonoBehaviour
 		scoreUI.Setup(numPlayer, _debugCurrentGameMode);
 
 		_level.StartGameLocal();
+
+		_currentGameMode.OnLevelCreated();
 
 		counterUI.StartCount(0, 3, () => { matchStarted = true; _currentGameMode.OnRoundStart(); });
 	}
@@ -130,6 +132,8 @@ public class Match : Photon.MonoBehaviour
 
 		// create level (player creation is here for now aswell)
 		_level.StartGameOnline();
+
+		_currentGameMode.OnLevelCreated();
 
 		// start countdown
 		counterUI.StartCount(delta, 3, () => { matchStarted = true; _currentGameMode.OnRoundStart(); });

@@ -1,7 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System;
+using Random = UnityEngine.Random;
+using Object = UnityEngine.Object;
 
 public class TileMap
 {
@@ -12,6 +14,8 @@ public class TileMap
 	Vector2DInt _gridSize;
 	public readonly Transform tilesFolder;
 	public readonly Transform powerUpsFolder;
+
+	public Action<string, Vector2DInt, double> OnTileDestroyed;
 	
     public TileMap(string mapName, Transform tilesFolder, Transform powerUpsFolder)
     {
@@ -28,8 +32,12 @@ public class TileMap
 	} 
 
 	// set a new tile at given coordinates and remove the old one
-    public void SetTile(Vector2DInt position, Tile tile, float destroyDelay)
+    public void SetTile(Vector2DInt position, Tile tile, float destroyDelay, double netDelta, bool oldDestroyed)
     {
+		// call all subscribers that want to know the tile that got removed
+		if (oldDestroyed)
+			OnTileDestroyed?.Invoke(_tiles[position].model.typeName, position, netDelta);
+
         _tiles[position].Delete(destroyDelay);
         _tiles[position] = tile;
     }
@@ -189,6 +197,18 @@ public class TileMap
 			point = new Vector2DInt(_gridSize.x - 2, 1); // bottom right
 
 		return point;
+	}
+
+	public int GetNumBreakableTiles()
+	{
+		int result = 0;
+
+		for (int y =0; y < _gridSize.y; y++)
+			for (int x =0; x < _gridSize.x; x++)
+				if (!_tiles[new Vector2DInt(x, y)].model.data.unbreakable)
+					result++;
+
+		return result;			
 	}
 
 }

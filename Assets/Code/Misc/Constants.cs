@@ -38,7 +38,7 @@ public static class Constants
 	public static readonly string MATCH_GAME_MODE                  = "9";
 
 	// temp storage here for now
-	public static bool  onlineGame = true;
+	public static bool  onlineGame = false;
 	public static float masterEffectVolume = 0.20f;
 
 

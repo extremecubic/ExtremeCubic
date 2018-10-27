@@ -129,7 +129,8 @@ public class Tile
 	// destroy the model that represent this tile
 	public void Delete(float delay)
 	{
-		Object.Destroy(view, delay);
+		if (view != null)
+			Object.Destroy(view, delay);
 	}
 
 	// is a powerup set to this tile
@@ -247,7 +248,7 @@ public class Tile
 		}
 	}
 
-	public void DamageTile()
+	public void DamageTile(double netDelta)
 	{
 		// ChangeColorTile health of this tile
 		currentHealth--;
@@ -268,7 +269,7 @@ public class Tile
 		// the model for the old tile will be destroyed with passed in delay
 		// and the current tile will be garbage collected
 		if (currentHealth == 0)
-			Match.instance.level.tileMap.SetTile(position, new Tile(position, "empty", 0.0f, 0.0f, null), 1.0f);
+			Match.instance.level.tileMap.SetTile(position, new Tile(position, "empty", 0.0f, 0.0f, null), 1.0f, netDelta, true);
 	}
 
 	// will get all renderers in a model

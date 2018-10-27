@@ -11,18 +11,20 @@ public class GameModesModel : ScriptableObject
 	[Header("TURF WAR SETTINGS")]
 	public int turfNumRoundsToWin = 3;
 	public double turfRespawnTime = 5.0;
-	public double turfRoundTime = 120.0;
-	public float tileFlipTime = 0.25f;
-	public float tileFlipHeight = 1.0f;
+	public double turfRoundTime   = 120.0;
+	public float tileFlipTime     = 0.25f;
+	public float tileFlipHeight   = 1.0f;
 	[Range(0,1)]
 	public float tileChangeColorIntoFlipPercent = 0.0f;
 	public Color[] turfColors;
 
 	[Header("ULTIMATE KILLER SETTINGS")]
-	public int    killerNumRoundsToWin = 3;
-	public double killerRespawnTime = 5.0;
-	public double killerRoundTime = 120.0;
-
+	public int    killerNumRoundsToWin           = 3;
+	public double killerRespawnTime              = 5.0;
+	public double killerRoundTime                = 120.0;
+	public double tilesRespawnMoveDuration       = 3.0;
+	public float  tilesRespawnStartDepth         = -20.0f;
+	public float  tilePercentDestroyedForRespawn = 0.1f;
 
 	public Color GetColorFromPlayerIndexID(int playerIndexID)
 	{

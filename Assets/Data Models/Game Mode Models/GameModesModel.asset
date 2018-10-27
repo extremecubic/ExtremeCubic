@@ -24,5 +24,8 @@ MonoBehaviour:
   - {r: 0, g: 0.8037145, b: 1, a: 1}
   - {r: 0.92502797, g: 1, b: 0, a: 1}
   killerNumRoundsToWin: 3
-  killerRespawnTime: 8
-  killerRoundTime: 30
+  killerRespawnTime: 2
+  killerRoundTime: 120
+  tilesRespawnMoveDuration: 2.5
+  tilesRespawnStartDepth: -20
+  tilePercentDestroyedForRespawn: 0.4

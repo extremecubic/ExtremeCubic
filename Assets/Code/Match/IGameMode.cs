@@ -10,4 +10,5 @@ public interface IGameMode
 	void OnPlayerLeft(int ID);
 	void OnPlayerRegistred(int ID);
 	void OnRoundStart();
+	void OnLevelCreated();
 }

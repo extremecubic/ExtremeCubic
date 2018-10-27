@@ -66,10 +66,10 @@ public class Level : Photon.MonoBehaviour
 	public void BreakTile(int x, int y)
 	{
 		if (Constants.onlineGame && PhotonNetwork.isMasterClient)
-			photonView.RPC("NetworkBreakTile", PhotonTargets.All, x, y);
+			photonView.RPC("NetworkBreakTile", PhotonTargets.All, x, y, PhotonNetwork.time);
 
 		if (!Constants.onlineGame)
-			NetworkBreakTile(x, y);
+			NetworkBreakTile(x, y, 0.0);
 	}
 
 	// change the color of a tile, this is only handled by the master client
@@ -108,9 +108,9 @@ public class Level : Photon.MonoBehaviour
 	}
 
 	[PunRPC]
-	void NetworkBreakTile(int x, int y)
+	void NetworkBreakTile(int x, int y, double netDelta)
 	{
-		tileMap.GetTile(new Vector2DInt(x, y)).DamageTile();
+		tileMap.GetTile(new Vector2DInt(x, y)).DamageTile(netDelta);
 	}
 
 	[PunRPC]

@@ -27,6 +27,8 @@ public class GameModeTurfWar : Photon.MonoBehaviour, IGameMode
 		_players = new Dictionary<int, TurfWarPlayerTracker>();
 	}
 
+	public void OnLevelCreated(){}
+
 	// remove a point from the player that had this turf before
 	public void RemoveTileScoreFrom(int playerPhotonID)
 	{

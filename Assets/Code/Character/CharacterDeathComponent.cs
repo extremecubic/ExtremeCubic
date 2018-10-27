@@ -60,7 +60,7 @@ public class CharacterDeathComponent : Photon.MonoBehaviour
 		if (deathTile.model.data.replaceTileOnDeath)
 		{
 			TileMap TM = Match.instance.level.tileMap;
-			TM.SetTile(deathTile.position, new Tile(deathTile.position, deathTile.model.data.replacementTile, 0, 1, TM.tilesFolder), 0.0f);
+			TM.SetTile(deathTile.position, new Tile(deathTile.position, deathTile.model.data.replacementTile, 0, 1, TM.tilesFolder), 0.0f, delta, true);
 		}
 
 		// start respawn countdown on all clients in case of server migration
