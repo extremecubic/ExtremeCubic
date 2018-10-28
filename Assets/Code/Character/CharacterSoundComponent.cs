@@ -13,6 +13,7 @@ public enum CharacterSound
 	Charge,
 	PowerupLoop,
 	StunnedSound,
+	RespawnSound,
 
 	Count,
 }
@@ -43,6 +44,7 @@ public class CharacterSoundComponent : MonoBehaviour
 		SM.CreateSound(_sounds[(int)CharacterSound.Charge],       "ChargeSound",      data.chargeSound,  true,  parent);
 		SM.CreateSound(_sounds[(int)CharacterSound.PowerupLoop],  "PowerUpLoopSound", null,              true,  parent);
 		SM.CreateSound(_sounds[(int)CharacterSound.StunnedSound], "StunnedSound",     data.stunnedSound, false, parent);
+		SM.CreateSound(_sounds[(int)CharacterSound.RespawnSound], "RespawnSound",     data.respawnSound, false, parent);
 	}
 
 	public void PlaySound(CharacterSound type, float duration = 0)

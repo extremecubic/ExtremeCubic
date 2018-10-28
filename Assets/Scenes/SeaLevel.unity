@@ -1087,7 +1087,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c5dd859341e34448690ed3e5af4b7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mapToLoad: SeaLevel
+  _mapToLoad: The Beach 1
   _tilesFolder: {fileID: 715085061}
   _powerUpFolder: {fileID: 1079690195}
   _characterPrefab: {fileID: 1300687396863330, guid: c968007a7fbe1f942a234aa54bc2f7e9,
@@ -8974,7 +8974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ead05708d7cccfb4bb25ffa7236b46ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _debugCurrentGameMode: 0
+  _debugCurrentGameMode: 2
   _level: {fileID: 140270603}
   _gameModeModel: {fileID: 11400000, guid: 4fe97f5b4cd61164e8a6fc649d2bfbbc, type: 2}
 --- !u!4 &1454707900

@@ -23,6 +23,8 @@ public class GameModeUltimateKiller : Photon.MonoBehaviour, IGameMode
 	int _numBreakableTiles;
 	int _numDestroyedTilesForRespawn;
 
+	SoundData _tilesRespawnSound;
+
 	void Awake()
 	{
 		_match     = GetComponent<Match>();
@@ -33,7 +35,10 @@ public class GameModeUltimateKiller : Photon.MonoBehaviour, IGameMode
 	{
 		_players            = new Dictionary<int, UltimateKillerPlayerTracker>();
 		_destroyedTiles     = new Dictionary<Vector2DInt, string>();
-		_respawnedTiles = new List<Tile>();
+		_respawnedTiles     = new List<Tile>();
+		_tilesRespawnSound  = new SoundData();
+
+		SoundManager.instance.CreateSound(_tilesRespawnSound, "TilesRespawn", _modeModel.tilesRespawnSound, true, gameObject.transform);
 	}
 
 	public void OnLevelCreated()
@@ -235,6 +240,9 @@ public class GameModeUltimateKiller : Photon.MonoBehaviour, IGameMode
 		float   currentDepth      = 0.0f;
 		Vector3 position          = Vector3.zero;
 
+		SoundManager SM = SoundManager.instance;
+		SM.PlaySound(_tilesRespawnSound, (float)moveUpForSeconds);
+		
 		while (moveUpForSeconds > 0)
 		{
 			moveUpForSeconds -= Time.deltaTime;

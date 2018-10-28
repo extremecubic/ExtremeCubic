@@ -123,9 +123,18 @@ public class Character : Photon.MonoBehaviour
 	[PunRPC]
 	public void ReSpawn(int tileX, int tileY)
 	{
+		// reset all movement and set our tile
 		movementComponent.ResetAll();
 		transform.position = new Vector3(tileX, 1, tileY);
 		movementComponent.SetSpawnTile(new Vector2DInt(tileX, tileY));
+
+		// play feedback of respawn
+		soundComponent.PlaySound(CharacterSound.RespawnSound);
+		if (viewData.respawnParticle != null)
+		{
+			ParticleSystem particle = Instantiate(viewData.respawnParticle, transform.position, viewData.respawnParticle.transform.rotation, gameObject.transform);
+			Destroy(particle.gameObject, 8.0f);
+		}
 	}
 
 	void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)

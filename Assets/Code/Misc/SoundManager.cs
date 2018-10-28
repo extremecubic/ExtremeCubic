@@ -4,6 +4,9 @@ using UnityEngine;
 using MEC;
 using System;
 
+// stores a audiosource with it's own
+// handles for playing and fading the
+// sound for a set duration
 [Serializable]
 public class SoundData
 {
@@ -28,6 +31,9 @@ public class SoundManager : MonoBehaviour
 		instance = null;	
 	}
 
+	// create a gameobject with a audiosource and sets it's properties
+	// that reference to the audiosource is set in the passed in "SoundData" structure
+	// for later acces
 	public void CreateSound(SoundData data, string name, AudioClip clip, bool loop, Transform parent)
 	{
 		GameObject soundHolder = new GameObject(name, typeof(AudioSource));
@@ -66,6 +72,7 @@ public class SoundManager : MonoBehaviour
 
 	public void StopSound(SoundData data, float time = 0.5f)
 	{
+		// only stop sound if it is playing and it is not already fading out
 		if (data.audioSource.isPlaying)
 			data.fadeHandle = Timing.RunCoroutineSingleton(_FadeSound(time, data), data.fadeHandle, SingletonBehavior.Abort);
 	}
@@ -88,15 +95,20 @@ public class SoundManager : MonoBehaviour
 		Destroy(soundHolder, destroyAfter);
 	}
 
+	// play an entire sound or play a sound for a set duration
 	public void PlaySound(SoundData data, float duration = 0.0f)
 	{
 		if (data.audioSource.clip != null)
 		{
+			// check if the sound is already playing and is fading out
+			// in that case abort fadeout and reset volume so it can be played again
 			if (data.fadeHandle.IsRunning)
 				data.fadeHandle.IsRunning = false;
 
 			data.audioSource.volume = Constants.masterEffectVolume;
 
+			// if duration is set to 0 play normally
+			// else start the coroutine that playes the sound fo a set duration
 			if (duration == 0)
 				data.audioSource.Play();
 			else
@@ -106,23 +118,32 @@ public class SoundManager : MonoBehaviour
 
 	IEnumerator<float> _PlayForDuration(float time, SoundData sound)
 	{
+		// set and play
 		sound.audioSource.volume = Constants.masterEffectVolume;
 		sound.audioSource.Play();
+
+		// wait for duration
 		yield return Timing.WaitForSeconds(time);
+
+		// start coroutine that fades out the sound
 		sound.fadeHandle = Timing.RunCoroutine(_FadeSound(0.5f, sound));
 	}
 
 	IEnumerator<float> _FadeSound(float time, SoundData sound)
 	{
+		// get current volume of sound
 		float startVolume = sound.audioSource.volume;
 		
 		float fraction = 0;
 		while (fraction < 1.0f)
 		{
+			// break out if the sound would get destroyed during fade
 			if (sound == null || sound.audioSource == null)
 				yield break;
 
-			fraction = time == 0 ? 1.0f : fraction + Time.deltaTime / time;
+			// avoid division by zero by setting the fraction directly to 1.0f
+			// if we want the sound to be stopped directly
+			fraction += time == 0 ? 1.0f : Time.deltaTime / time;
 
 			sound.audioSource.volume = Mathf.Lerp(startVolume, 0.0f, fraction);
 

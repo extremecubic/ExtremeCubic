@@ -34,6 +34,7 @@ public class CharacterDatabase : MonoBehaviour
 		public AudioClip deathSound;
 		public AudioClip chargeSound;
 		public AudioClip stunnedSound;
+		public AudioClip respawnSound;
 
 		[Header("PARTICLES"), Space(2)]
 		public ParticleSystem hitParticle;
@@ -42,6 +43,7 @@ public class CharacterDatabase : MonoBehaviour
 		public bool trailForwardAsDashDirection;
 		public ParticleSystem chargeupParticle;
 		public ParticleSystem stunnedParticle;
+		public ParticleSystem respawnParticle;
 	}
 
 	void Awake()

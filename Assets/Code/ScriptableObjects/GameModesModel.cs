@@ -19,12 +19,13 @@ public class GameModesModel : ScriptableObject
 	public Color[] turfColors;
 
 	[Header("ULTIMATE KILLER SETTINGS")]
-	public int    killerNumRoundsToWin           = 3;
-	public double killerRespawnTime              = 5.0;
-	public double killerRoundTime                = 120.0;
-	public double tilesRespawnMoveDuration       = 3.0;
-	public float  tilesRespawnStartDepth         = -20.0f;
-	public float  tilePercentDestroyedForRespawn = 0.1f;
+	public int       killerNumRoundsToWin           = 3;
+	public double    killerRespawnTime              = 5.0;
+	public double    killerRoundTime                = 120.0;
+	public double    tilesRespawnMoveDuration       = 3.0;
+	public float     tilesRespawnStartDepth         = -20.0f;
+	public float     tilePercentDestroyedForRespawn = 0.1f;
+	public AudioClip tilesRespawnSound;
 
 	public Color GetColorFromPlayerIndexID(int playerIndexID)
 	{

@@ -29,3 +29,4 @@ MonoBehaviour:
   tilesRespawnMoveDuration: 2.5
   tilesRespawnStartDepth: -20
   tilePercentDestroyedForRespawn: 0.4
+  tilesRespawnSound: {fileID: 8300000, guid: 103a487fb5226184eb1bd87255264b6e, type: 3}
