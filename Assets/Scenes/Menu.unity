@@ -26567,15 +26567,49 @@ MonoBehaviour:
     dotsParent: {fileID: 538187654}
     buttonImage: {fileID: 2003344980}
     levelText: {fileID: 1903161398}
+  - sceneName: TurfD
+    sprites:
+    - {fileID: 21300000, guid: ae474c1d5a105aa42bcd0de5cd09980c, type: 3}
+    names:
+    - Turf D1
+    dotsParent: {fileID: 1923312893}
+    buttonImage: {fileID: 1833727847}
+    levelText: {fileID: 1697944155}
   _ultimateKillerLevels:
   - sceneName: MineLevel
     sprites:
-    - {fileID: 21300000, guid: f464a1dd3ce6e8543b11d6c77e135205, type: 3}
+    - {fileID: 21300000, guid: 1bea965cac87a62498d5dcdf3364f174, type: 3}
+    - {fileID: 21300000, guid: 69635490689d3b64b832131fe0e5ab00, type: 3}
     names:
-    - Crystal Mine 1
+    - Crystal Mine b1
+    - Crystal Mine b2
     dotsParent: {fileID: 1621687941}
     buttonImage: {fileID: 429309932}
     levelText: {fileID: 1706153035}
+  - sceneName: SeaLevel
+    sprites:
+    - {fileID: 21300000, guid: f4f8ed505f228f249b765b92947817db, type: 3}
+    names:
+    - The Beach b1
+    dotsParent: {fileID: 1218101272}
+    buttonImage: {fileID: 1578395365}
+    levelText: {fileID: 377967781}
+  - sceneName: TempleLevel
+    sprites:
+    - {fileID: 21300000, guid: c5917cdea9de1ae4babaf37faa00de26, type: 3}
+    names:
+    - Temple Ruins b1
+    dotsParent: {fileID: 538187654}
+    buttonImage: {fileID: 2003344980}
+    levelText: {fileID: 1903161398}
+  - sceneName: SpaceLevel
+    sprites:
+    - {fileID: 21300000, guid: 8d3d2cdd10c1a0d4aa20400d4a371df4, type: 3}
+    names:
+    - Empty Space b1
+    dotsParent: {fileID: 1923312893}
+    buttonImage: {fileID: 1833727847}
+    levelText: {fileID: 1697944155}
   _nominatedLevelUI:
   - content: {fileID: 2002413142}
     image: {fileID: 1147774119}

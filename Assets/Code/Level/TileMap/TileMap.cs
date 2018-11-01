@@ -128,13 +128,14 @@ public class TileMap
 	}
 
 	// tries to find a random tile within a certain amount of tries
-	// deadly tiles is also considered empty
-	public Tile GetRandomFreeTile(int numTries)
+	// can include deadly or not
+	public Tile GetRandomFreeTile(int numTries, bool avoidDeadly)
 	{
 		for(int i =0; i < numTries; i++)
 		{
 			Tile tile = GetTile(GetRandomTileCoords());
-			if (!tile.IsOccupied() && !tile.ContainsPowerUp() && tile.model.data.walkable)
+			if (!avoidDeadly && !tile.IsOccupied() && !tile.ContainsPowerUp() && tile.model.data.walkable ||
+				 avoidDeadly && !tile.IsOccupied() && !tile.ContainsPowerUp() && tile.model.data.walkable && !tile.model.data.deadly)
 				return tile;
 		}
 
@@ -151,7 +152,7 @@ public class TileMap
 		{
 			Tile tile = tilePair.Value;
 
-			if (!tile.IsOccupied() && !tile.model.data.deadly)
+			if (!tile.IsOccupied() && !tile.model.data.deadly && !tile.ContainsPowerUp() && !tile.model.data.isSpecialTile)
 				allFreeTiles.Add(tile);
 		}
 
@@ -161,7 +162,7 @@ public class TileMap
 		return allFreeTiles.TakeRandom();
 	}
 
-	public Vector2DInt GetRandomTileCoordsFromType(string tileType, Tile myTile)
+	public Vector2DInt GetRandomTileCoordsByType(string tileType, Tile myTile)
 	{
 		// try to find a tile
 		List<Tile> possibleTiles = new List<Tile>();

@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TurfC.unity
     guid: 443738683bac01f41b74a677618f58a7
+  - enabled: 1
+    path: Assets/Scenes/TurfD.unity
+    guid: 58290ca92dac61a44abe5cd4c987cbce
   m_configObjects: {}

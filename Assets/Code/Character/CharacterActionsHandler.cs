@@ -119,7 +119,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 			// if need target, find non ocupied tile of same type
 			// that is not the same as current
 			if (currentTile.model.data.needTargetTileSameType)
-				targetTile = _tileMap.GetRandomTileCoordsFromType(currentTile.model.typeName, currentTile);
+				targetTile = _tileMap.GetRandomTileCoordsByType(currentTile.model.typeName, currentTile);
 
 			if (Constants.onlineGame)
 			{

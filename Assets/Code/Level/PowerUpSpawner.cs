@@ -47,7 +47,7 @@ public class PowerUpSpawner : Photon.MonoBehaviour
 				
 				for (int y = 0; y < _spawners[i].numSpawnsEachTime; y++)
 				{
-					Tile freeTile = Match.instance.level.tileMap.GetRandomFreeTile(10);
+					Tile freeTile = Match.instance.level.tileMap.GetRandomFreeTile(10, true);
 					if (freeTile == null)
 						continue;
 

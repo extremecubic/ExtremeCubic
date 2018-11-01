@@ -14,7 +14,7 @@ MonoBehaviour:
   kingNumRoundsToWin: 3
   turfNumRoundsToWin: 3
   turfRespawnTime: 5
-  turfRoundTime: 40
+  turfRoundTime: 120
   tileFlipTime: 0.25
   tileFlipHeight: 1
   tileChangeColorIntoFlipPercent: 0.25
@@ -24,9 +24,9 @@ MonoBehaviour:
   - {r: 0, g: 0.8037145, b: 1, a: 1}
   - {r: 0.92502797, g: 1, b: 0, a: 1}
   killerNumRoundsToWin: 3
-  killerRespawnTime: 2
+  killerRespawnTime: 5
   killerRoundTime: 120
   tilesRespawnMoveDuration: 2.5
   tilesRespawnStartDepth: -20
-  tilePercentDestroyedForRespawn: 0.4
+  tilePercentDestroyedForRespawn: 0.6
   tilesRespawnSound: {fileID: 8300000, guid: 103a487fb5226184eb1bd87255264b6e, type: 3}

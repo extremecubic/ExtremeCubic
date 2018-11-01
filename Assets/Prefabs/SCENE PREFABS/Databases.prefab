@@ -525,6 +525,68 @@ MonoBehaviour:
       enterSpecialFailedParticle: {fileID: 1862835849922676, guid: f8cb87b33e45936438a50c7201e5fe2f,
         type: 2}
       prefab: {fileID: 1614507276540036, guid: 611c76f87898d6348b7d23da9951e285, type: 2}
+  - _typeName: yellowteleport
+    _data:
+      walkable: 1
+      health: 0
+      deadly: 0
+      unbreakable: 1
+      deathType: 0
+      replaceTileOnDeath: 0
+      replacementTile: 
+      changeColorTile: 0
+      isSpecialTile: 1
+      specialType: 1
+      needTargetTileSameType: 1
+      intValue: 0
+      landSound: {fileID: 0}
+      breakSound: {fileID: 0}
+      killSound: {fileID: 0}
+      specialTileSound: {fileID: 8300000, guid: 9a1d33341f34fc24c89bc9a4a93c4d15,
+        type: 3}
+      failedSpecialTileSound: {fileID: 8300000, guid: b16810ce993553543880a8830547ab6e,
+        type: 3}
+      landParticle: {fileID: 0}
+      breakParticle: {fileID: 0}
+      killParticle: {fileID: 0}
+      enterSpecialParticle: {fileID: 1345682840426872, guid: bb045d1f68a08da409e9892ed520292d,
+        type: 2}
+      targetSpecialParticle: {fileID: 1237625651391516, guid: db43613b18ab1094b966e77a68eb66a8,
+        type: 2}
+      enterSpecialFailedParticle: {fileID: 1862835849922676, guid: c865c711c91255542a08379419d65115,
+        type: 2}
+      prefab: {fileID: 1000473963028982, guid: 79d3f30d82e0b754b971156c94b16022, type: 2}
+  - _typeName: redteleport
+    _data:
+      walkable: 1
+      health: 0
+      deadly: 0
+      unbreakable: 1
+      deathType: 0
+      replaceTileOnDeath: 0
+      replacementTile: 
+      changeColorTile: 0
+      isSpecialTile: 1
+      specialType: 1
+      needTargetTileSameType: 1
+      intValue: 0
+      landSound: {fileID: 0}
+      breakSound: {fileID: 0}
+      killSound: {fileID: 0}
+      specialTileSound: {fileID: 8300000, guid: 9a1d33341f34fc24c89bc9a4a93c4d15,
+        type: 3}
+      failedSpecialTileSound: {fileID: 8300000, guid: b16810ce993553543880a8830547ab6e,
+        type: 3}
+      landParticle: {fileID: 0}
+      breakParticle: {fileID: 0}
+      killParticle: {fileID: 0}
+      enterSpecialParticle: {fileID: 1345682840426872, guid: 2c93ab38aa6d7354aa33094a247026c5,
+        type: 2}
+      targetSpecialParticle: {fileID: 1237625651391516, guid: 178aa9a3f6b05854fa69c509fea3d428,
+        type: 2}
+      enterSpecialFailedParticle: {fileID: 1862835849922676, guid: c3c8665c3e3887648a4c3c7ca1238120,
+        type: 2}
+      prefab: {fileID: 1604109143566674, guid: 49132f98aa2a2424f9ff695aa7ff14cb, type: 2}
   - _typeName: greenteleport
     _data:
       walkable: 1
