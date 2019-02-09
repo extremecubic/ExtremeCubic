@@ -45,7 +45,7 @@ public class Level : Photon.MonoBehaviour
 		// this will change once menus for starting local play is done
 		tileMap = new TileMap(_mapToLoad, _tilesFolder, _powerUpFolder);
 
-		for(int i =0; i< 4; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			_characters.Add(Instantiate(_characterPrefab, Vector3.zero, Quaternion.identity).GetComponent<Character>());
 			_characters[i].Initialize("duplo", i, "LocalGuy", 0, i);

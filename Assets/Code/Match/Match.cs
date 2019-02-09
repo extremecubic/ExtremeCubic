@@ -13,7 +13,9 @@ public enum GameMode
 public class Match : Photon.MonoBehaviour
 {
 	// TEMP FOR SETTING GAMEMODE FOR LOCAL PLAY
+	[Header("ALWAYS DISABLE \"_debugPlay\" BEFORE SAVING SCENE")]
 	[SerializeField] GameMode _debugCurrentGameMode;
+	[SerializeField] bool     _debugPlay;
 
 	public static Match instance       { get; private set; }
 	public bool matchStarted           { get; private set; }
@@ -51,6 +53,13 @@ public class Match : Photon.MonoBehaviour
 		roundCounterUI = UI.roundCounter;
 
 		_musicManager = SoundManager.instance;
+
+		if (_debugPlay)
+		{
+			Constants.onlineGame = false;
+			SetupMatchLocal();
+			return;
+		}
 
 		if (Constants.onlineGame)		
 			SetupMatchOnline();

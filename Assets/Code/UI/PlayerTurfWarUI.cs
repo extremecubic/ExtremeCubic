@@ -8,8 +8,8 @@ using System;
 public class PlayerTurfWarUI : PlayerUIItem
 {	
 	[Space(2), Header("TURF REFERENCES")]
-	[SerializeField] Text            _turfText;
-	[SerializeField] Image           _colorImage;
+	[SerializeField] Text  _turfText;
+	[SerializeField] Image _colorImage;
 
 	public override void RegisterPlayer(int playerPhotonID, int playerIndexID, string nickName, string viewName)
 	{
@@ -17,9 +17,9 @@ public class PlayerTurfWarUI : PlayerUIItem
 		taken = true;
 
 		_userNameText.text = nickName;
-		_icon.sprite = CharacterDatabase.instance.GetViewFromName(viewName).iconUI;
-		_scoreText.text = "0";
-		_turfText.text = "0";
+		_icon.sprite       = CharacterDatabase.instance.GetViewFromName(viewName).iconUI;
+		_scoreText.text    = "0";
+		_turfText.text     = "0";
 		_respawnParent.SetActive(false);
 		_colorImage.color = Match.instance.gameModeModel.GetColorFromPlayerIndexID(playerIndexID);
 	}

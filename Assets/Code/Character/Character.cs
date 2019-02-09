@@ -32,7 +32,7 @@ public class Character : Photon.MonoBehaviour
 	public CharacterPowerUpComponent   powerUpComponent   {get; private set;}
 	public CharacterSpecialTileHandler specialTileHandler {get; private set;}
 
-	public int dashingPlayerID { get; set; }
+	public int dashingPlayerID; 
 
 	public void Initialize(string viewName, int playerID, string nickname, int skinID, int indexID)
     {
@@ -55,9 +55,9 @@ public class Character : Photon.MonoBehaviour
 	[PunRPC]
 	void NetworkInitialize(string viewname, int playerID, string nickname, int skinID, int indexID)
 	{
-		playerPhotonID  = playerID;
-		playerNickname       = nickname;
-		playerIndexID        = indexID;
+		playerPhotonID = playerID;
+		playerNickname = nickname;
+		playerIndexID  = indexID;
 
 		model    = CharacterDatabase.instance.standardModel;
 		viewData = CharacterDatabase.instance.GetViewFromName(viewname);
@@ -85,10 +85,10 @@ public class Character : Photon.MonoBehaviour
 		ParticleComponent.ManualAwake(viewData, view.transform);
 		specialTileHandler.ManualAwake(this);
 
-		// register this player in match class fro score kepping
+		// register this player in match class for score kepping
 		// and for in game UI
 		if (Constants.onlineGame && photonView.isMine)				
-			Match.instance.photonView.RPC("RegisterPlayer", PhotonTargets.AllViaServer, this.playerPhotonID, playerIndexID, playerNickname, viewname);
+			Match.instance.photonView.RPC("RegisterPlayer", PhotonTargets.AllViaServer, playerPhotonID, playerIndexID, playerNickname, viewname);
 
 		if (!Constants.onlineGame)
 			Match.instance.RegisterPlayer(playerIndexID, playerIndexID, playerNickname, viewname);

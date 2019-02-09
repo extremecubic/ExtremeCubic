@@ -348,7 +348,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 	public IEnumerator<float> _ObstacleCollide(Vector2DInt tile, Vector2DInt direction)
 	{
 		// get references to tiles
-		Tile fromTile = _tileMap.GetTile(tile);
+		Tile fromTile   = _tileMap.GetTile(tile);
 		Tile targetTile = fromTile.GetRelativeTile(direction);
 
 		Vector3 targetPosition = new Vector3(targetTile.position.x, 1, targetTile.position.y);
@@ -362,7 +362,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		// do lerp from current rotation if desynced(will catch up)
 		// target is calculated using the target rotation we had during last movement if we are lagging behind
 		// this prevents crooked target rotations
-		Quaternion fromRotation = transform.rotation;
+		Quaternion fromRotation   = transform.rotation;
 		Quaternion targetRotation = Quaternion.Euler(movementDirectionRight * 90) * _lastTargetRotation;
 
 		int rollCount = 1;
@@ -395,8 +395,8 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 			// reset rotation progress and add another 90 degress to target
 			if (rotationProgress >= 1 && rollCount < _model.numCollideRolls)
 			{
-				fromRotation = transform.rotation;
-				targetRotation = Quaternion.Euler(movementDirectionRight * 90) * _lastTargetRotation;
+				fromRotation        = transform.rotation;
+				targetRotation      = Quaternion.Euler(movementDirectionRight * 90) * _lastTargetRotation;
 				_lastTargetRotation = targetRotation;
 
 				rotationProgress = 0;

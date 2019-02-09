@@ -18,15 +18,16 @@ public class CharacterSelectPage : MenuPage
 	[Header("UI REFERENCES"), Space(2)]
 	[SerializeField] MenuPlayerInfoUI  _playerInfo;
 	[SerializeField] CharacterButton[] _characterButtons;
+
 	[Space(5)]
-	[SerializeField] Button            _readyButton;
-	[SerializeField] Button            _leaveButton;
-	[SerializeField] RectTransform     _dotsParent;
-	[SerializeField] Image             _dotPrefab;
-	[SerializeField] MessagePromt      _promt;
-	[SerializeField] Button            _leftarrow;
-	[SerializeField] Button            _rightArrow;
-	[SerializeField] StartCounterUI    _counter;
+	[SerializeField] Button         _readyButton;
+	[SerializeField] Button         _leaveButton;
+	[SerializeField] RectTransform  _dotsParent;
+	[SerializeField] Image          _dotPrefab;
+	[SerializeField] MessagePromt   _promt;
+	[SerializeField] Button         _leftarrow;
+	[SerializeField] Button         _rightArrow;
+	[SerializeField] StartCounterUI _counter;
 
 	[Header("3D MODEL SETTINGS"),Space(2)]
 	[SerializeField] Transform[]  _modelTransforms;
@@ -58,7 +59,7 @@ public class CharacterSelectPage : MenuPage
 
 		// always start with skin 0 on new character
 		_currentSkin = 0;
-		_numSkins = _currentView.prefabs.Length;
+		_numSkins    = _currentView.prefabs.Length;
 		UpdateSkinDots();
 
 		// tell everyone to update the 3d model
@@ -81,6 +82,9 @@ public class CharacterSelectPage : MenuPage
 		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.CHARACTER_NAME, _currentView.name);
 		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.SKIN_ID, _currentSkin);
 		PhotonHelpers.SetPlayerProperty(PhotonNetwork.player, Constants.PLAYER_READY, true);
+
+		// set that the game should start in online mode when the level scene loads
+		Constants.onlineGame = true;
 
 		// tell everyone to set that this player is ready in thier UI
 		_playerInfo.photonView.RPC("SetReadyUI", PhotonTargets.All, PhotonNetwork.player.ID, true);		
@@ -242,12 +246,10 @@ public class CharacterSelectPage : MenuPage
 	public void LeaveRoom()
 	{
 		// destroy 3d model
-		for (int i = 0; i < 4; i++)
-		{
+		for (int i = 0; i < 4; i++)		
 			if (_currentViewObject[i] != null)
 				Destroy(_currentViewObject[i]);									
-		}
-
+		
 		// remove all UI of players in room
 		_counter.CancelCount();
 		_playerInfo.DisableAllPlayerUI();

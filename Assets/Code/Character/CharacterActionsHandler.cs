@@ -5,8 +5,8 @@ using MEC;
 
 // this file handles receving and processeing possible character actions
 // and then forwarding them to all clients that should have them
-// it also checks if we are in a local and online game so we know
-// if the actions only should be ran locally or not
+// it also checks if we are in a local or online game so we know
+// if the actions only should be run locally or not
 public partial class CharacterMovementComponent : Photon.MonoBehaviour
 {
 	// called locally on "my local player" when receving input
@@ -95,13 +95,13 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 		if (Constants.onlineGame)
 		{
 			if (PhotonNetwork.isMasterClient)
-				photonView.RPC("NetworkOnhittingObstacle", PhotonTargets.All, currentTile.position.x, currentTile.position.y, direction.x, direction.y);
+				photonView.RPC("NetworkOnHittingObstacle", PhotonTargets.All, currentTile.position.x, currentTile.position.y, direction.x, direction.y);
 			else
 				_character.stateComponent.SetState(CharacterState.Frozen);
 		}
 
 		if (!Constants.onlineGame)
-			NetworkOnhittingObstacle(currentTile.position.x, currentTile.position.y, direction.x, direction.y);
+			NetworkOnHittingObstacle(currentTile.position.x, currentTile.position.y, direction.x, direction.y);
 	}
 
 	// called locally on all clients
@@ -288,7 +288,7 @@ public partial class CharacterMovementComponent : Photon.MonoBehaviour
 	}
 
 	[PunRPC]
-	public void NetworkOnhittingObstacle(int tileX, int tileY, int directionX, int directionY)
+	public void NetworkOnHittingObstacle(int tileX, int tileY, int directionX, int directionY)
 	{
 		// set new current tile if desynced
 		SetNewTileReferences(new Vector2DInt(tileX, tileY));

@@ -13,12 +13,12 @@ public class PlayerUltimateKillerUI : PlayerUIItem
 	public override void RegisterPlayer(int playerPhotonID, int playerIndexID, string nickName, string viewName)
 	{
 		ownerID = playerPhotonID;
-		taken = true;
+		taken   = true;
 
 		_userNameText.text = nickName;
-		_icon.sprite = CharacterDatabase.instance.GetViewFromName(viewName).iconUI;
-		_scoreText.text = "0";
-		_killsText.text = "0";
+		_icon.sprite       = CharacterDatabase.instance.GetViewFromName(viewName).iconUI;
+		_scoreText.text    = "0";
+		_killsText.text    = "0";
 		_respawnParent.SetActive(false);
 	}
 

@@ -32,14 +32,14 @@ public class TileModel
     public struct Data           
     {
 		[Header("BASIC SETTINGS"),Space(3)]
-        public bool walkable;       // Can a player ever enter this tile?
-        public int  health;         // How many times can a player step on this tile?
-        public bool deadly;         // Will a player die if it steps on this tile?
-        public bool unbreakable;    // tile cant break 
-		public DeathType deathType; // what death scenario will play
-		public bool replaceTileOnDeath;
-		public string replacementTile;
-		public bool changeColorTile;
+        public bool      walkable;       // Can a player ever enter this tile?
+        public int       health;         // How many times can a player step on this tile?
+        public bool      deadly;         // Will a player die if it steps on this tile?
+        public bool      unbreakable;    // tile cant break 
+		public DeathType deathType;      // what death scenario will play
+		public bool      replaceTileOnDeath;
+		public string    replacementTile;
+		public bool      changeColorTile;
 
 		[Header("SPECIAL TILE SETTINGS")]
 		public bool        isSpecialTile;
@@ -71,14 +71,14 @@ public class TileModel
 	public void MakeEdgeTile()
 	{
 		_typeName = Constants.EDGE_TYPE;
-		_data = new Data();
+		_data     = new Data();
 
-		_data.prefab = null;
-		_data.walkable = true;
-		_data.health = 0;
-		_data.deadly = true;
+		_data.prefab      = null;
+		_data.walkable    = true;
+		_data.health      = 0;
+		_data.deadly      = true;
 		_data.unbreakable = true;
-		_data.deathType = DeathType.Sink;
+		_data.deathType   = DeathType.Sink;
 	}
 }
 
@@ -189,7 +189,7 @@ public class Tile
 	public void SpawnPowerUp(PowerUp power, Transform powerUpFolder)
 	{
 		// set powerup properties and spawn poweerup model
-		_powerUp = power.type;
+		_powerUp   = power.type;
 		_powerView = Object.Instantiate(power.prefab, new Vector3(position.x, 1, position.y), power.prefab.transform.rotation, powerUpFolder);
 
 		// spawn one use sound for the powerup
@@ -345,7 +345,7 @@ public class Tile
 			fraction = Mathf.Clamp01(fraction);
 
 			// change the color when we are a certain percent into the flip
-			if (!haveChangedColor && fraction >= 1 * model.tileChangeColorIntoFlipPercent)
+			if (!haveChangedColor && fraction >= model.tileChangeColorIntoFlipPercent)
 			{
 				ChangeColorTile(color);
 				haveChangedColor = true;

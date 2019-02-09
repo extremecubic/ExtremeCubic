@@ -62,8 +62,7 @@ public class CharacterDatabase : MonoBehaviour
 		if (_characterViews.ContainsKey(name))
 			return _characterViews[name];
 		else
-			return _fallBackView;
-		
+			return _fallBackView;		
 	}
 
 	public ViewData GetFirstView()
